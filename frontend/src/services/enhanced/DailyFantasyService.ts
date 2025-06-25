@@ -501,6 +501,17 @@ export class EnhancedDailyFantasyService {
       };
     }
 
+    // Test PrizePicks (free API)
+    try {
+      const prizePicksHealth = await prizePicksProjectionsService.healthCheck();
+      results.prizePicks = {
+        status: prizePicksHealth.status === "healthy" ? "healthy" : "degraded",
+        message: `${prizePicksHealth.projections_available} projections available`,
+      };
+    } catch (error) {
+      results.prizePicks = { status: "degraded", message: "Free API error" };
+    }
+
     const healthyCount = Object.values(results).filter(
       (r) => r.status === "healthy",
     ).length;
