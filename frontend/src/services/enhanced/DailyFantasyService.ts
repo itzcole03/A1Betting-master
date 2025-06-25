@@ -389,6 +389,10 @@ export class EnhancedDailyFantasyService {
           sportsDataProjections.status === "fulfilled"
             ? sportsDataProjections.value
             : [],
+        prizePicksProjections:
+          prizePicksProjections.status === "fulfilled"
+            ? prizePicksProjections.value
+            : [],
         optimalLineup,
         lastUpdated: new Date().toISOString(),
         sources: {
@@ -396,6 +400,10 @@ export class EnhancedDailyFantasyService {
           projections:
             sportsDataProjections.status === "fulfilled"
               ? "SportsDataIO"
+              : "Unavailable",
+          prizePicksProjections:
+            prizePicksProjections.status === "fulfilled"
+              ? "PrizePicks (Free)"
               : "Unavailable",
           optimization: optimalLineup ? "FairPlay" : "Mock",
         },
