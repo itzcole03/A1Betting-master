@@ -409,6 +409,7 @@ export const api = {
   async getBettingOpportunities(params?: {
     sport?: string;
     minEdge?: number;
+    maxResults?: number;
   }): Promise<ApiResponse<any[]>> {
     return productionApiService.get<any[]>(
       "/api/betting-opportunities",
