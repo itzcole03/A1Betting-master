@@ -58,6 +58,22 @@ const useUserStats = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Get the API base URL from environment or use relative path
+  const getApiUrl = (path: string) => {
+    const baseUrl =
+      import.meta.env.VITE_API_URL ||
+      import.meta.env.VITE_BACKEND_URL ||
+      import.meta.env.VITE_API_BASE_URL ||
+      "";
+
+    // If no base URL is configured, use relative paths (for deployed environments)
+    if (!baseUrl) {
+      return `/api${path.startsWith("/") ? path : `/${path}`}`;
+    }
+
+    return `${baseUrl}${path.startsWith("/") ? path : `/${path}`}`;
+  };
+
   // Fetch user statistics from backend
   const fetchUserStats = async () => {
     setIsLoading(true);
@@ -66,9 +82,9 @@ const useUserStats = () => {
     try {
       // Try to fetch from multiple endpoints for comprehensive data
       const endpoints = [
-        "http://localhost:8000/api/analytics/advanced",
-        "http://localhost:8000/api/active-bets",
-        "http://localhost:8000/api/transactions",
+        getApiUrl("/analytics/advanced"),
+        getApiUrl("/active-bets"),
+        getApiUrl("/transactions"),
       ];
 
       const requests = endpoints.map((endpoint) =>
