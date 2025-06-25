@@ -9,6 +9,7 @@ import { enhancedTheOddsService } from "../../services/enhanced/TheOddsService";
 import { sportsbookDataService } from "../../services/enhanced/SportsbookDataService";
 import { unifiedDataIntegrationService } from "../../services/enhanced/UnifiedDataIntegrationService";
 import { productionValidationService } from "../../services/enhanced/ProductionValidationService";
+import { prizePicksProjectionsService } from "../../services/enhanced/PrizePicksProjectionsService";
 
 interface TestResult {
   service: string;
