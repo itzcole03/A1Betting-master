@@ -596,6 +596,7 @@ export class UnifiedDataIntegrationService {
     const providers = [
       { name: "TheOdds-API", service: enhancedTheOddsService },
       { name: "SportsRadar", service: optimizedSportsRadarService },
+      { name: "PrizePicks-Free", service: prizePicksProjectionsService },
       { name: "DailyFantasy", service: enhancedDailyFantasyService },
       { name: "AutonomousSportsbooks", service: autonomousSportsbookService },
     ];
