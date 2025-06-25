@@ -54,7 +54,29 @@ window.addEventListener("error", (event) => {
 
 // Handle unhandled promise rejections
 window.addEventListener("unhandledrejection", (event) => {
-  // Properly serialize the error reason
+  // Check if this is a WebSocket-related error
+  const isWebSocketError =
+    event.reason?.message?.includes("WebSocket") ||
+    event.reason?.message?.includes("closed without opened") ||
+    event.reason?.toString()?.includes("WebSocket");
+
+  if (isWebSocketError) {
+    // For WebSocket errors, just log as warning and prevent default handling
+    logger.warn(
+      "WebSocket connection issue (expected in development)",
+      {
+        message: event.reason?.message || String(event.reason),
+        type: "WebSocket Error",
+      },
+      "WebSocket",
+    );
+
+    // Prevent the error from being logged as unhandled
+    event.preventDefault();
+    return;
+  }
+
+  // Properly serialize the error reason for non-WebSocket errors
   const errorDetails = {
     reasonType: typeof event.reason,
     reasonString: String(event.reason),
