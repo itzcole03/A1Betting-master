@@ -110,12 +110,14 @@ export class UnifiedDataIntegrationService {
         return cached.data;
       }
 
-      // Fetch data from all sources in parallel
-      const [oddsData, dfsData, sportsbookData] = await Promise.allSettled([
-        enhancedTheOddsService.getAggregatedOdds(sport),
-        enhancedDailyFantasyService.getComprehensiveDFSData(sport),
-        sportsbookDataService.getAggregatedOdds(sport, league),
-      ]);
+      // Fetch data from all sources in parallel - prioritizing configured APIs
+      const [theOddsData, sportsRadarData, dfsData, autonomousSportsbookData] =
+        await Promise.allSettled([
+          enhancedTheOddsService.getAggregatedOdds(sport),
+          optimizedSportsRadarService.getOddsComparison(sport),
+          enhancedDailyFantasyService.getComprehensiveDFSData(sport),
+          autonomousSportsbookService.getAllAutonomousOdds(sport),
+        ]);
 
       // Process and merge the data
       const unifiedData = await this.mergeDataSources(
