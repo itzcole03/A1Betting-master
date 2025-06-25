@@ -383,7 +383,13 @@ export const api = {
     sport?: string;
     minConfidence?: number;
   }): Promise<ApiResponse<any[]>> {
-    return productionApiService.get<any[]>("/api/prizepicks/props", params);
+    const endpoint =
+      params.sport && params.sport !== "all"
+        ? `/api/prizepicks/projections/${params.sport}`
+        : "/api/prizepicks/projections";
+    return productionApiService.get<any[]>(endpoint, {
+      minConfidence: params.minConfidence,
+    });
   },
 
   async getPrizePicksRecommendations(params: {
@@ -391,7 +397,12 @@ export const api = {
     strategy?: string;
     minConfidence?: number;
   }): Promise<ApiResponse<any[]>> {
-    return productionApiService.get<any[]>("/api/prizepicks/recommendations", params);
+    // For now, use the same projections endpoint since recommendations don't exist yet
+    const endpoint =
+      params.sport && params.sport !== "all"
+        ? `/api/prizepicks/projections/${params.sport}`
+        : "/api/prizepicks/projections";
+    return productionApiService.get<any[]>(endpoint, params);
   },
 
   // Money Maker Pro endpoints
@@ -399,7 +410,10 @@ export const api = {
     sport?: string;
     minEdge?: number;
   }): Promise<ApiResponse<any[]>> {
-    return productionApiService.get<any[]>("/api/betting-opportunities", params);
+    return productionApiService.get<any[]>(
+      "/api/betting-opportunities",
+      params,
+    );
   },
 
   async getArbitrageOpportunities(): Promise<ApiResponse<any[]>> {
@@ -411,7 +425,10 @@ export const api = {
   },
 
   // PropOllama chat endpoint
-  async sendChatMessage(message: string, context?: any): Promise<ApiResponse<any>> {
+  async sendChatMessage(
+    message: string,
+    context?: any,
+  ): Promise<ApiResponse<any>> {
     return productionApiService.post<any>("/api/propollama/chat", {
       message,
       context,
