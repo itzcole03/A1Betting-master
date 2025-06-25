@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import path from "path";
 import react from "@vitejs/plugin-react";
-import { backendPlugin } from "./vite-backend-plugin";
+// import { backendPlugin } from "./vite-backend-plugin";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -17,7 +17,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
-  plugins: [react(), backendPlugin()],
+  plugins: [react()], // Temporarily disable backend plugin
   server: {
     port: 5173,
     host: true,
