@@ -23,6 +23,7 @@ import {
   useArbitrageOpportunities,
 } from "../../hooks/useBetting";
 import { useWebSocket } from "../../hooks/useWebSocket";
+import useUserStats from "../../hooks/useUserStats";
 import OfflineIndicator from "../ui/OfflineIndicator";
 import EmptyState from "../ui/EmptyState";
 import { useQueryClient } from "@tanstack/react-query";
@@ -49,6 +50,14 @@ export const UserFriendlyDashboard: React.FC<{
   onNavigate: (page: string) => void;
 }> = ({ onNavigate }) => {
   const queryClient = useQueryClient();
+
+  // Real user statistics from backend
+  const {
+    userStats,
+    backendHealth,
+    isLoading: statsLoading,
+    error: statsError,
+  } = useUserStats();
 
   // Real API data fetching
   const {
@@ -93,7 +102,9 @@ export const UserFriendlyDashboard: React.FC<{
     accuracyError ||
     healthError ||
     analyticsError ||
+    statsError ||
     (healthStatus && healthStatus.status === "offline") ||
+    (backendHealth && backendHealth.status === "offline") ||
     !userAnalytics ||
     !accuracyMetrics;
 
@@ -104,24 +115,20 @@ export const UserFriendlyDashboard: React.FC<{
     },
   });
 
-  // Calculate live stats from real data - memoized to prevent infinite re-renders
+  // Calculate live stats from real backend data - memoized to prevent infinite re-renders
   const liveStats: LiveStats = useMemo(() => {
-    const currentYear = new Date().getFullYear();
     return {
-      totalProfit: userAnalytics?.yearly?.[currentYear] || 0,
-      winRate: accuracyMetrics?.overall_accuracy
-        ? accuracyMetrics.overall_accuracy * 100
-        : 0,
-      activeGames: healthStatus?.metrics?.active_predictions || 0,
-      aiAccuracy: accuracyMetrics?.overall_accuracy
-        ? accuracyMetrics.overall_accuracy * 100
-        : 0,
-      todaysPicks: valueBets?.length || 0,
+      totalProfit: userStats.totalProfit || 0,
+      winRate: userStats.winRate * 100 || 0,
+      activeGames:
+        userStats.activeBets || healthStatus?.metrics?.active_predictions || 0,
+      aiAccuracy: userStats.accuracy || backendHealth.accuracy || 0,
+      todaysPicks: valueBets?.length || backendHealth.activePredictions || 0,
       liveAlerts: arbitrageOpportunities?.length || 0,
     };
   }, [
-    userAnalytics,
-    accuracyMetrics,
+    userStats,
+    backendHealth,
     healthStatus,
     valueBets,
     arbitrageOpportunities,

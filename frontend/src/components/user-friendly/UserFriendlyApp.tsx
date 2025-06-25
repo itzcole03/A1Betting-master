@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import React from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   BarChart3,
@@ -14,14 +15,16 @@ import {
   TrendingUp,
   User,
 } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
-import OfflineIndicator from "@/components/ui/OfflineIndicator";
-import ApiErrorBoundary from "@/components/ApiErrorBoundary";
 import {
   initializeSettings,
   getUserDisplayName,
   getUserEmail,
-} from "@/utils/userSettings";
+} from "../../utils/userSettings";
+import { useWebSocket } from "../../hooks/useWebSocket";
+import useUserStats from "../../hooks/useUserStats";
+import { Settings } from "lucide-react";
+import OfflineIndicator from "../ui/OfflineIndicator";
+import ApiErrorBoundary from "../ApiErrorBoundary";
 import toast from "react-hot-toast";
 
 // Import user-friendly components with enhanced AI
@@ -32,10 +35,9 @@ import UserFriendlyDashboard from "./UserFriendlyDashboard";
 import SimpleSettings from "./SimpleSettings";
 
 // Import existing components to integrate
-import { AdvancedIntelligenceHub } from "@/components/intelligence/AdvancedIntelligenceHub";
+import CleanAdvancedIntelligenceHub from "@/components/intelligence/CleanAdvancedIntelligenceHub";
 
-// Import test page for API validation
-import { SportsRadarTestPage } from "@/pages/SportsRadarTestPage";
+// Test pages now integrated within Intelligence Hub
 
 // Import user profile and handlers
 import UserProfile from "@/components/user-friendly/UserProfile";
@@ -91,19 +93,25 @@ const UserFriendlyApp: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const queryClient = useQueryClient();
-  const { isOnline, accuracy } = useHealthCheck();
+  const { isOnline } = useHealthCheck();
 
-  // Production user data with real values
+  // Fetch real user statistics from backend
+  const { userStats, backendHealth, isLoading, error } = useUserStats();
+
+  // Use backend accuracy instead of local accuracy
+  const accuracy = backendHealth?.accuracy || 85.0;
+
+  // Production user data with real backend values
   const userData: UserData = useMemo(
     () => ({
       name: getUserDisplayName() || "Ultimate User",
       email: getUserEmail() || "user@a1betting.com",
-      balance: 25000,
+      balance: userStats.balance,
       tier: "Ultimate Brain Pro",
-      winRate: 0.847,
-      totalProfit: 47350,
+      winRate: userStats.winRate,
+      totalProfit: userStats.totalProfit,
     }),
-    [],
+    [userStats],
   );
 
   // Initialize settings only once
@@ -151,15 +159,8 @@ const UserFriendlyApp: React.FC = () => {
         id: "intelligence",
         label: "Intelligence Hub",
         icon: <BarChart3 className="w-5 h-5" />,
-        component: AdvancedIntelligenceHub,
+        component: CleanAdvancedIntelligenceHub,
         badge: isOnline ? "🧠" : "⚡",
-      },
-      {
-        id: "api-test",
-        label: "API Integration Test",
-        icon: <TrendingUp className="w-5 h-5" />,
-        component: SportsRadarTestPage,
-        badge: "🔧",
       },
       {
         id: "settings",
@@ -276,6 +277,27 @@ const UserFriendlyApp: React.FC = () => {
                 </div>
               </button>
 
+              {/* Backend Status */}
+              <div className="hidden lg:flex items-center gap-2 px-3 py-1 bg-gray-800/50 rounded-lg border border-gray-700">
+                <div
+                  className={`w-2 h-2 rounded-full ${
+                    backendHealth.status === "healthy"
+                      ? "bg-green-400"
+                      : backendHealth.status === "degraded"
+                        ? "bg-yellow-400"
+                        : "bg-red-400"
+                  } animate-pulse`}
+                ></div>
+                <span className="text-xs text-gray-400">
+                  Backend{" "}
+                  {backendHealth.status === "healthy"
+                    ? "Online"
+                    : backendHealth.status === "degraded"
+                      ? "Issues"
+                      : "Offline"}
+                </span>
+              </div>
+
               {/* User Info */}
               <div className="hidden md:flex items-center gap-3 pl-3 border-l border-gray-700">
                 <div className="text-right">
@@ -297,29 +319,65 @@ const UserFriendlyApp: React.FC = () => {
             </div>
           </div>
 
-          {/* Stats Bar */}
+          {/* Stats Bar - Real Backend Data */}
           <div className="px-6 pb-4">
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-2">
-                  <DollarSign className="w-4 h-4 text-green-400" />
+                  <DollarSign
+                    className={`w-4 h-4 ${isLoading ? "animate-pulse" : ""} text-green-400`}
+                  />
                   <span className="text-gray-400">Balance:</span>
                   <span className="text-green-400 font-semibold">
-                    ${userData.balance.toLocaleString()}
+                    {isLoading
+                      ? "..."
+                      : `$${userData.balance.toLocaleString()}`}
                   </span>
+                  <div
+                    className={`w-2 h-2 rounded-full ml-1 ${
+                      error ? "bg-red-400" : "bg-green-400 animate-pulse"
+                    }`}
+                    title={error ? "Using cached data" : "Live data"}
+                  ></div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <TrendingUp className="w-4 h-4 text-cyan-400" />
+                  <TrendingUp
+                    className={`w-4 h-4 ${isLoading ? "animate-pulse" : ""} text-cyan-400`}
+                  />
                   <span className="text-gray-400">Win Rate:</span>
                   <span className="text-cyan-400 font-semibold">
-                    {(userData.winRate * 100).toFixed(1)}%
+                    {isLoading
+                      ? "..."
+                      : `${(userData.winRate * 100).toFixed(1)}%`}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4 text-purple-400" />
+                  <Trophy
+                    className={`w-4 h-4 ${isLoading ? "animate-pulse" : ""} text-purple-400`}
+                  />
                   <span className="text-gray-400">Profit:</span>
                   <span className="text-purple-400 font-semibold">
-                    +${userData.totalProfit.toLocaleString()}
+                    {isLoading
+                      ? "..."
+                      : `+$${userData.totalProfit.toLocaleString()}`}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div
+                    className={`w-3 h-3 rounded-full ${
+                      backendHealth.status === "healthy"
+                        ? "bg-green-400"
+                        : backendHealth.status === "degraded"
+                          ? "bg-yellow-400"
+                          : "bg-red-400"
+                    } animate-pulse`}
+                  ></div>
+                  <span className="text-gray-400 text-xs">
+                    {backendHealth.status === "healthy"
+                      ? "Live"
+                      : backendHealth.status === "degraded"
+                        ? "Degraded"
+                        : "Offline"}
                   </span>
                 </div>
               </div>

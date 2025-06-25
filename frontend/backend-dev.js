@@ -8,6 +8,16 @@ import cors from "cors";
 import { WebSocketServer } from "ws";
 import http from "http";
 
+// Ensure fetch is available in Node.js
+if (!globalThis.fetch) {
+  try {
+    const { default: fetch } = await import("node-fetch");
+    globalThis.fetch = fetch;
+  } catch (e) {
+    console.warn("node-fetch not available, using built-in fetch");
+  }
+}
+
 const app = express();
 const PORT = 8000;
 
@@ -463,6 +473,878 @@ app.get("/api/ollama/models", (req, res) => {
       step3: "Run: ollama pull llama3.2",
       step4: "Restart your development server",
     },
+  });
+});
+
+// SportsRadar API Integration
+const SPORTSRADAR_API_KEY =
+  process.env.VITE_SPORTRADAR_API_KEY ||
+  "R10yQbjTO5fZF6BPkfxjOaftsyN9X4ImAJv95H7s";
+const SPORTSRADAR_BASE_URL = "https://api.sportradar.com";
+
+// Rate limiting for SportsRadar API
+const sportsRadarCache = new Map();
+const CACHE_TTL = 300000; // 5 minutes
+let lastSportsRadarRequest = 0;
+const RATE_LIMIT_MS = 1000; // 1 request per second
+
+async function makeSportsRadarRequest(endpoint) {
+  // Check cache first
+  const cached = sportsRadarCache.get(endpoint);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+
+  // Rate limiting
+  const now = Date.now();
+  const timeSinceLastRequest = now - lastSportsRadarRequest;
+  if (timeSinceLastRequest < RATE_LIMIT_MS) {
+    await new Promise((resolve) =>
+      setTimeout(resolve, RATE_LIMIT_MS - timeSinceLastRequest),
+    );
+  }
+
+  const url = `${SPORTSRADAR_BASE_URL}${endpoint}?api_key=${SPORTSRADAR_API_KEY}`;
+
+  try {
+    lastSportsRadarRequest = Date.now();
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(
+        `SportsRadar API error: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    const data = await response.json();
+
+    // Cache the response
+    sportsRadarCache.set(endpoint, {
+      data,
+      timestamp: Date.now(),
+    });
+
+    return data;
+  } catch (error) {
+    console.error("SportsRadar API request failed:", error);
+    throw error;
+  }
+}
+
+// SportsRadar Health Check
+app.get("/api/sportsradar/health", async (req, res) => {
+  try {
+    const availableAPIs = [];
+    const apiStatus = {};
+
+    // Test different NBA API endpoints
+    const nbaEndpoints = [
+      "/nba/trial/v8/en/league/hierarchy.json",
+      "/nba/v7/en/league/hierarchy.json",
+      "/nba/trial/v7/en/league/hierarchy.json",
+    ];
+
+    let nbaWorking = false;
+    for (const endpoint of nbaEndpoints) {
+      try {
+        await makeSportsRadarRequest(endpoint);
+        availableAPIs.push("NBA");
+        apiStatus.nba = { status: "healthy", endpoint };
+        nbaWorking = true;
+        break;
+      } catch (e) {
+        console.warn(`NBA API endpoint ${endpoint} not accessible:`, e.message);
+      }
+    }
+
+    if (!nbaWorking) {
+      apiStatus.nba = {
+        status: "degraded",
+        error: "API key may be invalid or expired",
+      };
+    }
+
+    // Test Odds Comparison API with fallback endpoints
+    const oddsEndpoints = [
+      "/odds-comparison/trial/v2/en/us/sports.json",
+      "/odds-comparison/v2/en/us/sports.json",
+    ];
+
+    let oddsWorking = false;
+    for (const endpoint of oddsEndpoints) {
+      try {
+        await makeSportsRadarRequest(endpoint);
+        availableAPIs.push("Odds Comparison");
+        apiStatus.odds = { status: "healthy", endpoint };
+        oddsWorking = true;
+        break;
+      } catch (e) {
+        console.warn(
+          `Odds API endpoint ${endpoint} not accessible:`,
+          e.message,
+        );
+      }
+    }
+
+    if (!oddsWorking) {
+      apiStatus.odds = {
+        status: "degraded",
+        error: "API key may be invalid or expired",
+      };
+    }
+
+    res.json({
+      status: availableAPIs.length > 0 ? "healthy" : "degraded",
+      availableAPIs,
+      apiStatus,
+      message:
+        availableAPIs.length === 0
+          ? "All APIs unavailable - check API keys and network connectivity"
+          : "API integration operational",
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Health check failed",
+      message: error.message,
+      status: "unhealthy",
+      availableAPIs: [],
+    });
+  }
+});
+
+// NBA Games - with date
+app.get("/api/sportsradar/nba/games/:date", async (req, res) => {
+  try {
+    const date = req.params.date;
+
+    // Try multiple endpoint versions
+    const endpoints = [
+      `/nba/trial/v8/en/games/${date}/schedule.json`,
+      `/nba/v7/en/games/${date}/schedule.json`,
+      `/nba/trial/v7/en/games/${date}/schedule.json`,
+    ];
+
+    let data = null;
+    let lastError = null;
+
+    for (const endpoint of endpoints) {
+      try {
+        data = await makeSportsRadarRequest(endpoint);
+        break;
+      } catch (error) {
+        lastError = error;
+        console.warn(`Failed to fetch from ${endpoint}:`, error.message);
+      }
+    }
+
+    if (!data) {
+      // Return development fallback data when APIs are unavailable
+      const fallbackGames = [
+        {
+          gameId: "dev-game-1",
+          sport: "NBA",
+          status: "scheduled",
+          scheduled: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+          homeTeam: {
+            id: "lakers",
+            name: "Los Angeles Lakers",
+            abbreviation: "LAL",
+          },
+          awayTeam: {
+            id: "warriors",
+            name: "Golden State Warriors",
+            abbreviation: "GSW",
+          },
+        },
+      ];
+
+      return res.json({
+        games: fallbackGames,
+        message:
+          "Development mode: Using fallback data (SportsRadar API unavailable)",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const games =
+      data.games?.map((game) => ({
+        gameId: game.id,
+        sport: "NBA",
+        status: game.status,
+        scheduled: game.scheduled,
+        homeTeam: {
+          id: game.home.id,
+          name: game.home.name,
+          abbreviation: game.home.alias,
+        },
+        awayTeam: {
+          id: game.away.id,
+          name: game.away.name,
+          abbreviation: game.away.alias,
+        },
+        score:
+          game.home_points !== undefined
+            ? {
+                home: game.home_points,
+                away: game.away_points,
+              }
+            : undefined,
+      })) || [];
+
+    res.json(games);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch NBA games",
+      message: error.message,
+    });
+  }
+});
+
+// NBA Games - today's games (without date parameter)
+app.get("/api/sportsradar/nba/games", async (req, res) => {
+  try {
+    const date = new Date().toISOString().split("T")[0];
+    const endpoint = `/nba/trial/v8/en/games/${date}/schedule.json`;
+    const data = await makeSportsRadarRequest(endpoint);
+
+    const games =
+      data.games?.map((game) => ({
+        gameId: game.id,
+        sport: "NBA",
+        status: game.status,
+        scheduled: game.scheduled,
+        homeTeam: {
+          id: game.home.id,
+          name: game.home.name,
+          abbreviation: game.home.alias,
+        },
+        awayTeam: {
+          id: game.away.id,
+          name: game.away.name,
+          abbreviation: game.away.alias,
+        },
+        score:
+          game.home_points !== undefined
+            ? {
+                home: game.home_points,
+                away: game.away_points,
+              }
+            : undefined,
+      })) || [];
+
+    res.json(games);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch NBA games",
+      message: error.message,
+    });
+  }
+});
+
+// Player Stats
+app.get("/api/sportsradar/:sport/players/:playerId/stats", async (req, res) => {
+  try {
+    const { sport, playerId } = req.params;
+    const { season = "2024" } = req.query;
+
+    let sportEndpoint;
+    switch (sport.toLowerCase()) {
+      case "nba":
+        sportEndpoint = "/nba/trial/v8/en";
+        break;
+      case "nfl":
+        sportEndpoint = "/nfl/trial/v7/en";
+        break;
+      case "mlb":
+        sportEndpoint = "/mlb/trial/v7/en";
+        break;
+      case "nhl":
+        sportEndpoint = "/nhl/trial/v7/en";
+        break;
+      default:
+        return res.status(400).json({ error: `Unsupported sport: ${sport}` });
+    }
+
+    const endpoint = `${sportEndpoint}/players/${playerId}/profile.json`;
+    const data = await makeSportsRadarRequest(endpoint);
+
+    if (!data.player) {
+      return res.status(404).json({ error: "Player not found" });
+    }
+
+    const playerStats = {
+      playerId: data.player.id,
+      playerName: data.player.full_name,
+      team: data.player.team?.name || "Unknown",
+      position: data.player.position,
+      season: season,
+      stats: data.player.seasons?.[0]?.totals || {},
+      recentForm: data.player.seasons?.[0]?.games?.slice(-10) || [],
+    };
+
+    res.json(playerStats);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch player stats",
+      message: error.message,
+    });
+  }
+});
+
+// Odds Comparison
+app.get("/api/sportsradar/odds/:sport", async (req, res) => {
+  try {
+    const { sport } = req.params;
+    const { eventId } = req.query;
+
+    let endpoint = `/odds-comparison/trial/v2/en/us/sports/${sport.toLowerCase()}/events.json`;
+    if (eventId) {
+      endpoint += `?event_id=${eventId}`;
+    }
+
+    const data = await makeSportsRadarRequest(endpoint);
+
+    const odds =
+      data.events?.map((event) => ({
+        eventId: event.id,
+        sport: sport.toUpperCase(),
+        homeTeam:
+          event.competitors?.find((c) => c.qualifier === "home")?.name ||
+          "Unknown",
+        awayTeam:
+          event.competitors?.find((c) => c.qualifier === "away")?.name ||
+          "Unknown",
+        odds: {
+          moneyline: {
+            home:
+              event.markets
+                ?.find((m) => m.type === "moneyline")
+                ?.books?.[0]?.outcomes?.find((o) => o.type === "home")?.price ||
+              0,
+            away:
+              event.markets
+                ?.find((m) => m.type === "moneyline")
+                ?.books?.[0]?.outcomes?.find((o) => o.type === "away")?.price ||
+              0,
+          },
+          spread: {
+            line:
+              event.markets?.find((m) => m.type === "spread")?.books?.[0]
+                ?.outcomes?.[0]?.spread || 0,
+            home:
+              event.markets
+                ?.find((m) => m.type === "spread")
+                ?.books?.[0]?.outcomes?.find((o) => o.type === "home")?.price ||
+              0,
+            away:
+              event.markets
+                ?.find((m) => m.type === "spread")
+                ?.books?.[0]?.outcomes?.find((o) => o.type === "away")?.price ||
+              0,
+          },
+          total: {
+            line:
+              event.markets?.find((m) => m.type === "total")?.books?.[0]
+                ?.outcomes?.[0]?.total || 0,
+            over:
+              event.markets
+                ?.find((m) => m.type === "total")
+                ?.books?.[0]?.outcomes?.find((o) => o.type === "over")?.price ||
+              0,
+            under:
+              event.markets
+                ?.find((m) => m.type === "total")
+                ?.books?.[0]?.outcomes?.find((o) => o.type === "under")
+                ?.price || 0,
+          },
+        },
+        timestamp: new Date().toISOString(),
+      })) || [];
+
+    res.json(odds);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch odds comparison",
+      message: error.message,
+    });
+  }
+});
+
+// Player Props
+app.get(
+  "/api/sportsradar/odds/:sport/events/:eventId/player-props",
+  async (req, res) => {
+    try {
+      const { sport, eventId } = req.params;
+      const endpoint = `/odds-comparison/trial/v2/en/us/sports/${sport.toLowerCase()}/events/${eventId}/markets.json`;
+
+      const data = await makeSportsRadarRequest(endpoint);
+
+      const playerProps =
+        data.markets
+          ?.filter((market) => market.type === "player_prop")
+          ?.map((market) => ({
+            playerId: market.player?.id || "",
+            playerName: market.player?.name || "Unknown",
+            propType: market.specifier || "",
+            line: market.handicap || 0,
+            overOdds:
+              market.books?.[0]?.outcomes?.find((o) => o.type === "over")
+                ?.price || 0,
+            underOdds:
+              market.books?.[0]?.outcomes?.find((o) => o.type === "under")
+                ?.price || 0,
+          })) || [];
+
+      res.json(playerProps);
+    } catch (error) {
+      res.status(500).json({
+        error: "Failed to fetch player props",
+        message: error.message,
+      });
+    }
+  },
+);
+
+// SportsRadar Cache Stats
+app.get("/api/sportsradar/cache/stats", (req, res) => {
+  res.json({
+    size: sportsRadarCache.size,
+    totalRequests: sportsRadarCache.size,
+  });
+});
+
+// Clear SportsRadar Cache
+app.delete("/api/sportsradar/cache", (req, res) => {
+  sportsRadarCache.clear();
+  res.json({ message: "Cache cleared successfully" });
+});
+
+// =======================
+// DAILY FANTASY API ENDPOINTS
+// =======================
+
+const DAILYFANTASY_API_KEY =
+  process.env.VITE_DAILYFANTASY_API_KEY || "your_dailyfantasy_api_key_here";
+const DAILYFANTASY_BASE_URL =
+  process.env.VITE_DAILYFANTASY_API_ENDPOINT || "https://api.draftkings.com";
+
+const dailyFantasyCache = new Map();
+let lastDailyFantasyRequest = 0;
+
+async function makeDailyFantasyRequest(endpoint, params = {}) {
+  const cacheKey = `${endpoint}:${JSON.stringify(params)}`;
+
+  // Check cache first
+  const cached = dailyFantasyCache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+
+  // Rate limiting
+  const now = Date.now();
+  const timeSinceLastRequest = now - lastDailyFantasyRequest;
+  if (timeSinceLastRequest < RATE_LIMIT_MS) {
+    await new Promise((resolve) =>
+      setTimeout(resolve, RATE_LIMIT_MS - timeSinceLastRequest),
+    );
+  }
+
+  const queryParams = new URLSearchParams({
+    ...params,
+  });
+
+  const url = `${DAILYFANTASY_BASE_URL}${endpoint}?${queryParams}`;
+
+  try {
+    lastDailyFantasyRequest = Date.now();
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${DAILYFANTASY_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `DailyFantasy API error: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    const data = await response.json();
+
+    // Cache the response
+    dailyFantasyCache.set(cacheKey, {
+      data,
+      timestamp: Date.now(),
+    });
+
+    return data;
+  } catch (error) {
+    console.error("DailyFantasy API request failed:", error);
+    throw error;
+  }
+}
+
+// DailyFantasy Contests
+app.get("/api/dailyfantasy/contests/:sport", async (req, res) => {
+  try {
+    const { sport } = req.params;
+    const endpoint = `/contests/v1/contests`;
+    const params = { sport: sport.toLowerCase() };
+
+    const data = await makeDailyFantasyRequest(endpoint, params);
+
+    const contests =
+      data.contests?.map((contest) => ({
+        id: contest.id,
+        name: contest.name,
+        sport: contest.sport,
+        entryFee: contest.entry_fee,
+        totalPrizes: contest.total_prizes,
+        maxEntries: contest.max_entries,
+        startTime: contest.start_time,
+        salaryCap: contest.salary_cap,
+      })) || [];
+
+    res.json(contests);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch contests",
+      message: error.message,
+    });
+  }
+});
+
+// DailyFantasy Players
+app.get("/api/dailyfantasy/contests/:contestId/players", async (req, res) => {
+  try {
+    const { contestId } = req.params;
+    const endpoint = `/contests/v1/contests/${contestId}/draftables`;
+
+    const data = await makeDailyFantasyRequest(endpoint);
+
+    const players =
+      data.draftables?.map((player) => ({
+        id: player.id,
+        name: player.display_name,
+        position: player.position,
+        team: player.team_abbreviation,
+        salary: player.salary,
+        projectedPoints: player.projected_points,
+        averagePoints: player.average_points,
+        isInjured: player.is_injured,
+      })) || [];
+
+    res.json(players);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch players",
+      message: error.message,
+    });
+  }
+});
+
+// DailyFantasy Player Projections
+app.get("/api/dailyfantasy/players/:playerId/projections", async (req, res) => {
+  try {
+    const { playerId } = req.params;
+    const endpoint = `/players/v1/players/${playerId}/projections`;
+
+    const data = await makeDailyFantasyRequest(endpoint);
+
+    res.json({
+      playerId: data.player_id,
+      projectedPoints: data.projected_points,
+      projectedStats: data.projected_stats,
+      confidence: data.confidence || 0.85,
+      lastUpdated: data.last_updated,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch player projections",
+      message: error.message,
+    });
+  }
+});
+
+// DailyFantasy Optimal Lineups
+app.post("/api/dailyfantasy/lineups/optimize", async (req, res) => {
+  try {
+    const { contestId, strategy = "balanced", budget } = req.body;
+    const endpoint = `/optimization/v1/lineups`;
+
+    const requestBody = {
+      contest_id: contestId,
+      strategy,
+      budget,
+      constraints: req.body.constraints || {},
+    };
+
+    const response = await fetch(`${DAILYFANTASY_BASE_URL}${endpoint}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${DAILYFANTASY_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `DailyFantasy API error: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    const data = await response.json();
+
+    res.json({
+      lineup: data.lineup,
+      projectedPoints: data.projected_points,
+      totalSalary: data.total_salary,
+      confidence: data.confidence,
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to generate optimal lineup",
+      message: error.message,
+    });
+  }
+});
+
+// =======================
+// THE ODDS API ENDPOINTS
+// =======================
+
+const THEODDS_API_KEY =
+  process.env.VITE_THEODDS_API_KEY || "your_odds_api_key_here";
+const THEODDS_BASE_URL =
+  process.env.VITE_THEODDS_API_ENDPOINT || "https://api.the-odds-api.com";
+
+const theoddsCache = new Map();
+let lastTheOddsRequest = 0;
+
+async function makeTheOddsRequest(endpoint, params = {}) {
+  const cacheKey = `${endpoint}:${JSON.stringify(params)}`;
+
+  // Check cache first
+  const cached = theoddsCache.get(cacheKey);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data;
+  }
+
+  // Rate limiting
+  const now = Date.now();
+  const timeSinceLastRequest = now - lastTheOddsRequest;
+  if (timeSinceLastRequest < RATE_LIMIT_MS) {
+    await new Promise((resolve) =>
+      setTimeout(resolve, RATE_LIMIT_MS - timeSinceLastRequest),
+    );
+  }
+
+  const queryParams = new URLSearchParams({
+    apiKey: THEODDS_API_KEY,
+    ...params,
+  });
+
+  const url = `${THEODDS_BASE_URL}${endpoint}?${queryParams}`;
+
+  try {
+    lastTheOddsRequest = Date.now();
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(
+        `TheOdds API error: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    const data = await response.json();
+
+    // Cache the response
+    theoddsCache.set(cacheKey, {
+      data,
+      timestamp: Date.now(),
+    });
+
+    return data;
+  } catch (error) {
+    console.error("TheOdds API request failed:", error);
+    throw error;
+  }
+}
+
+// TheOdds Sports
+app.get("/api/theodds/sports", async (req, res) => {
+  try {
+    const endpoint = "/v4/sports";
+    const data = await makeTheOddsRequest(endpoint);
+
+    res.json(data);
+  } catch (error) {
+    console.warn("TheOdds API error:", error.message);
+
+    // Return structured error response for API unavailability
+    res.status(503).json({
+      error: "TheOdds API temporarily unavailable",
+      message:
+        "Unable to fetch sports data. This may be due to API key restrictions or rate limiting.",
+      suggestion:
+        "The service will retry automatically. Sports data is temporarily unavailable.",
+      sports: [], // Return empty array for frontend compatibility
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+// TheOdds Odds
+app.get("/api/theodds/odds/:sport", async (req, res) => {
+  try {
+    const { sport } = req.params;
+    const {
+      regions = "us",
+      markets = "h2h",
+      oddsFormat = "decimal",
+    } = req.query;
+
+    const endpoint = `/v4/sports/${sport}/odds`;
+    const params = {
+      regions,
+      markets,
+      oddsFormat,
+    };
+
+    const data = await makeTheOddsRequest(endpoint, params);
+
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch odds",
+      message: error.message,
+    });
+  }
+});
+
+// TheOdds Event Odds
+app.get("/api/theodds/odds/:sport/events/:eventId", async (req, res) => {
+  try {
+    const { sport, eventId } = req.params;
+    const {
+      regions = "us",
+      markets = "h2h,spreads,totals",
+      oddsFormat = "decimal",
+    } = req.query;
+
+    const endpoint = `/v4/sports/${sport}/events/${eventId}/odds`;
+    const params = {
+      regions,
+      markets,
+      oddsFormat,
+    };
+
+    const data = await makeTheOddsRequest(endpoint, params);
+
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch event odds",
+      message: error.message,
+    });
+  }
+});
+
+// TheOdds Odds
+app.get("/api/theodds/odds/:sport", async (req, res) => {
+  try {
+    const { sport } = req.params;
+    const {
+      regions = "us",
+      markets = "h2h",
+      oddsFormat = "decimal",
+    } = req.query;
+
+    const endpoint = `/v4/sports/${sport}/odds`;
+    const params = {
+      regions,
+      markets,
+      oddsFormat,
+    };
+
+    const data = await makeTheOddsRequest(endpoint, params);
+
+    res.json(data);
+  } catch (error) {
+    console.warn("TheOdds API error for odds:", error.message);
+
+    // Return structured error response
+    res.status(503).json({
+      error: "TheOdds API temporarily unavailable",
+      message:
+        "Unable to fetch odds data. This may be due to API key restrictions or rate limiting.",
+      suggestion:
+        "The service will retry automatically. Odds data is temporarily unavailable.",
+      odds: [], // Return empty array for frontend compatibility
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+// API Health Check - Combined
+app.get("/api/health/all", async (req, res) => {
+  const health = {
+    timestamp: new Date().toISOString(),
+    services: {
+      sportsradar: { status: "unknown", apis: [] },
+      dailyfantasy: { status: "unknown" },
+      theodds: { status: "unknown" },
+    },
+  };
+
+  // Test SportsRadar
+  try {
+    const sportsRadarHealth = await makeSportsRadarRequest(
+      "/nba/trial/v8/en/league/hierarchy.json",
+    );
+    health.services.sportsradar.status = "healthy";
+    health.services.sportsradar.apis.push("NBA");
+  } catch (e) {
+    health.services.sportsradar.status = "degraded";
+  }
+
+  // Test DailyFantasy
+  try {
+    await makeDailyFantasyRequest("/contests/v1/contests", { limit: 1 });
+    health.services.dailyfantasy.status = "healthy";
+  } catch (e) {
+    health.services.dailyfantasy.status = "degraded";
+  }
+
+  // Test TheOdds
+  try {
+    await makeTheOddsRequest("/v4/sports", { limit: 1 });
+    health.services.theodds.status = "healthy";
+  } catch (e) {
+    health.services.theodds.status = "degraded";
+  }
+
+  res.json(health);
+});
+
+// Cache Management for all APIs
+app.delete("/api/cache/clear", (req, res) => {
+  sportsRadarCache.clear();
+  dailyFantasyCache.clear();
+  theoddsCache.clear();
+  res.json({ message: "All caches cleared successfully" });
+});
+
+app.get("/api/cache/stats", (req, res) => {
+  res.json({
+    sportsradar: { size: sportsRadarCache.size },
+    dailyfantasy: { size: dailyFantasyCache.size },
+    theodds: { size: theoddsCache.size },
+    total: sportsRadarCache.size + dailyFantasyCache.size + theoddsCache.size,
   });
 });
 

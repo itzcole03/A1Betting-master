@@ -1,140 +1,181 @@
-import axios from 'axios';
-import { API_CONFIG } from '../config/api';
-import { errorLogger } from '../utils/errorLogger';
+/**
+ * Production-Ready DailyFantasy Service
+ * Integrates with backend DailyFantasy API endpoints
+ */
 
-interface DailyFantasyPlayer {
+export interface DailyFantasyPlayer {
   id: string;
   name: string;
   position: string;
   team: string;
   salary: number;
   projectedPoints: number;
-  actualPoints?: number;
-  status: 'active' | 'inactive' | 'questionable';
+  averagePoints: number;
+  isInjured: boolean;
 }
 
-interface DailyFantasyContest {
+export interface DailyFantasyContest {
   id: string;
   name: string;
   sport: string;
-  startTime: string;
   entryFee: number;
-  totalEntries: number;
+  totalPrizes: number;
   maxEntries: number;
-  prizePool: number;
-  status: 'upcoming' | 'live' | 'completed';
+  startTime: string;
+  salaryCap: number;
 }
 
-interface DailyFantasyLineup {
-  id: string;
-  contestId: string;
-  players: DailyFantasyPlayer[];
-  totalSalary: number;
+export interface DailyFantasyLineup {
+  lineup: DailyFantasyPlayer[];
   projectedPoints: number;
-  actualPoints?: number;
-  rank?: number;
+  totalSalary: number;
+  confidence: number;
 }
 
-class DailyFantasyService {
-  private api = axios.create({
-    baseURL: API_CONFIG.dailyFantasy.baseUrl,
-    headers: {
-      Authorization: `Bearer ${API_CONFIG.dailyFantasy.apiKey}`,
-      'Content-Type': 'application/json',
-    },
-  });
+export interface DailyFantasyProjection {
+  playerId: string;
+  projectedPoints: number;
+  projectedStats: Record<string, number>;
+  confidence: number;
+  lastUpdated: string;
+}
 
-  async getContests(sport: string): Promise<DailyFantasyContest[]> {
-    try {
-      const response = await this.api.get(`/contests? sport=${sport}`);
-      return response.data;
-    } catch (error) {
-      errorLogger.logError(error as Error, { context: 'DailyFantasyService.getContests' });
-      throw error;
-    }
+class EnhancedDailyFantasyService {
+  private baseUrl: string;
+  private cache: Map<string, { data: any; timestamp: number }>;
+  private cacheTTL: number = 300000; // 5 minutes
+
+  constructor() {
+    this.baseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+    this.cache = new Map();
   }
 
-  async getPlayers(contestId: string): Promise<DailyFantasyPlayer[]> {
-    try {
-      const response = await this.api.get(`/contests/${contestId}/players`);
-      return response.data;
-    } catch (error) {
-      errorLogger.logError(error as Error, { context: 'DailyFantasyService.getPlayers' });
-      throw error;
-    }
-  }
+  private async makeRequest<T>(
+    endpoint: string,
+    options: RequestInit = {},
+  ): Promise<T> {
+    const cacheKey = `${endpoint}:${JSON.stringify(options)}`;
 
-  async getPlayerProjections(playerId: string): Promise<number> {
-    try {
-      const response = await this.api.get(`/players/${playerId}/projections`);
-      return response.data.projectedPoints;
-    } catch (error) {
-      errorLogger.logError(error as Error, { context: 'DailyFantasyService.getPlayerProjections' });
-      throw error;
+    // Check cache first
+    const cached = this.cache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < this.cacheTTL) {
+      return cached.data;
     }
-  }
 
-  async getOptimalLineup(contestId: string, strategy: string): Promise<DailyFantasyLineup> {
+    const url = `${this.baseUrl}${endpoint}`;
+
     try {
-      const response = await this.api.post(`/contests/${contestId}/optimal-lineup`, {
-        strategy,
+      const response = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        ...options,
       });
-      return response.data;
+
+      if (!response.ok) {
+        throw new Error(
+          `DailyFantasy API error: ${response.status} ${response.statusText}`,
+        );
+      }
+
+      const data = await response.json();
+
+      // Cache the response
+      this.cache.set(cacheKey, {
+        data,
+        timestamp: Date.now(),
+      });
+
+      return data;
     } catch (error) {
-      errorLogger.logError(error as Error, { context: 'DailyFantasyService.getOptimalLineup' });
+      console.error("DailyFantasy API request failed:", error);
       throw error;
     }
   }
 
-  async getContestResults(contestId: string): Promise<DailyFantasyLineup[]> {
+  /**
+   * Get contests by sport
+   */
+  async getContests(sport: string): Promise<DailyFantasyContest[]> {
+    const endpoint = `/api/dailyfantasy/contests/${sport}`;
+    return await this.makeRequest<DailyFantasyContest[]>(endpoint);
+  }
+
+  /**
+   * Get players for a specific contest
+   */
+  async getPlayers(contestId: string): Promise<DailyFantasyPlayer[]> {
+    const endpoint = `/api/dailyfantasy/contests/${contestId}/players`;
+    return await this.makeRequest<DailyFantasyPlayer[]>(endpoint);
+  }
+
+  /**
+   * Get player projections
+   */
+  async getPlayerProjections(
+    playerId: string,
+  ): Promise<DailyFantasyProjection> {
+    const endpoint = `/api/dailyfantasy/players/${playerId}/projections`;
+    return await this.makeRequest<DailyFantasyProjection>(endpoint);
+  }
+
+  /**
+   * Generate optimal lineup
+   */
+  async getOptimalLineup(
+    contestId: string,
+    strategy: string = "balanced",
+    budget?: number,
+    constraints?: Record<string, any>,
+  ): Promise<DailyFantasyLineup> {
+    const endpoint = "/api/dailyfantasy/lineups/optimize";
+    const options: RequestInit = {
+      method: "POST",
+      body: JSON.stringify({
+        contestId,
+        strategy,
+        budget,
+        constraints,
+      }),
+    };
+    return await this.makeRequest<DailyFantasyLineup>(endpoint, options);
+  }
+
+  /**
+   * Health check for DailyFantasy API
+   */
+  async healthCheck(): Promise<{ status: string; message?: string }> {
     try {
-      const response = await this.api.get(`/contests/${contestId}/results`);
-      return response.data;
+      const contests = await this.getContests("nba");
+      return {
+        status: "healthy",
+        message: `Found ${contests.length} NBA contests`,
+      };
     } catch (error) {
-      errorLogger.logError(error as Error, { context: 'DailyFantasyService.getContestResults' });
-      throw error;
+      return {
+        status: "degraded",
+        message: (error as Error).message,
+      };
     }
   }
 
-  async getPlayerStats(playerId: string, timeframe: string): Promise<any> {
-    try {
-      const response = await this.api.get(`/players/${playerId}/stats?timeframe=${timeframe}`);
-      return response.data;
-    } catch (error) {
-      errorLogger.logError(error as Error, { context: 'DailyFantasyService.getPlayerStats' });
-      throw error;
-    }
+  /**
+   * Clear cache
+   */
+  clearCache(): void {
+    this.cache.clear();
   }
 
-  async getContestTrends(contestId: string): Promise<any> {
-    try {
-      const response = await this.api.get(`/contests/${contestId}/trends`);
-      return response.data;
-    } catch (error) {
-      errorLogger.logError(error as Error, { context: 'DailyFantasyService.getContestTrends' });
-      throw error;
-    }
-  }
-
-  async getPlayerOwnership(contestId: string): Promise<Record<string, number>> {
-    try {
-      const response = await this.api.get(`/contests/${contestId}/ownership`);
-      return response.data;
-    } catch (error) {
-      errorLogger.logError(error as Error, { context: 'DailyFantasyService.getPlayerOwnership' });
-      throw error;
-    }
-  }
-
-  async getSalaryChanges(contestId: string): Promise<Record<string, number>> {
-    try {
-      const response = await this.api.get(`/contests/${contestId}/salary-changes`);
-      return response.data;
-    } catch (error) {
-      errorLogger.logError(error as Error, { context: 'DailyFantasyService.getSalaryChanges' });
-      throw error;
-    }
+  /**
+   * Get cache statistics
+   */
+  getCacheStats(): { size: number; totalRequests: number } {
+    return {
+      size: this.cache.size,
+      totalRequests: this.cache.size,
+    };
   }
 }
 
-export const dailyFantasyService = new DailyFantasyService();
+// Export singleton instance
+export const dailyFantasyService = new EnhancedDailyFantasyService();
