@@ -69,6 +69,51 @@ export function backendPlugin() {
           models_active: 3,
           prediction_latency: 45,
         },
+        activeBets: {
+          active_bets: [
+            {
+              id: "bet_1",
+              event: "Lakers vs Warriors",
+              market: "Moneyline",
+              selection: "Lakers",
+              odds: 1.85,
+              stake: 100.0,
+              potential_return: 185.0,
+              status: "active",
+              placed_at: new Date(Date.now() - 3600000).toISOString(),
+            },
+          ],
+          total_count: 1,
+        },
+        transactions: {
+          transactions: [
+            {
+              id: "txn_1",
+              type: "bet",
+              amount: -100.0,
+              description: "Lakers vs Warriors - Lakers ML",
+              timestamp: new Date(Date.now() - 3600000).toISOString(),
+              status: "completed",
+            },
+            {
+              id: "txn_2",
+              type: "win",
+              amount: 185.0,
+              description: "Lakers vs Warriors - Win",
+              timestamp: new Date(Date.now() - 1800000).toISOString(),
+              status: "completed",
+            },
+          ],
+          total_count: 2,
+        },
+        healthAll: {
+          timestamp: new Date().toISOString(),
+          services: {
+            sportsradar: { status: "healthy" },
+            dailyfantasy: { status: "healthy" },
+            theodds: { status: "healthy" },
+          },
+        },
       };
 
       // Add routes as middleware
