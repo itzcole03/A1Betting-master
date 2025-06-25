@@ -25,6 +25,7 @@ export default defineConfig({
       overlay: false, // Disable overlay to prevent WebSocket errors
       clientPort: 5173,
       port: 24678, // Use different port for HMR WebSocket
+      skipExternalConnections: true, // Only allow local HMR connections
     },
     proxy: {
       "/api": {
@@ -62,6 +63,12 @@ export default defineConfig({
         target: "ws://localhost:8000",
         ws: true,
         changeOrigin: true,
+        configure: (proxy, _options) => {
+          proxy.on("error", (err, _req, _res) => {
+            console.log("WebSocket proxy error:", err.message);
+            // Don't throw, just log the error
+          });
+        },
       },
     },
   },
