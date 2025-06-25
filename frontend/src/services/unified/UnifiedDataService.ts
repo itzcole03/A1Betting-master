@@ -251,7 +251,7 @@ class UnifiedDataService {
     }
 
     try {
-      logApiCall("getPlayerProps", { filters });
+      logger.info("Fetching player props", { filters }, "UnifiedDataService");
 
       // Normalize sport filter
       const normalizedSport = filters.sport
