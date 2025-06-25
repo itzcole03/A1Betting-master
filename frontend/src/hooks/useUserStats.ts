@@ -214,7 +214,15 @@ const useUserStats = () => {
     try {
       const response = await fetch(
         getApiUrl("/ultra-accuracy/model-performance"),
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          signal: AbortSignal.timeout(8000), // 8 second timeout
+        },
       );
+
       if (response.ok) {
         const data = await response.json();
         const accuracy =
@@ -229,9 +237,13 @@ const useUserStats = () => {
           ...prev,
           accuracy,
         }));
+      } else {
+        console.warn(
+          `System accuracy API failed with status ${response.status}: ${response.statusText}`,
+        );
       }
     } catch (error) {
-      console.warn("Failed to fetch system accuracy:", error);
+      console.warn("Failed to fetch system accuracy:", error.message || error);
     }
   };
 
