@@ -1324,9 +1324,7 @@ app.delete("/api/sportsradar/cache", (req, res) => {
 // OPTIMIZED SPORTSRADAR API ENDPOINTS
 // =======================
 
-const SPORTSRADAR_API_KEY =
-  process.env.VITE_SPORTRADAR_API_KEY ||
-  "R10yQbjTO5fZF6BPkfxjOaftsyN9X4ImAJv95H7s";
+// Using existing SPORTSRADAR_API_KEY from above
 const SPORTSRADAR_BASE_URL = "https://api.sportradar.com";
 
 // SportsRadar quota tracking
