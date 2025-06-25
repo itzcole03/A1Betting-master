@@ -203,8 +203,8 @@ export class UnifiedDataIntegrationService {
     // Merge events data
     const eventMap = new Map<string, any>();
 
-    // Add odds events
-    for (const event of oddsEvents) {
+    // Add The-Odds-API events (Priority)
+    for (const event of theOddsEvents) {
       const key = `${event.home_team}_vs_${event.away_team}`;
       eventMap.set(key, {
         event_id: event.event_id || event.id,
@@ -216,9 +216,30 @@ export class UnifiedDataIntegrationService {
           moneyline_away: event.best_odds?.away_ml?.odds || 0,
           spread_line: event.best_odds?.home_spread?.line || 0,
           total_line: event.best_odds?.over?.line || 0,
-          best_sportsbook: event.best_odds?.home_ml?.sportsbook || "Unknown",
+          best_sportsbook:
+            event.best_odds?.home_ml?.sportsbook || "The-Odds-API",
         },
       });
+    }
+
+    // Add SportsRadar events
+    for (const event of sportsRadarEvents) {
+      const key = `${event.home_team}_vs_${event.away_team}`;
+      if (!eventMap.has(key)) {
+        eventMap.set(key, {
+          event_id: event.event_id,
+          home_team: event.home_team,
+          away_team: event.away_team,
+          commence_time: event.commence_time,
+          odds: {
+            moneyline_home: event.bookmakers?.[0]?.moneyline_home || 0,
+            moneyline_away: event.bookmakers?.[0]?.moneyline_away || 0,
+            spread_line: event.bookmakers?.[0]?.spread_line || 0,
+            total_line: event.bookmakers?.[0]?.total_line || 0,
+            best_sportsbook: "SportsRadar",
+          },
+        });
+      }
     }
 
     // Add sportsbook data
