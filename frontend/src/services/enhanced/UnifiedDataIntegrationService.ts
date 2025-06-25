@@ -152,14 +152,15 @@ export class UnifiedDataIntegrationService {
   }
 
   /**
-   * Merge data from multiple sources
+   * Merge data from multiple sources with optimized API usage
    */
   private async mergeDataSources(
     sport: string,
     league: string | undefined,
-    oddsResult: PromiseSettledResult<any>,
+    theOddsResult: PromiseSettledResult<any>,
+    sportsRadarResult: PromiseSettledResult<any>,
     dfsResult: PromiseSettledResult<any>,
-    sportsbookResult: PromiseSettledResult<any>,
+    autonomousResult: PromiseSettledResult<any>,
   ): Promise<UnifiedSportsData> {
     const sources = {
       odds_providers: [] as string[],
@@ -169,11 +170,18 @@ export class UnifiedDataIntegrationService {
 
     const events: any[] = [];
 
-    // Process odds data
-    let oddsEvents: any[] = [];
-    if (oddsResult.status === "fulfilled" && oddsResult.value) {
-      oddsEvents = oddsResult.value;
-      sources.odds_providers.push("The-Odds-API", "SportsDataIO");
+    // Process The-Odds-API data (Primary)
+    let theOddsEvents: any[] = [];
+    if (theOddsResult.status === "fulfilled" && theOddsResult.value) {
+      theOddsEvents = theOddsResult.value;
+      sources.odds_providers.push("The-Odds-API");
+    }
+
+    // Process SportsRadar data (Primary)
+    let sportsRadarEvents: any[] = [];
+    if (sportsRadarResult.status === "fulfilled" && sportsRadarResult.value) {
+      sportsRadarEvents = sportsRadarResult.value;
+      sources.odds_providers.push("SportsRadar");
     }
 
     // Process DFS data
