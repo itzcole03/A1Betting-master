@@ -1323,65 +1323,7 @@ app.delete("/api/sportsradar/cache", (req, res) => {
 // =======================
 // OPTIMIZED SPORTSRADAR API ENDPOINTS
 // =======================
-// Note: Using existing SPORTSRADAR_API_KEY, SPORTSRADAR_BASE_URL, and quota variables from above
-const sportsRadarCache = new Map();
-let lastSportsRadarRequest = 0;
-const RATE_LIMIT_MS = 1100; // 1.1 seconds for 1 QPS
-
-async function makeSportsRadarRequest(endpoint) {
-  // Check quota
-  if (sportsRadarQuotaUsed >= SPORTSRADAR_QUOTA_LIMIT) {
-    throw new Error("SportsRadar quota exceeded for trial period");
-  }
-
-  // Check cache first to conserve quota
-  const cached = sportsRadarCache.get(endpoint);
-  if (cached && Date.now() - cached.timestamp < 300000) {
-    // 5 minute cache
-    return cached.data;
-  }
-
-  // Rate limiting
-  const now = Date.now();
-  const timeSinceLastRequest = now - lastSportsRadarRequest;
-  if (timeSinceLastRequest < RATE_LIMIT_MS) {
-    await new Promise((resolve) =>
-      setTimeout(resolve, RATE_LIMIT_MS - timeSinceLastRequest),
-    );
-  }
-
-  const url = `${SPORTSRADAR_BASE_URL}${endpoint}?api_key=${SPORTSRADAR_API_KEY}`;
-
-  try {
-    lastSportsRadarRequest = Date.now();
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(
-        `SportsRadar API error: ${response.status} ${response.statusText}`,
-      );
-    }
-
-    const data = await response.json();
-    sportsRadarQuotaUsed++;
-
-    // Cache the response to conserve quota
-    sportsRadarCache.set(endpoint, {
-      data,
-      timestamp: Date.now(),
-    });
-
-    console.log(
-      `SportsRadar quota used: ${sportsRadarQuotaUsed}/${SPORTSRADAR_QUOTA_LIMIT}`,
-    );
-    return data;
-  } catch (error) {
-    console.error("SportsRadar API request failed:", error);
-    throw error;
-  }
-}
-
-// SportsRadar Odds Comparison API
+// Note: Using existing SportsRadar implementation from above
 app.get("/api/sportsradar/odds-comparison/:sport", async (req, res) => {
   try {
     const { sport } = req.params;
