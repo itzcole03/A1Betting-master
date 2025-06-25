@@ -130,6 +130,7 @@ const EnhancedAPITestDashboard: React.FC = () => {
 
   useEffect(() => {
     checkHealthStatus();
+    runProductionValidation(); // Run initial production validation
     const interval = setInterval(checkHealthStatus, 30000); // Every 30 seconds
     return () => clearInterval(interval);
   }, []);
