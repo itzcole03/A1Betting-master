@@ -45,6 +45,18 @@ const EnhancedAPITestDashboard: React.FC = () => {
 
     const tests = [
       {
+        service: "PrizePicks - Free Projections (NBA)",
+        test: () => prizePicksProjectionsService.getNBAProjections(),
+      },
+      {
+        service: "PrizePicks - All Projections",
+        test: () => prizePicksProjectionsService.getProjections(),
+      },
+      {
+        service: "PrizePicks - High Value Props",
+        test: () => prizePicksProjectionsService.getHighValueProjections(0.7),
+      },
+      {
         service: "DailyFantasy - DraftKings Contests",
         test: () => enhancedDailyFantasyService.getDraftKingsContests("NBA"),
       },
