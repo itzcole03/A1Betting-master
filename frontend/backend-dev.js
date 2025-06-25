@@ -733,7 +733,7 @@ This is a development mock response. To get real AI-powered analysis:
 - Research thoroughly before placing bets
 - Consider using bankroll management strategies
 
-🎯 **Value Betting Tips:**
+���� **Value Betting Tips:**
 - Look for positive expected value (+EV) bets
 - Compare odds across multiple sportsbooks
 - Track your betting performance over time
@@ -1224,6 +1224,183 @@ app.get("/api/sportsradar/cache/stats", (req, res) => {
 app.delete("/api/sportsradar/cache", (req, res) => {
   sportsRadarCache.clear();
   res.json({ message: "Cache cleared successfully" });
+});
+
+// =======================
+// OPTIMIZED SPORTSRADAR API ENDPOINTS
+// =======================
+
+const SPORTSRADAR_API_KEY =
+  process.env.VITE_SPORTRADAR_API_KEY ||
+  "R10yQbjTO5fZF6BPkfxjOaftsyN9X4ImAJv95H7s";
+const SPORTSRADAR_BASE_URL = "https://api.sportradar.com";
+
+// SportsRadar quota tracking
+let sportsRadarQuotaUsed = 0;
+const SPORTSRADAR_QUOTA_LIMIT = 1000;
+const sportsRadarCache = new Map();
+let lastSportsRadarRequest = 0;
+const RATE_LIMIT_MS = 1100; // 1.1 seconds for 1 QPS
+
+async function makeSportsRadarRequest(endpoint) {
+  // Check quota
+  if (sportsRadarQuotaUsed >= SPORTSRADAR_QUOTA_LIMIT) {
+    throw new Error("SportsRadar quota exceeded for trial period");
+  }
+
+  // Check cache first to conserve quota
+  const cached = sportsRadarCache.get(endpoint);
+  if (cached && Date.now() - cached.timestamp < 300000) {
+    // 5 minute cache
+    return cached.data;
+  }
+
+  // Rate limiting
+  const now = Date.now();
+  const timeSinceLastRequest = now - lastSportsRadarRequest;
+  if (timeSinceLastRequest < RATE_LIMIT_MS) {
+    await new Promise((resolve) =>
+      setTimeout(resolve, RATE_LIMIT_MS - timeSinceLastRequest),
+    );
+  }
+
+  const url = `${SPORTSRADAR_BASE_URL}${endpoint}?api_key=${SPORTSRADAR_API_KEY}`;
+
+  try {
+    lastSportsRadarRequest = Date.now();
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(
+        `SportsRadar API error: ${response.status} ${response.statusText}`,
+      );
+    }
+
+    const data = await response.json();
+    sportsRadarQuotaUsed++;
+
+    // Cache the response to conserve quota
+    sportsRadarCache.set(endpoint, {
+      data,
+      timestamp: Date.now(),
+    });
+
+    console.log(
+      `SportsRadar quota used: ${sportsRadarQuotaUsed}/${SPORTSRADAR_QUOTA_LIMIT}`,
+    );
+    return data;
+  } catch (error) {
+    console.error("SportsRadar API request failed:", error);
+    throw error;
+  }
+}
+
+// SportsRadar Odds Comparison API
+app.get("/api/sportsradar/odds-comparison/:sport", async (req, res) => {
+  try {
+    const { sport } = req.params;
+    const endpoint = `/odds-comparison/trial/v2/en/us/sports/${sport}/events.json`;
+    const data = await makeSportsRadarRequest(endpoint);
+
+    res.json({
+      sport,
+      events: data.events || [],
+      quota_used: sportsRadarQuotaUsed,
+      quota_remaining: SPORTSRADAR_QUOTA_LIMIT - sportsRadarQuotaUsed,
+      source: "SportsRadar Odds Comparison API",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch SportsRadar odds comparison",
+      message: error.message,
+      quota_used: sportsRadarQuotaUsed,
+    });
+  }
+});
+
+// SportsRadar Player Props API
+app.get("/api/sportsradar/player-props/:sport", async (req, res) => {
+  try {
+    const { sport } = req.params;
+    const endpoint = `/odds-comparison-player-props/trial/v1/en/us/sports/${sport}/events.json`;
+    const data = await makeSportsRadarRequest(endpoint);
+
+    res.json({
+      sport,
+      player_props: data.markets || [],
+      quota_used: sportsRadarQuotaUsed,
+      quota_remaining: SPORTSRADAR_QUOTA_LIMIT - sportsRadarQuotaUsed,
+      source: "SportsRadar Player Props API",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch SportsRadar player props",
+      message: error.message,
+      quota_used: sportsRadarQuotaUsed,
+    });
+  }
+});
+
+// SportsRadar NBA API
+app.get("/api/sportsradar/nba/:endpoint", async (req, res) => {
+  try {
+    const { endpoint } = req.params;
+    const apiEndpoint = `/nba/trial/v8/en/${endpoint}.json`;
+    const data = await makeSportsRadarRequest(apiEndpoint);
+
+    res.json({
+      ...data,
+      quota_used: sportsRadarQuotaUsed,
+      quota_remaining: SPORTSRADAR_QUOTA_LIMIT - sportsRadarQuotaUsed,
+      source: "SportsRadar NBA API",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: `Failed to fetch SportsRadar NBA ${endpoint}`,
+      message: error.message,
+      quota_used: sportsRadarQuotaUsed,
+    });
+  }
+});
+
+// SportsRadar NFL API
+app.get("/api/sportsradar/nfl/:endpoint", async (req, res) => {
+  try {
+    const { endpoint } = req.params;
+    const apiEndpoint = `/nfl/trial/v7/en/${endpoint}.json`;
+    const data = await makeSportsRadarRequest(apiEndpoint);
+
+    res.json({
+      ...data,
+      quota_used: sportsRadarQuotaUsed,
+      quota_remaining: SPORTSRADAR_QUOTA_LIMIT - sportsRadarQuotaUsed,
+      source: "SportsRadar NFL API",
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: `Failed to fetch SportsRadar NFL ${endpoint}`,
+      message: error.message,
+      quota_used: sportsRadarQuotaUsed,
+    });
+  }
+});
+
+// SportsRadar Quota Status
+app.get("/api/sportsradar/quota", (req, res) => {
+  res.json({
+    quota_used: sportsRadarQuotaUsed,
+    quota_limit: SPORTSRADAR_QUOTA_LIMIT,
+    quota_remaining: SPORTSRADAR_QUOTA_LIMIT - sportsRadarQuotaUsed,
+    quota_percentage: (sportsRadarQuotaUsed / SPORTSRADAR_QUOTA_LIMIT) * 100,
+    cache_size: sportsRadarCache.size,
+    recommendations:
+      sportsRadarQuotaUsed > 800
+        ? [
+            "⚠ Quota getting low - increase cache TTL",
+            "💡 Consider using autonomous data sources",
+          ]
+        : ["✓ Quota usage is healthy"],
+  });
 });
 
 // =======================
