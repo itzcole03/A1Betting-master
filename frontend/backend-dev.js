@@ -343,6 +343,100 @@ app.get("/api/analytics/advanced", (req, res) => {
   });
 });
 
+// =======================
+// PRIZEPICKS FREE API PROXY ENDPOINTS
+// =======================
+
+// PrizePicks projections proxy
+app.get("/api/prizepicks/projections", async (req, res) => {
+  try {
+    const response = await fetch("https://api.prizepicks.com/projections", {
+      headers: {
+        "User-Agent": "A1Betting-PrizePicks/1.0",
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`PrizePicks API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    res.json({
+      ...data,
+      proxy_info: {
+        source: "PrizePicks Free API",
+        proxied_at: new Date().toISOString(),
+        total_projections: data.data?.length || 0,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: "Failed to fetch PrizePicks projections",
+      message: error.message,
+      fallback_available: true,
+    });
+  }
+});
+
+// PrizePicks projections by sport
+app.get("/api/prizepicks/projections/:sport", async (req, res) => {
+  try {
+    const { sport } = req.params;
+    const response = await fetch("https://api.prizepicks.com/projections", {
+      headers: {
+        "User-Agent": "A1Betting-PrizePicks/1.0",
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`PrizePicks API error: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    // Filter by sport if leagues are included
+    let filteredProjections = data.data || [];
+    let filteredLeagues = [];
+
+    if (data.included) {
+      const leagues = data.included.filter((item) => item.type === "league");
+      filteredLeagues = leagues.filter(
+        (league) =>
+          league.attributes.sport
+            ?.toLowerCase()
+            .includes(sport.toLowerCase()) ||
+          league.attributes.name?.toLowerCase().includes(sport.toLowerCase()),
+      );
+
+      const leagueIds = filteredLeagues.map((league) => league.id);
+      filteredProjections = filteredProjections.filter((projection) =>
+        leagueIds.includes(projection.relationships?.league?.data?.id),
+      );
+    }
+
+    res.json({
+      data: filteredProjections,
+      included: data.included,
+      sport_filter: sport,
+      filtered_count: filteredProjections.length,
+      total_count: data.data?.length || 0,
+      proxy_info: {
+        source: "PrizePicks Free API",
+        proxied_at: new Date().toISOString(),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: `Failed to fetch ${req.params.sport} projections`,
+      message: error.message,
+      fallback_available: true,
+    });
+  }
+});
+
 // Enhanced DailyFantasy API endpoints
 app.get("/api/dailyfantasy/contests/:sport", (req, res) => {
   const { sport } = req.params;
@@ -733,7 +827,7 @@ This is a development mock response. To get real AI-powered analysis:
 - Research thoroughly before placing bets
 - Consider using bankroll management strategies
 
-���� **Value Betting Tips:**
+🎯 **Value Betting Tips:**
 - Look for positive expected value (+EV) bets
 - Compare odds across multiple sportsbooks
 - Track your betting performance over time
