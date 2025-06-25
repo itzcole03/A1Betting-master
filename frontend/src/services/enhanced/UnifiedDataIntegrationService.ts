@@ -193,10 +193,10 @@ export class UnifiedDataIntegrationService {
         : ["DraftKings", "SportsDataIO"];
     }
 
-    // Process sportsbook data
-    let sportsbookEvents: any[] = [];
-    if (sportsbookResult.status === "fulfilled" && sportsbookResult.value) {
-      sportsbookEvents = sportsbookResult.value;
+    // Process autonomous sportsbook data
+    let autonomousEvents: any[] = [];
+    if (autonomousResult.status === "fulfilled" && autonomousResult.value) {
+      autonomousEvents = autonomousResult.value;
       sources.sportsbooks.push("DraftKings", "FanDuel", "BetMGM", "Caesars");
     }
 
