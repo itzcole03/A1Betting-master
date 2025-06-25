@@ -58,6 +58,28 @@ const useUserStats = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Test basic connectivity to the backend
+  const testConnectivity = async () => {
+    const testUrl = getApiUrl("/health");
+    console.log("Testing connectivity to:", testUrl);
+
+    try {
+      const response = await fetch(testUrl, {
+        method: "GET",
+        signal: AbortSignal.timeout(5000),
+      });
+      console.log(
+        "Connectivity test result:",
+        response.status,
+        response.statusText,
+      );
+      return response.ok;
+    } catch (error) {
+      console.error("Connectivity test failed:", error);
+      return false;
+    }
+  };
+
   // Get the API base URL from environment or use relative path
   const getApiUrl = (path: string) => {
     // Check environment variables first
