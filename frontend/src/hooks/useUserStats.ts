@@ -151,7 +151,7 @@ const useUserStats = () => {
   // Fetch backend health information
   const fetchBackendHealth = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/health/all");
+      const response = await fetch(getApiUrl("/health/all"));
       if (response.ok) {
         const healthData = await response.json();
 
