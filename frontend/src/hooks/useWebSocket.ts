@@ -1,6 +1,7 @@
 /**
  * Custom WebSocket hook for real-time data streaming
  * Provides connection management, reconnection, and typed message handling
+ * Fixed to handle promises properly and prevent unhandled rejections
  */
 
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -20,6 +21,8 @@ interface UseWebSocketOptions {
   onError?: (error: Event) => void;
   onMessage?: (message: WebSocketMessage) => void;
   shouldReconnect?: boolean;
+  autoConnect?: boolean;
+  silent?: boolean; // Don't show toast notifications
 }
 
 interface WebSocketState {
@@ -36,13 +39,15 @@ export const useWebSocket = (
   options: UseWebSocketOptions = {},
 ) => {
   const {
-    reconnectAttempts = 5,
+    reconnectAttempts = 3,
     reconnectInterval = 3000,
     onConnect,
     onDisconnect,
     onError,
     onMessage,
-    shouldReconnect = true,
+    shouldReconnect = false, // Changed to false by default
+    autoConnect = true,
+    silent = true, // Changed to true by default to reduce noise
   } = options;
 
   const [state, setState] = useState<WebSocketState>({
@@ -56,46 +61,61 @@ export const useWebSocket = (
 
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const shouldReconnectRef = useRef(shouldReconnect);
+  const connectionPromiseRef = useRef<Promise<void> | null>(null);
 
   // Update shouldReconnect ref when option changes
   useEffect(() => {
     shouldReconnectRef.current = shouldReconnect;
   }, [shouldReconnect]);
 
-  const connect = useCallback(() => {
-    if (state.isConnecting || state.isConnected) {
+  const connect = useCallback((): Promise<void> => {
+    // If already connecting or connected, return existing promise or resolve immediately
+    if (state.isConnected) {
       return Promise.resolve();
+    }
+
+    if (state.isConnecting && connectionPromiseRef.current) {
+      return connectionPromiseRef.current;
+    }
+
+    // Validate URL
+    if (!url || url.trim() === "") {
+      const error = new Error("WebSocket URL is required");
+      setState((prev) => ({
+        ...prev,
+        error: "Invalid URL",
+        isConnecting: false,
+      }));
+      return Promise.reject(error);
     }
 
     setState((prev) => ({ ...prev, isConnecting: true, error: null }));
 
-    return new Promise<void>((resolve, reject) => {
+    const connectionPromise = new Promise<void>((resolve, reject) => {
       try {
         const wsUrl = url.startsWith("ws")
           ? url
           : `ws://${window.location.host}${url}`;
 
-        // Check if URL is valid and accessible
-        if (!url || url.trim() === '') {
-          throw new Error('WebSocket URL is required');
-        }
-
+        console.log("Attempting to connect to WebSocket:", wsUrl);
         const socket = new WebSocket(wsUrl);
 
         const connectionTimeout = setTimeout(() => {
-          socket.close();
-          const error = new Error('WebSocket connection timeout');
-          setState((prev) => ({
-            ...prev,
-            error: "Connection timeout",
-            isConnecting: false,
-          }));
-          reject(error);
+          if (socket.readyState === WebSocket.CONNECTING) {
+            socket.close();
+            const timeoutError = new Error("WebSocket connection timeout");
+            setState((prev) => ({
+              ...prev,
+              error: "Connection timeout",
+              isConnecting: false,
+            }));
+            reject(timeoutError);
+          }
         }, 10000); // 10 second timeout
 
         socket.onopen = () => {
           clearTimeout(connectionTimeout);
-          console.log("WebSocket connected to:", wsUrl);
+          console.log("WebSocket connected successfully");
           setState((prev) => ({
             ...prev,
             socket,
@@ -104,58 +124,93 @@ export const useWebSocket = (
             error: null,
             connectionAttempts: 0,
           }));
-          onConnect?.();
-          // Don't show toast for background connections
+
+          try {
+            onConnect?.();
+          } catch (err) {
+            console.warn("Error in onConnect callback:", err);
+          }
+
+          if (!silent) {
+            toast.success("Connected to real-time data");
+          }
           resolve();
         };
 
         socket.onclose = (event) => {
           clearTimeout(connectionTimeout);
           console.log("WebSocket disconnected:", event.code, event.reason);
+
           setState((prev) => ({
             ...prev,
             socket: null,
             isConnected: false,
             isConnecting: false,
           }));
-          onDisconnect?.();
 
-          // Only attempt to reconnect if it was not a clean close and we haven't exceeded attempts
+          try {
+            onDisconnect?.();
+          } catch (err) {
+            console.warn("Error in onDisconnect callback:", err);
+          }
+
+          // Only attempt to reconnect for unexpected closures
           if (
             shouldReconnectRef.current &&
             state.connectionAttempts < reconnectAttempts &&
             !event.wasClean &&
-            event.code !== 1000 // Normal closure
+            event.code !== 1000 && // Normal closure
+            event.code !== 1001 // Going away
           ) {
             setState((prev) => ({
               ...prev,
               connectionAttempts: prev.connectionAttempts + 1,
             }));
 
-            reconnectTimeoutRef.current = setTimeout(() => {
+            if (!silent) {
               console.log(
                 `Attempting to reconnect... (${state.connectionAttempts + 1}/${reconnectAttempts})`,
               );
+            }
+
+            reconnectTimeoutRef.current = setTimeout(() => {
               connect().catch((err) => {
-                console.warn("Reconnection failed:", err);
+                if (!silent) {
+                  console.warn("Reconnection failed:", err);
+                }
               });
             }, reconnectInterval);
           }
 
-          if (event.code !== 1000) { // If not normal closure, reject the promise
-            reject(new Error(`WebSocket closed with code: ${event.code}`));
+          // For unexpected closures, this is considered an error
+          if (event.code !== 1000 && event.code !== 1001) {
+            const closeError = new Error(
+              `WebSocket closed unexpectedly: ${event.code} ${event.reason}`,
+            );
+            reject(closeError);
           }
         };
 
         socket.onerror = (error) => {
           clearTimeout(connectionTimeout);
           console.error("WebSocket error:", error);
+
           setState((prev) => ({
             ...prev,
-            error: "WebSocket connection error",
+            error: "Connection error",
             isConnecting: false,
           }));
-          onError?.(error);
+
+          try {
+            onError?.(error);
+          } catch (err) {
+            console.warn("Error in onError callback:", err);
+          }
+
+          if (!silent) {
+            toast.error("Connection error");
+          }
+
           reject(new Error("WebSocket connection error"));
         };
 
@@ -163,7 +218,12 @@ export const useWebSocket = (
           try {
             const message: WebSocketMessage = JSON.parse(event.data);
             setState((prev) => ({ ...prev, lastMessage: message }));
-            onMessage?.(message);
+
+            try {
+              onMessage?.(message);
+            } catch (err) {
+              console.warn("Error in onMessage callback:", err);
+            }
           } catch (error) {
             console.error("Failed to parse WebSocket message:", error);
           }
@@ -175,9 +235,20 @@ export const useWebSocket = (
           error: "Failed to create connection",
           isConnecting: false,
         }));
-        reject(error);
+        reject(
+          error instanceof Error ? error : new Error("Unknown WebSocket error"),
+        );
       }
     });
+
+    connectionPromiseRef.current = connectionPromise;
+
+    // Clear the promise reference when it completes
+    connectionPromise.finally(() => {
+      connectionPromiseRef.current = null;
+    });
+
+    return connectionPromise;
   }, [
     url,
     state.isConnecting,
@@ -189,18 +260,7 @@ export const useWebSocket = (
     onDisconnect,
     onError,
     onMessage,
-  ]);
-  }, [
-    url,
-    state.isConnecting,
-    state.isConnected,
-    state.connectionAttempts,
-    reconnectAttempts,
-    reconnectInterval,
-    onConnect,
-    onDisconnect,
-    onError,
-    onMessage,
+    silent,
   ]);
 
   const disconnect = useCallback(() => {
@@ -212,6 +272,7 @@ export const useWebSocket = (
     }
 
     if (state.socket) {
+      // Use normal closure code
       state.socket.close(1000, "Manual disconnect");
     }
 
@@ -221,12 +282,17 @@ export const useWebSocket = (
       isConnected: false,
       isConnecting: false,
       connectionAttempts: 0,
+      error: null,
     }));
   }, [state.socket]);
 
   const sendMessage = useCallback(
     (message: any) => {
-      if (state.socket && state.isConnected) {
+      if (
+        state.socket &&
+        state.isConnected &&
+        state.socket.readyState === WebSocket.OPEN
+      ) {
         try {
           const messageString =
             typeof message === "string" ? message : JSON.stringify(message);
@@ -234,61 +300,73 @@ export const useWebSocket = (
           return true;
         } catch (error) {
           console.error("Failed to send WebSocket message:", error);
-          toast.error("Failed to send message");
+          if (!silent) {
+            toast.error("Failed to send message");
+          }
           return false;
         }
       } else {
-        console.warn("WebSocket is not connected");
-        toast.warning("Connection not available");
+        console.warn("WebSocket not connected, cannot send message");
         return false;
       }
     },
-    [state.socket, state.isConnected],
+    [state.socket, state.isConnected, silent],
   );
 
-  // Auto-connect on mount
+  // Auto-connect on mount with proper error handling
   useEffect(() => {
-    connect();
+    if (!autoConnect) {
+      return;
+    }
 
-    // Cleanup on unmount
+    if (!url || url.trim() === "") {
+      console.warn("WebSocket URL is empty, skipping connection");
+      return;
+    }
+
+    // Only connect to local development URLs or explicitly allowed URLs
+    if (
+      url.includes("localhost") ||
+      url.includes("127.0.0.1") ||
+      process.env.NODE_ENV === "development"
+    ) {
+      connect().catch((error) => {
+        if (!silent) {
+          console.warn("WebSocket connection failed:", error.message);
+        }
+        // Don't propagate the error to avoid unhandled rejection
+      });
+    } else {
+      console.warn(
+        "WebSocket connection skipped for non-local URL in production:",
+        url,
+      );
+    }
+
+    return () => {
+      disconnect();
+    };
+  }, [autoConnect, url, silent]); // Removed connect/disconnect dependencies to avoid loops
+
+  // Cleanup on unmount
+  useEffect(() => {
     return () => {
       shouldReconnectRef.current = false;
       if (reconnectTimeoutRef.current) {
         clearTimeout(reconnectTimeoutRef.current);
       }
-      if (state.socket) {
-        state.socket.close(1000, "Component unmount");
-      }
-    };
-  }, [url]);
-
-  // Cleanup timeout on unmount
-  useEffect(() => {
-    return () => {
-      if (reconnectTimeoutRef.current) {
-        clearTimeout(reconnectTimeoutRef.current);
+      if (state.socket && state.socket.readyState === WebSocket.OPEN) {
+        state.socket.close(1000, "Component unmounting");
       }
     };
   }, []);
 
   return {
-    // Connection state
-    isConnected: state.isConnected,
-    isConnecting: state.isConnecting,
-    error: state.error,
-    connectionAttempts: state.connectionAttempts,
-
-    // Data
-    lastMessage: state.lastMessage,
-
-    // Actions
+    ...state,
     connect,
     disconnect,
     sendMessage,
-
-    // Connection info
-    readyState: state.socket?.readyState,
   };
 };
 
-// Named export only to prevent import confusion
+export default useWebSocket;
