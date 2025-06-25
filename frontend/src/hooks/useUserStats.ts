@@ -88,9 +88,26 @@ const useUserStats = () => {
       ];
 
       const requests = endpoints.map((endpoint) =>
-        fetch(endpoint)
-          .then((res) => (res.ok ? res.json() : null))
-          .catch(() => null),
+        fetch(endpoint, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          signal: AbortSignal.timeout(10000), // 10 second timeout
+        })
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            }
+            console.warn(
+              `API endpoint ${endpoint} returned ${res.status}: ${res.statusText}`,
+            );
+            return null;
+          })
+          .catch((error) => {
+            console.warn(`Failed to fetch from ${endpoint}:`, error.message);
+            return null;
+          }),
       );
 
       const [analyticsData, activeBetsData, transactionsData] =
