@@ -363,10 +363,12 @@ export class EnhancedDailyFantasyService {
     const currentDate = date || new Date().toISOString().split("T")[0];
 
     try {
-      const [contests, sportsDataProjections] = await Promise.allSettled([
-        this.getDraftKingsContests(sport),
-        this.getSportsDataIOProjections(sport, currentDate),
-      ]);
+      const [contests, sportsDataProjections, prizePicksProjections] =
+        await Promise.allSettled([
+          this.getDraftKingsContests(sport),
+          this.getSportsDataIOProjections(sport, currentDate),
+          prizePicksProjectionsService.getProjectionsBySport(sport),
+        ]);
 
       // Get players for the first contest if available
       let players: DraftKingsPlayer[] = [];
