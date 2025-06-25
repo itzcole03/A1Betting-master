@@ -132,11 +132,23 @@ export class EnhancedTheOddsService {
   private readonly rateLimitMs: number = 1100; // Slightly over 1 second
 
   constructor() {
-    this.baseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+    this.baseUrl =
+      import.meta.env.VITE_BACKEND_URL ||
+      import.meta.env.VITE_API_URL ||
+      "http://localhost:8000";
     this.theOddsAPIKey = import.meta.env.VITE_THEODDS_API_KEY || "";
     this.oddsJamKey = import.meta.env.VITE_ODDSJAM_API_KEY || "";
     this.sportsDataIOKey = import.meta.env.VITE_SPORTSDATA_API_KEY || "";
     this.cache = new Map();
+
+    // Production validation
+    if (this.theOddsAPIKey) {
+      console.log("✓ The-Odds-API key configured for production");
+    } else {
+      console.warn(
+        "⚠ The-Odds-API key not found - some features will use mock data",
+      );
+    }
   }
 
   private async enforceRateLimit(): Promise<void> {
