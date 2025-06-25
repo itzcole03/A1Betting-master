@@ -1323,13 +1323,7 @@ app.delete("/api/sportsradar/cache", (req, res) => {
 // =======================
 // OPTIMIZED SPORTSRADAR API ENDPOINTS
 // =======================
-
-// Using existing SPORTSRADAR_API_KEY from above
-const SPORTSRADAR_BASE_URL = "https://api.sportradar.com";
-
-// SportsRadar quota tracking
-let sportsRadarQuotaUsed = 0;
-const SPORTSRADAR_QUOTA_LIMIT = 1000;
+// Note: Using existing SPORTSRADAR_API_KEY, SPORTSRADAR_BASE_URL, and quota variables from above
 const sportsRadarCache = new Map();
 let lastSportsRadarRequest = 0;
 const RATE_LIMIT_MS = 1100; // 1.1 seconds for 1 QPS
