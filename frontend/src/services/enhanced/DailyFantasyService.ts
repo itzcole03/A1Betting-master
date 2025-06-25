@@ -81,10 +81,22 @@ export class EnhancedDailyFantasyService {
   private readonly rateLimitMs: number = 1000; // 1 second between requests
 
   constructor() {
-    this.baseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+    this.baseUrl =
+      import.meta.env.VITE_BACKEND_URL ||
+      import.meta.env.VITE_API_URL ||
+      "http://localhost:8000";
     this.sportsDataIOKey = import.meta.env.VITE_SPORTSDATA_API_KEY || "";
     this.fairPlayKey = import.meta.env.VITE_FAIRPLAY_API_KEY || "";
     this.cache = new Map();
+
+    // Production validation
+    console.log("✓ Enhanced DailyFantasy Service initialized for production");
+    if (this.sportsDataIOKey) {
+      console.log("✓ SportsDataIO API key configured");
+    }
+    if (this.fairPlayKey) {
+      console.log("✓ FairPlay API key configured");
+    }
   }
 
   private async enforceRateLimit(): Promise<void> {
