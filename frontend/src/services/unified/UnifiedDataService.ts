@@ -222,13 +222,24 @@ class UnifiedDataService {
 
       return result;
     } catch (error) {
-      logError(error as Error, "UnifiedDataService.getBettingOpportunities");
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+
+      logger.error(
+        "Failed to fetch betting opportunities",
+        {
+          error: errorMessage,
+          filters,
+          duration: Date.now() - startTime,
+        },
+        "UnifiedDataService",
+      );
 
       return {
         success: false,
         data: [],
         count: 0,
-        error: (error as Error).message,
+        error: errorMessage,
         timestamp: Date.now(),
       };
     }
