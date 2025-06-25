@@ -168,7 +168,14 @@ const useUserStats = () => {
   // Fetch backend health information
   const fetchBackendHealth = async () => {
     try {
-      const response = await fetch(getApiUrl("/health/all"));
+      const response = await fetch(getApiUrl("/health/all"), {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        signal: AbortSignal.timeout(8000), // 8 second timeout
+      });
+
       if (response.ok) {
         const healthData = await response.json();
 
@@ -191,10 +198,13 @@ const useUserStats = () => {
           },
         }));
       } else {
+        console.warn(
+          `Health check failed with status ${response.status}: ${response.statusText}`,
+        );
         setBackendHealth((prev) => ({ ...prev, status: "degraded" }));
       }
     } catch (error) {
-      console.warn("Backend health check failed:", error);
+      console.warn("Backend health check failed:", error.message || error);
       setBackendHealth((prev) => ({ ...prev, status: "offline" }));
     }
   };
