@@ -242,37 +242,21 @@ export class UnifiedDataIntegrationService {
       }
     }
 
-    // Add sportsbook data
-    for (const event of sportsbookEvents) {
-      const key = `${event.home_team}_vs_${event.away_team}`;
-      const existing = eventMap.get(key);
-
-      if (existing) {
-        // Update with better odds if available
-        if (
-          event.best_odds?.moneyline_home?.moneyline_home >
-          existing.odds.moneyline_home
-        ) {
-          existing.odds.moneyline_home =
-            event.best_odds.moneyline_home.moneyline_home;
-          existing.odds.best_sportsbook =
-            event.best_odds.moneyline_home.sportsbook;
-        }
-      } else {
-        eventMap.set(key, {
-          event_id: event.event_id,
-          home_team: event.home_team,
-          away_team: event.away_team,
-          commence_time: event.commence_time,
+    // Add autonomous sportsbook data
+    for (const event of autonomousEvents) {
+      const key = `${event.event}_autonomous`;
+      if (!eventMap.has(key.replace("_autonomous", ""))) {
+        eventMap.set(key.replace("_autonomous", ""), {
+          event_id: `autonomous_${event.event.replace(" ", "_")}`,
+          home_team: event.event.split(" vs ")[0] || "Home",
+          away_team: event.event.split(" vs ")[1] || "Away",
+          commence_time: event.last_updated,
           odds: {
-            moneyline_home:
-              event.best_odds?.moneyline_home?.moneyline_home || 0,
-            moneyline_away:
-              event.best_odds?.moneyline_away?.moneyline_away || 0,
-            spread_line: event.best_odds?.spread_home?.spread_line || 0,
-            total_line: event.best_odds?.over?.total_line || 0,
-            best_sportsbook:
-              event.best_odds?.moneyline_home?.sportsbook || "Unknown",
+            moneyline_home: event.odds.moneyline_home || 0,
+            moneyline_away: event.odds.moneyline_away || 0,
+            spread_line: event.odds.spread_line || 0,
+            total_line: event.odds.total_line || 0,
+            best_sportsbook: event.sportsbook,
           },
         });
       }
