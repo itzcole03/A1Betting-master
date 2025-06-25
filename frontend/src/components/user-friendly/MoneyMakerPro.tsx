@@ -481,9 +481,6 @@ const MoneyMakerPro: React.FC = () => {
     if (selectedFilter !== "all") {
       filtered = filtered.filter((opp) => opp.category === selectedFilter);
     }
-    const filtered = opportunities.filter(
-      (opp) => selectedFilter === "all" || opp.category === selectedFilter,
-    );
 
     filtered.sort((a, b) => {
       switch (sortBy) {
