@@ -8,6 +8,7 @@ import { enhancedDailyFantasyService } from "../../services/enhanced/DailyFantas
 import { enhancedTheOddsService } from "../../services/enhanced/TheOddsService";
 import { sportsbookDataService } from "../../services/enhanced/SportsbookDataService";
 import { unifiedDataIntegrationService } from "../../services/enhanced/UnifiedDataIntegrationService";
+import { productionValidationService } from "../../services/enhanced/ProductionValidationService";
 
 interface TestResult {
   service: string;
