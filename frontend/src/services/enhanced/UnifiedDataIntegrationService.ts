@@ -593,9 +593,10 @@ export class UnifiedDataIntegrationService {
    */
   private async updateHealthStatus(): Promise<void> {
     const providers = [
+      { name: "TheOdds-API", service: enhancedTheOddsService },
+      { name: "SportsRadar", service: optimizedSportsRadarService },
       { name: "DailyFantasy", service: enhancedDailyFantasyService },
-      { name: "TheOdds", service: enhancedTheOddsService },
-      { name: "Sportsbooks", service: sportsbookDataService },
+      { name: "AutonomousSportsbooks", service: autonomousSportsbookService },
     ];
 
     for (const provider of providers) {
