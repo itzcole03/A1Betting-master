@@ -1,214 +1,428 @@
-import EventEmitter from "eventemitter3";
-import axios, { AxiosInstance } from "axios";
-import { io, Socket } from "socket.io-client";
-import { z } from "zod";
+/**
+ * Unified Data Service
+ * Consolidates all data fetching and ensures consistent sport filtering across components
+ */
 
-// Data source types
-export enum DataSource {
-  PRIZEPICKS = "prizepicks",
-  ESPN = "espn",
-  ODDS_API = "odds_api",
+import { logger, logApiCall, logError } from "@/utils/logger";
+import { productionApiService, api } from "@/services/api/ProductionApiService";
+import { filterSportData, normalizeSportFilter } from "@/utils/sportFiltering";
+import { UNIFIED_SPORTS, getSportConfig } from "@/constants/unifiedSports";
+
+// Unified data interfaces
+export interface UnifiedBettingOpportunity {
+  id: string;
+  sport: string;
+  game: string;
+  event: string;
+  market: string;
+  betType: string;
+  line: number;
+  odds: number;
+  bookmaker: string;
+  expectedValue: number;
+  confidence: number;
+  edge: number;
+  stake?: number;
+  potentialProfit?: number;
+  riskLevel: "low" | "medium" | "high";
+  category: "value" | "arbitrage" | "sure-bet";
+  expires: string;
+  timestamp: number;
 }
 
-// Unified response schema
-const DataResponseSchema = z.object({
-  source: z.nativeEnum(DataSource),
-  timestamp: z.number(),
-  data: z.unknown(),
-  status: z.enum(["success", "error"]),
-});
+export interface UnifiedPlayerProp {
+  id: string;
+  player: string;
+  team: string;
+  position: string;
+  stat: string;
+  line: number;
+  overOdds: number;
+  underOdds: number;
+  gameTime: string;
+  opponent: string;
+  sport: string;
+  confidence: number;
+  projection: number;
+  edge: number;
+  pickType: "normal" | "demon" | "goblin";
+  reasoning: string;
+  lastGameStats: number[];
+  seasonAvg: number;
+  recentForm: "hot" | "cold" | "neutral";
+  injuryStatus: "healthy" | "questionable" | "probable";
+  weatherImpact?: number;
+  homeAwayFactor: number;
+  timestamp: number;
+}
 
-type DataResponse = z.infer<typeof DataResponseSchema>;
+export interface UnifiedDataFilters {
+  sport?: string;
+  minConfidence?: number;
+  maxResults?: number;
+  includeExpired?: boolean;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+}
 
-export class UnifiedDataService extends EventEmitter {
-  private static instance: UnifiedDataService;
-  private apiClients: Map<DataSource, AxiosInstance>;
-  private wsConnections: Map<DataSource, WebSocket>;
-  private cache: Map<string, { data: unknown; timestamp: number }>;
+export interface UnifiedApiResponse<T> {
+  success: boolean;
+  data?: T[];
+  count?: number;
+  filters?: UnifiedDataFilters;
+  error?: string;
+  timestamp: number;
+  cached?: boolean;
+}
 
-  private constructor() {
-    super();
-    this.apiClients = new Map();
-    this.wsConnections = new Map();
-    this.cache = new Map();
-    this.initializeClients();
-    this.initializeWebSockets();
+class UnifiedDataService {
+  private cache = new Map<
+    string,
+    { data: any; timestamp: number; ttl: number }
+  >();
+  private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+  private getCacheKey(endpoint: string, params?: any): string {
+    return `${endpoint}:${JSON.stringify(params || {})}`;
   }
 
-  static getInstance(): UnifiedDataService {
-    if (!UnifiedDataService.instance) {
-      UnifiedDataService.instance = new UnifiedDataService();
+  private isValidCacheEntry(entry: {
+    timestamp: number;
+    ttl: number;
+  }): boolean {
+    return Date.now() - entry.timestamp < entry.ttl;
+  }
+
+  private setCache(key: string, data: any, ttl: number = this.CACHE_TTL): void {
+    this.cache.set(key, { data, timestamp: Date.now(), ttl });
+  }
+
+  private getFromCache<T>(key: string): T | null {
+    const entry = this.cache.get(key);
+    if (entry && this.isValidCacheEntry(entry)) {
+      return entry.data;
     }
-    return UnifiedDataService.instance;
+    if (entry) {
+      this.cache.delete(key);
+    }
+    return null;
   }
 
-  private initializeClients() {
-    // Initialize API clients
-    Object.values(DataSource).forEach((source) => {
-      this.apiClients.set(
-        source,
-        axios.create({
-          baseURL: this.getBaseUrl(source),
-          timeout: 10000,
+  /**
+   * Fetch betting opportunities with unified filtering
+   */
+  async getBettingOpportunities(
+    filters: UnifiedDataFilters = {},
+  ): Promise<UnifiedApiResponse<UnifiedBettingOpportunity>> {
+    const startTime = Date.now();
+    const cacheKey = this.getCacheKey("betting-opportunities", filters);
+
+    // Check cache first
+    const cached =
+      this.getFromCache<UnifiedApiResponse<UnifiedBettingOpportunity>>(
+        cacheKey,
+      );
+    if (cached) {
+      return { ...cached, cached: true };
+    }
+
+    try {
+      logApiCall("getBettingOpportunities", { filters });
+
+      // Normalize sport filter
+      const normalizedSport = filters.sport
+        ? normalizeSportFilter(filters.sport)
+        : UNIFIED_SPORTS.ALL;
+
+      const response = await api.getBettingOpportunities({
+        sport: normalizedSport,
+        minEdge: 2.0,
+        maxResults: filters.maxResults || 50,
+      });
+
+      if (!response.success || !response.data) {
+        throw new Error(
+          response.error || "Failed to fetch betting opportunities",
+        );
+      }
+
+      // Transform API data to unified format
+      let opportunities: UnifiedBettingOpportunity[] = response.data.map(
+        (opp: any) => ({
+          id: opp.id || `bet_${Date.now()}_${Math.random()}`,
+          sport: opp.sport || "unknown",
+          game: opp.event || opp.game || "Unknown Game",
+          event: opp.event || opp.game || "Unknown Event",
+          market: opp.market || "Unknown Market",
+          betType: opp.market || opp.betType || "Unknown Bet",
+          line: opp.line || opp.odds || 0,
+          odds: opp.odds || -110,
+          bookmaker: opp.bookmaker || "DraftKings",
+          expectedValue: (opp.expectedValue || opp.edge || 0) * 100,
+          confidence: opp.confidence || 75,
+          edge: (opp.expectedValue || opp.edge || 0) * 100,
+          stake: 0,
+          potentialProfit: 0,
+          riskLevel: opp.riskLevel || "medium",
+          category: opp.category || "value",
+          expires:
+            opp.expires ||
+            new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+          timestamp: Date.now(),
         }),
       );
-    });
-  }
 
-  private initializeWebSockets() {
-    // Initialize WebSocket connections for each data source
-    Object.values(DataSource).forEach((source) => {
-      const wsUrl = this.getWebSocketUrl(source);
+      // Apply unified sport filtering
+      if (filters.sport && filters.sport !== UNIFIED_SPORTS.ALL) {
+        opportunities = filterSportData(opportunities, filters.sport, {
+          useCommonMappings: true,
+          allowPartialMatch: true,
+          caseSensitive: false,
+        });
+      }
 
-      // Safety checks to prevent invalid WebSocket connections
-      if (
-        !wsUrl ||
-        wsUrl === "" ||
-        wsUrl === "wss://api.betproai.com/ws" ||
-        wsUrl.includes("api.betproai.com") ||
-        wsUrl.includes("localhost:8000") ||
-        wsUrl.includes("localhost:3001") ||
-        import.meta.env.VITE_ENABLE_WEBSOCKET === "false"
-      ) {
-        console.log(
-          "WebSocket connection disabled for data source:",
-          source,
-          wsUrl,
+      // Apply confidence filter
+      if (filters.minConfidence) {
+        opportunities = opportunities.filter(
+          (opp) => opp.confidence >= filters.minConfidence!,
         );
-        return;
       }
 
-      const ws = new WebSocket(wsUrl);
-
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        this.emit(`ws:${source}:${data.type}`, data);
-      };
-
-      ws.onerror = (error) => {
-        this.emit("error", { source, error });
-      };
-
-      this.wsConnections.set(source, ws);
-    });
-  }
-
-  private getBaseUrl(source: DataSource): string {
-    // Configure base URLs for different data sources
-    const urls = {
-      [DataSource.PRIZEPICKS]: import.meta.env.VITE_PRIZEPICKS_API_URL,
-      [DataSource.ESPN]: import.meta.env.VITE_ESPN_API_URL,
-      [DataSource.ODDS_API]: import.meta.env.VITE_ODDS_API_URL,
-    };
-    return urls[source] || "";
-  }
-
-  private getWebSocketUrl(source: DataSource): string {
-    switch (source) {
-      case DataSource.PRIZEPICKS:
-        return "wss://api.prizepicks.com/ws";
-      case DataSource.ODDS_API:
-        return "wss://api.odds-api.com/ws";
-      default:
-        throw new Error(`Unknown data source: ${source}`);
-    }
-  }
-
-  async fetchData<T>(source: DataSource, endpoint: string): Promise<T> {
-    try {
-      const response = await fetch(this.getApiUrl(source, endpoint));
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      // Apply sorting
+      if (filters.sortBy) {
+        opportunities.sort((a, b) => {
+          const aVal = (a as any)[filters.sortBy!] || 0;
+          const bVal = (b as any)[filters.sortBy!] || 0;
+          const direction = filters.sortOrder === "asc" ? 1 : -1;
+          return (bVal - aVal) * direction;
+        });
       }
-      return await response.json();
+
+      // Apply result limit
+      if (filters.maxResults) {
+        opportunities = opportunities.slice(0, filters.maxResults);
+      }
+
+      const result: UnifiedApiResponse<UnifiedBettingOpportunity> = {
+        success: true,
+        data: opportunities,
+        count: opportunities.length,
+        filters,
+        timestamp: Date.now(),
+      };
+
+      // Cache the result
+      this.setCache(cacheKey, result);
+
+      logger.info("Successfully fetched unified betting opportunities", {
+        count: opportunities.length,
+        duration: Date.now() - startTime,
+        filters,
+      });
+
+      return result;
     } catch (error) {
-      this.emit("error", { source, endpoint, error });
-      throw error;
+      logError(error as Error, "UnifiedDataService.getBettingOpportunities");
+
+      return {
+        success: false,
+        data: [],
+        count: 0,
+        error: (error as Error).message,
+        timestamp: Date.now(),
+      };
     }
   }
 
-  private getApiUrl(source: DataSource, endpoint: string): string {
-    const baseUrl = this.getBaseUrl(source);
-    return `${baseUrl}${endpoint}`;
-  }
+  /**
+   * Fetch player props with unified filtering
+   */
+  async getPlayerProps(
+    filters: UnifiedDataFilters = {},
+  ): Promise<UnifiedApiResponse<UnifiedPlayerProp>> {
+    const startTime = Date.now();
+    const cacheKey = this.getCacheKey("player-props", filters);
 
-  async fetchDataFromApi(
-    source: DataSource,
-    endpoint: string,
-    params?: Record<string, unknown>,
-  ): Promise<DataResponse> {
-    const cacheKey = `${source}:${endpoint}:${JSON.stringify(params)}`;
-    const cached = this.cache.get(cacheKey);
-
-    // Return cached data if it's less than 30 seconds old
-    if (cached && Date.now() - cached.timestamp < 30000) {
-      return {
-        source,
-        timestamp: cached.timestamp,
-        data: cached.data,
-        status: "success",
-      };
+    // Check cache first
+    const cached =
+      this.getFromCache<UnifiedApiResponse<UnifiedPlayerProp>>(cacheKey);
+    if (cached) {
+      return { ...cached, cached: true };
     }
 
     try {
-      const client = this.apiClients.get(source);
-      if (!client) throw new Error(`No client found for source: ${source}`);
+      logApiCall("getPlayerProps", { filters });
 
-      const response = await client.get(endpoint, { params });
+      // Normalize sport filter
+      const normalizedSport = filters.sport
+        ? normalizeSportFilter(filters.sport)
+        : UNIFIED_SPORTS.ALL;
 
-      // Cache the response
-      this.cache.set(cacheKey, {
-        data: response.data,
-        timestamp: Date.now(),
+      const response = await api.getPrizePicksProps({
+        sport: normalizedSport,
+        minConfidence: filters.minConfidence || 70,
       });
 
-      return {
-        source,
+      if (!response.success || !response.data) {
+        throw new Error(response.error || "Failed to fetch player props");
+      }
+
+      // Transform API data to unified format
+      let props: UnifiedPlayerProp[] = response.data.map((prop: any) => ({
+        id: prop.id || `prop_${Date.now()}_${Math.random()}`,
+        player: prop.player || "Unknown Player",
+        team: prop.team || "Unknown Team",
+        position: prop.position || "Unknown",
+        stat: prop.stat || "Points",
+        line: prop.line || 0,
+        overOdds: prop.overOdds || -110,
+        underOdds: prop.underOdds || -110,
+        gameTime: prop.gameTime || new Date().toISOString(),
+        opponent: prop.opponent || "Unknown Opponent",
+        sport: prop.sport || "nba",
+        confidence: prop.confidence || 75,
+        projection: prop.projection || prop.line || 0,
+        edge: prop.edge || 5,
+        pickType: prop.pickType || "normal",
+        reasoning: prop.reasoning || "No reasoning provided",
+        lastGameStats: prop.lastGameStats || [],
+        seasonAvg: prop.seasonAvg || prop.line || 0,
+        recentForm: prop.recentForm || "neutral",
+        injuryStatus: prop.injuryStatus || "healthy",
+        weatherImpact: prop.weatherImpact,
+        homeAwayFactor: prop.homeAwayFactor || 1.0,
         timestamp: Date.now(),
-        data: response.data,
-        status: "success",
+      }));
+
+      // Apply unified sport filtering
+      if (filters.sport && filters.sport !== UNIFIED_SPORTS.ALL) {
+        props = filterSportData(props, filters.sport, {
+          useCommonMappings: true,
+          allowPartialMatch: true,
+          caseSensitive: false,
+        });
+      }
+
+      // Apply confidence filter
+      if (filters.minConfidence) {
+        props = props.filter(
+          (prop) => prop.confidence >= filters.minConfidence!,
+        );
+      }
+
+      // Apply sorting
+      if (filters.sortBy) {
+        props.sort((a, b) => {
+          const aVal = (a as any)[filters.sortBy!] || 0;
+          const bVal = (b as any)[filters.sortBy!] || 0;
+          const direction = filters.sortOrder === "asc" ? 1 : -1;
+          return (bVal - aVal) * direction;
+        });
+      }
+
+      // Apply result limit
+      if (filters.maxResults) {
+        props = props.slice(0, filters.maxResults);
+      }
+
+      const result: UnifiedApiResponse<UnifiedPlayerProp> = {
+        success: true,
+        data: props,
+        count: props.length,
+        filters,
+        timestamp: Date.now(),
       };
+
+      // Cache the result
+      this.setCache(cacheKey, result);
+
+      logger.info("Successfully fetched unified player props", {
+        count: props.length,
+        duration: Date.now() - startTime,
+        filters,
+      });
+
+      return result;
     } catch (error) {
-      this.emit("error", { source, error });
+      logError(error as Error, "UnifiedDataService.getPlayerProps");
+
       return {
-        source,
+        success: false,
+        data: [],
+        count: 0,
+        error: (error as Error).message,
         timestamp: Date.now(),
-        data: null,
-        status: "error",
       };
     }
   }
 
-  connectWebSocket(source: DataSource, options: { events: string[] }) {
-    if (this.wsConnections.has(source)) return;
+  /**
+   * Get available sports for current user
+   */
+  async getAvailableSports(): Promise<string[]> {
+    try {
+      const cacheKey = "available-sports";
+      const cached = this.getFromCache<string[]>(cacheKey);
+      if (cached) {
+        return cached;
+      }
 
-    const socket = io(this.getBaseUrl(source), {
-      transports: ["websocket"],
-      autoConnect: true,
-    });
+      // Fetch from both betting opportunities and player props to get all available sports
+      const [bettingResponse, propsResponse] = await Promise.all([
+        this.getBettingOpportunities({ maxResults: 100 }),
+        this.getPlayerProps({ maxResults: 100 }),
+      ]);
 
-    options.events.forEach((event) => {
-      socket.on(event, (data) => {
-        this.emit(`ws:${source}:${event}`, data);
-      });
-    });
+      const sportsSet = new Set<string>();
 
-    socket.on("connect_error", (error) => {
-      this.emit("ws:error", { source, error });
-    });
+      if (bettingResponse.data) {
+        bettingResponse.data.forEach((opp) => sportsSet.add(opp.sport));
+      }
 
-    this.wsConnections.set(source, socket);
-  }
+      if (propsResponse.data) {
+        propsResponse.data.forEach((prop) => sportsSet.add(prop.sport));
+      }
 
-  disconnectWebSocket(source: DataSource) {
-    const socket = this.wsConnections.get(source);
-    if (socket) {
-      socket.disconnect();
-      this.wsConnections.delete(source);
+      const availableSports = [UNIFIED_SPORTS.ALL, ...Array.from(sportsSet)];
+
+      // Cache for shorter time since this can change
+      this.setCache(cacheKey, availableSports, 2 * 60 * 1000); // 2 minutes
+
+      return availableSports;
+    } catch (error) {
+      logError(error as Error, "UnifiedDataService.getAvailableSports");
+
+      // Return default sports if API fails
+      return [
+        UNIFIED_SPORTS.ALL,
+        UNIFIED_SPORTS.NBA,
+        UNIFIED_SPORTS.NFL,
+        UNIFIED_SPORTS.MLB,
+        UNIFIED_SPORTS.NHL,
+        UNIFIED_SPORTS.SOCCER,
+      ];
     }
   }
 
-  clearCache() {
+  /**
+   * Clear cache for fresh data
+   */
+  clearCache(): void {
     this.cache.clear();
+    logger.info("Unified data service cache cleared");
+  }
+
+  /**
+   * Get cache statistics
+   */
+  getCacheStats(): { size: number; keys: string[] } {
+    return {
+      size: this.cache.size,
+      keys: Array.from(this.cache.keys()),
+    };
   }
 }
+
+// Export singleton instance
+export const unifiedDataService = new UnifiedDataService();
+export default unifiedDataService;
