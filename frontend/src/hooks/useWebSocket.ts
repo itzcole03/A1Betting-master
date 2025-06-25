@@ -64,91 +64,132 @@ export const useWebSocket = (
 
   const connect = useCallback(() => {
     if (state.isConnecting || state.isConnected) {
-      return;
+      return Promise.resolve();
     }
 
     setState((prev) => ({ ...prev, isConnecting: true, error: null }));
 
-    try {
-      const wsUrl = url.startsWith("ws")
-        ? url
-        : `ws://${window.location.host}${url}`;
-      const socket = new WebSocket(wsUrl);
+    return new Promise<void>((resolve, reject) => {
+      try {
+        const wsUrl = url.startsWith("ws")
+          ? url
+          : `ws://${window.location.host}${url}`;
 
-      socket.onopen = () => {
-        console.log("WebSocket connected");
-        setState((prev) => ({
-          ...prev,
-          socket,
-          isConnected: true,
-          isConnecting: false,
-          error: null,
-          connectionAttempts: 0,
-        }));
-        onConnect?.();
-        toast.success("Connected to real-time data stream");
-      };
+        // Check if URL is valid and accessible
+        if (!url || url.trim() === '') {
+          throw new Error('WebSocket URL is required');
+        }
 
-      socket.onclose = (event) => {
-        console.log("WebSocket disconnected:", event.code, event.reason);
-        setState((prev) => ({
-          ...prev,
-          socket: null,
-          isConnected: false,
-          isConnecting: false,
-        }));
-        onDisconnect?.();
+        const socket = new WebSocket(wsUrl);
 
-        // Attempt to reconnect if enabled and within retry limits
-        if (
-          shouldReconnectRef.current &&
-          state.connectionAttempts < reconnectAttempts &&
-          !event.wasClean
-        ) {
+        const connectionTimeout = setTimeout(() => {
+          socket.close();
+          const error = new Error('WebSocket connection timeout');
           setState((prev) => ({
             ...prev,
-            connectionAttempts: prev.connectionAttempts + 1,
+            error: "Connection timeout",
+            isConnecting: false,
           }));
+          reject(error);
+        }, 10000); // 10 second timeout
 
-          reconnectTimeoutRef.current = setTimeout(() => {
-            console.log(
-              `Attempting to reconnect... (${state.connectionAttempts + 1}/${reconnectAttempts})`,
-            );
-            connect();
-          }, reconnectInterval);
-        } else if (state.connectionAttempts >= reconnectAttempts) {
-          toast.error("Connection lost - maximum retry attempts reached");
-        }
-      };
+        socket.onopen = () => {
+          clearTimeout(connectionTimeout);
+          console.log("WebSocket connected to:", wsUrl);
+          setState((prev) => ({
+            ...prev,
+            socket,
+            isConnected: true,
+            isConnecting: false,
+            error: null,
+            connectionAttempts: 0,
+          }));
+          onConnect?.();
+          // Don't show toast for background connections
+          resolve();
+        };
 
-      socket.onerror = (error) => {
-        console.error("WebSocket error:", error);
+        socket.onclose = (event) => {
+          clearTimeout(connectionTimeout);
+          console.log("WebSocket disconnected:", event.code, event.reason);
+          setState((prev) => ({
+            ...prev,
+            socket: null,
+            isConnected: false,
+            isConnecting: false,
+          }));
+          onDisconnect?.();
+
+          // Only attempt to reconnect if it was not a clean close and we haven't exceeded attempts
+          if (
+            shouldReconnectRef.current &&
+            state.connectionAttempts < reconnectAttempts &&
+            !event.wasClean &&
+            event.code !== 1000 // Normal closure
+          ) {
+            setState((prev) => ({
+              ...prev,
+              connectionAttempts: prev.connectionAttempts + 1,
+            }));
+
+            reconnectTimeoutRef.current = setTimeout(() => {
+              console.log(
+                `Attempting to reconnect... (${state.connectionAttempts + 1}/${reconnectAttempts})`,
+              );
+              connect().catch((err) => {
+                console.warn("Reconnection failed:", err);
+              });
+            }, reconnectInterval);
+          }
+
+          if (event.code !== 1000) { // If not normal closure, reject the promise
+            reject(new Error(`WebSocket closed with code: ${event.code}`));
+          }
+        };
+
+        socket.onerror = (error) => {
+          clearTimeout(connectionTimeout);
+          console.error("WebSocket error:", error);
+          setState((prev) => ({
+            ...prev,
+            error: "WebSocket connection error",
+            isConnecting: false,
+          }));
+          onError?.(error);
+          reject(new Error("WebSocket connection error"));
+        };
+
+        socket.onmessage = (event) => {
+          try {
+            const message: WebSocketMessage = JSON.parse(event.data);
+            setState((prev) => ({ ...prev, lastMessage: message }));
+            onMessage?.(message);
+          } catch (error) {
+            console.error("Failed to parse WebSocket message:", error);
+          }
+        };
+      } catch (error) {
+        console.error("Failed to create WebSocket connection:", error);
         setState((prev) => ({
           ...prev,
-          error: "WebSocket connection error",
+          error: "Failed to create connection",
           isConnecting: false,
         }));
-        onError?.(error);
-        toast.error("Connection error occurred");
-      };
-
-      socket.onmessage = (event) => {
-        try {
-          const message: WebSocketMessage = JSON.parse(event.data);
-          setState((prev) => ({ ...prev, lastMessage: message }));
-          onMessage?.(message);
-        } catch (error) {
-          console.error("Failed to parse WebSocket message:", error);
-        }
-      };
-    } catch (error) {
-      console.error("Failed to create WebSocket connection:", error);
-      setState((prev) => ({
-        ...prev,
-        error: "Failed to create connection",
-        isConnecting: false,
-      }));
-    }
+        reject(error);
+      }
+    });
+  }, [
+    url,
+    state.isConnecting,
+    state.isConnected,
+    state.connectionAttempts,
+    reconnectAttempts,
+    reconnectInterval,
+    onConnect,
+    onDisconnect,
+    onError,
+    onMessage,
+  ]);
   }, [
     url,
     state.isConnecting,
