@@ -170,6 +170,48 @@ export function backendPlugin() {
         },
       );
 
+      server.middlewares.use(
+        "/api/active-bets",
+        (req: any, res: any, next: any) => {
+          if (req.method === "GET") {
+            console.log("[Backend Plugin] Active bets requested");
+            res.setHeader("Content-Type", "application/json");
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.end(JSON.stringify(mockData.activeBets));
+            return;
+          }
+          next();
+        },
+      );
+
+      server.middlewares.use(
+        "/api/transactions",
+        (req: any, res: any, next: any) => {
+          if (req.method === "GET") {
+            console.log("[Backend Plugin] Transactions requested");
+            res.setHeader("Content-Type", "application/json");
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.end(JSON.stringify(mockData.transactions));
+            return;
+          }
+          next();
+        },
+      );
+
+      server.middlewares.use(
+        "/api/health/all",
+        (req: any, res: any, next: any) => {
+          if (req.method === "GET") {
+            console.log("[Backend Plugin] Health all requested");
+            res.setHeader("Content-Type", "application/json");
+            res.setHeader("Access-Control-Allow-Origin", "*");
+            res.end(JSON.stringify(mockData.healthAll));
+            return;
+          }
+          next();
+        },
+      );
+
       console.log("✅ Backend API endpoints embedded in Vite server");
     },
   };
