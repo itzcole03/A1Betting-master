@@ -523,6 +523,9 @@ const EnhancedAPITestDashboard: React.FC = () => {
                 DailyFantasy Providers
               </h3>
               <ul className="text-sm space-y-1">
+                <li>
+                  • <strong>PrizePicks API (FREE)</strong>
+                </li>
                 <li>• DraftKings (Unofficial API)</li>
                 <li>• SportsDataIO Fantasy API</li>
                 <li>• FairPlay Lineup Optimizer</li>
