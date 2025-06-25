@@ -22,6 +22,8 @@ const EnhancedAPITestDashboard: React.FC = () => {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [healthStatus, setHealthStatus] = useState<any>(null);
+  const [productionReport, setProductionReport] = useState<any>(null);
+  const [isValidating, setIsValidating] = useState(false);
 
   const updateTestResult = (service: string, result: Partial<TestResult>) => {
     setTestResults((prev) => {
@@ -359,7 +361,7 @@ const EnhancedAPITestDashboard: React.FC = () => {
               </h3>
               <ul className="text-sm space-y-1">
                 <li>• The-Odds-API</li>
-                <li>• OddsJam API</li>
+                <li>��� OddsJam API</li>
                 <li>• SportsDataIO Odds</li>
                 <li>• Real-time aggregation</li>
               </ul>
