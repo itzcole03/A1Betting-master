@@ -60,18 +60,32 @@ const useUserStats = () => {
 
   // Get the API base URL from environment or use relative path
   const getApiUrl = (path: string) => {
-    const baseUrl =
+    // Check environment variables first
+    const envApiUrl =
       import.meta.env.VITE_API_URL ||
       import.meta.env.VITE_BACKEND_URL ||
-      import.meta.env.VITE_API_BASE_URL ||
-      "";
+      import.meta.env.VITE_API_BASE_URL;
 
-    // If no base URL is configured, use relative paths (for deployed environments)
-    if (!baseUrl) {
+    if (envApiUrl) {
+      return `${envApiUrl}${path.startsWith("/") ? path : `/${path}`}`;
+    }
+
+    // Auto-detect based on current environment
+    if (typeof window !== "undefined") {
+      const { protocol, hostname, port } = window.location;
+
+      // In development (localhost), proxy is handled by Vite
+      if (hostname === "localhost" || hostname === "127.0.0.1") {
+        return `/api${path.startsWith("/") ? path : `/${path}`}`;
+      }
+
+      // In production, try to construct the backend URL
+      // This might need adjustment based on actual deployment setup
       return `/api${path.startsWith("/") ? path : `/${path}`}`;
     }
 
-    return `${baseUrl}${path.startsWith("/") ? path : `/${path}`}`;
+    // Fallback to relative paths
+    return `/api${path.startsWith("/") ? path : `/${path}`}`;
   };
 
   // Fetch user statistics from backend
