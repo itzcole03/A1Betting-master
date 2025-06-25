@@ -343,6 +343,311 @@ app.get("/api/analytics/advanced", (req, res) => {
   });
 });
 
+// Enhanced DailyFantasy API endpoints
+app.get("/api/dailyfantasy/contests/:sport", (req, res) => {
+  const { sport } = req.params;
+  const contests = [
+    {
+      id: "contest_nba_main",
+      name: `${sport.toUpperCase()} Main Slate`,
+      sport_id: sport === "nba" ? "4" : "1",
+      entry_fee: 25,
+      total_payouts: 100000,
+      max_entries: 150000,
+      starts_at: new Date(Date.now() + 3600000).toISOString(),
+      salary_cap: 50000,
+      draft_group_id: `dg_${sport}_${Date.now()}`,
+    },
+    {
+      id: "contest_nba_turbo",
+      name: `${sport.toUpperCase()} Turbo`,
+      sport_id: sport === "nba" ? "4" : "1",
+      entry_fee: 3,
+      total_payouts: 10000,
+      max_entries: 25000,
+      starts_at: new Date(Date.now() + 1800000).toISOString(),
+      salary_cap: 50000,
+      draft_group_id: `dg_${sport}_turbo_${Date.now()}`,
+    },
+  ];
+
+  res.json(contests);
+});
+
+app.get("/api/dailyfantasy/contests/:contestId/players", (req, res) => {
+  const { contestId } = req.params;
+  const players = [
+    {
+      id: "player_lebron",
+      name: "LeBron James",
+      position: "SF",
+      team_abbreviation: "LAL",
+      salary: 11500,
+      projected_fantasy_points: 58.2,
+      average_fantasy_points: 56.8,
+      injury_status: "GTD",
+      game_info: {
+        game_date: new Date().toISOString(),
+        opponent: "GSW",
+        home_away: "HOME",
+      },
+    },
+    {
+      id: "player_curry",
+      name: "Stephen Curry",
+      position: "PG",
+      team_abbreviation: "GSW",
+      salary: 10800,
+      projected_fantasy_points: 54.7,
+      average_fantasy_points: 52.3,
+      game_info: {
+        game_date: new Date().toISOString(),
+        opponent: "LAL",
+        home_away: "AWAY",
+      },
+    },
+    {
+      id: "player_ad",
+      name: "Anthony Davis",
+      position: "C",
+      team_abbreviation: "LAL",
+      salary: 10200,
+      projected_fantasy_points: 52.1,
+      average_fantasy_points: 50.4,
+      game_info: {
+        game_date: new Date().toISOString(),
+        opponent: "GSW",
+        home_away: "HOME",
+      },
+    },
+  ];
+
+  res.json(players);
+});
+
+// Enhanced TheOdds API endpoints
+app.get("/api/theodds/sports", (req, res) => {
+  const sports = [
+    {
+      key: "americanfootball_nfl",
+      group: "American Football",
+      title: "NFL",
+      description: "National Football League",
+      active: true,
+      has_outrights: true,
+    },
+    {
+      key: "basketball_nba",
+      group: "Basketball",
+      title: "NBA",
+      description: "National Basketball Association",
+      active: true,
+      has_outrights: true,
+    },
+    {
+      key: "baseball_mlb",
+      group: "Baseball",
+      title: "MLB",
+      description: "Major League Baseball",
+      active: true,
+      has_outrights: true,
+    },
+  ];
+
+  res.json(sports);
+});
+
+app.get("/api/theodds/odds/:sport", (req, res) => {
+  const { sport } = req.params;
+  const { regions = "us", markets = "h2h", oddsFormat = "decimal" } = req.query;
+
+  const events = [
+    {
+      id: `${sport}_event_1`,
+      sport_key: sport,
+      sport_title: sport.toUpperCase(),
+      commence_time: new Date(Date.now() + 3600000).toISOString(),
+      home_team: "Lakers",
+      away_team: "Warriors",
+      bookmakers: [
+        {
+          key: "draftkings",
+          title: "DraftKings",
+          last_update: new Date().toISOString(),
+          markets: [
+            {
+              key: "h2h",
+              last_update: new Date().toISOString(),
+              outcomes: [
+                { name: "Lakers", price: 1.91 },
+                { name: "Warriors", price: 1.95 },
+              ],
+            },
+            {
+              key: "spreads",
+              last_update: new Date().toISOString(),
+              outcomes: [
+                { name: "Lakers", price: 1.91, point: -3.5 },
+                { name: "Warriors", price: 1.91, point: 3.5 },
+              ],
+            },
+            {
+              key: "totals",
+              last_update: new Date().toISOString(),
+              outcomes: [
+                { name: "Over", price: 1.91, point: 225.5 },
+                { name: "Under", price: 1.91, point: 225.5 },
+              ],
+            },
+          ],
+        },
+        {
+          key: "fanduel",
+          title: "FanDuel",
+          last_update: new Date().toISOString(),
+          markets: [
+            {
+              key: "h2h",
+              last_update: new Date().toISOString(),
+              outcomes: [
+                { name: "Lakers", price: 1.89 },
+                { name: "Warriors", price: 1.97 },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ];
+
+  res.json(events);
+});
+
+// Sportsbook aggregation endpoints
+app.get("/api/sportsbook/aggregated-odds/:sport", (req, res) => {
+  const { sport } = req.params;
+  const { league } = req.query;
+
+  const aggregatedEvents = [
+    {
+      event_id: `${sport}_agg_1`,
+      sport,
+      league: league || "NFL",
+      commence_time: new Date(Date.now() + 3600000).toISOString(),
+      home_team: "Lakers",
+      away_team: "Warriors",
+      sportsbooks: [
+        {
+          sportsbook: "DraftKings",
+          moneyline_home: -110,
+          moneyline_away: +105,
+          spread_home: -110,
+          spread_away: -110,
+          spread_line: -3.5,
+          total_over: -110,
+          total_under: -110,
+          total_line: 225.5,
+          last_updated: new Date().toISOString(),
+        },
+        {
+          sportsbook: "FanDuel",
+          moneyline_home: -115,
+          moneyline_away: +110,
+          spread_home: -105,
+          spread_away: -115,
+          spread_line: -3.5,
+          total_over: -105,
+          total_under: -115,
+          total_line: 226.0,
+          last_updated: new Date().toISOString(),
+        },
+      ],
+      best_odds: {
+        moneyline_home: {
+          sportsbook: "DraftKings",
+          moneyline_home: -110,
+          last_updated: new Date().toISOString(),
+        },
+        moneyline_away: {
+          sportsbook: "FanDuel",
+          moneyline_away: +110,
+          last_updated: new Date().toISOString(),
+        },
+        spread_home: {
+          sportsbook: "FanDuel",
+          spread_home: -105,
+          spread_line: -3.5,
+          last_updated: new Date().toISOString(),
+        },
+        spread_away: {
+          sportsbook: "DraftKings",
+          spread_away: -110,
+          spread_line: 3.5,
+          last_updated: new Date().toISOString(),
+        },
+        over: {
+          sportsbook: "FanDuel",
+          total_over: -105,
+          total_line: 226.0,
+          last_updated: new Date().toISOString(),
+        },
+        under: {
+          sportsbook: "DraftKings",
+          total_under: -110,
+          total_line: 225.5,
+          last_updated: new Date().toISOString(),
+        },
+      },
+    },
+  ];
+
+  res.json(aggregatedEvents);
+});
+
+app.get("/api/sportsbook/health/:sportsbook", (req, res) => {
+  const { sportsbook } = req.params;
+
+  // Simulate varying availability
+  const isHealthy = Math.random() > 0.2; // 80% uptime
+
+  if (isHealthy) {
+    res.json({
+      sportsbook,
+      status: "healthy",
+      response_time: Math.floor(Math.random() * 200) + 50,
+      last_check: new Date().toISOString(),
+    });
+  } else {
+    res.status(503).json({
+      sportsbook,
+      status: "degraded",
+      error: "Service temporarily unavailable",
+      last_check: new Date().toISOString(),
+    });
+  }
+});
+
+app.get("/api/sportsbook/health", (req, res) => {
+  const sportsbooks = ["draftkings", "fanduel", "betmgm", "caesars"];
+  const health = {};
+
+  sportsbooks.forEach((book) => {
+    health[book] = {
+      status: Math.random() > 0.2 ? "healthy" : "degraded",
+      response_time: Math.floor(Math.random() * 200) + 50,
+      last_check: new Date().toISOString(),
+    };
+  });
+
+  res.json({
+    overall: Object.values(health).some((h) => h.status === "healthy")
+      ? "healthy"
+      : "degraded",
+    sportsbooks: health,
+    last_updated: new Date().toISOString(),
+  });
+});
+
 // Ollama LLM endpoints
 app.get("/api/ollama/status", (req, res) => {
   res.json({
