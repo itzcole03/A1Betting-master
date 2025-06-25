@@ -11,6 +11,7 @@ import { enhancedTheOddsService } from "./TheOddsService";
 import { sportsbookDataService } from "./SportsbookDataService";
 import { optimizedSportsRadarService } from "./OptimizedSportsRadarService";
 import { autonomousSportsbookService } from "./AutonomousSportsbookService";
+import { prizePicksProjectionsService } from "./PrizePicksProjectionsService";
 
 interface UnifiedSportsData {
   sport: string;
