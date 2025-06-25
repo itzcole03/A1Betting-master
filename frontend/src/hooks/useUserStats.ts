@@ -186,7 +186,7 @@ const useUserStats = () => {
   const fetchSystemAccuracy = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8000/api/ultra-accuracy/model-performance",
+        getApiUrl("/ultra-accuracy/model-performance"),
       );
       if (response.ok) {
         const data = await response.json();
