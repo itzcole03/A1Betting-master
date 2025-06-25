@@ -192,6 +192,18 @@ const EnhancedAPITestDashboard: React.FC = () => {
             >
               Refresh Health Status
             </button>
+
+            <button
+              onClick={runProductionValidation}
+              disabled={isValidating}
+              className={`px-6 py-2 rounded-lg font-semibold ${
+                isValidating
+                  ? "bg-gray-600 cursor-not-allowed"
+                  : "bg-purple-600 hover:bg-purple-700"
+              }`}
+            >
+              {isValidating ? "Validating..." : "Production Validation"}
+            </button>
           </div>
         </div>
 
