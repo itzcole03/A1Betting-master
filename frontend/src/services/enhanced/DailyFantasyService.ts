@@ -457,6 +457,7 @@ export class EnhancedDailyFantasyService {
       backend: { status: "unknown", message: "" },
       sportsDataIO: { status: "unknown", message: "" },
       fairPlay: { status: "unknown", message: "" },
+      prizePicks: { status: "unknown", message: "" },
     };
 
     // Test backend
