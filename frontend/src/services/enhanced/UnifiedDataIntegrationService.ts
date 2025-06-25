@@ -9,6 +9,8 @@
 import { enhancedDailyFantasyService } from "./DailyFantasyService";
 import { enhancedTheOddsService } from "./TheOddsService";
 import { sportsbookDataService } from "./SportsbookDataService";
+import { optimizedSportsRadarService } from "./OptimizedSportsRadarService";
+import { autonomousSportsbookService } from "./AutonomousSportsbookService";
 
 interface UnifiedSportsData {
   sport: string;
