@@ -123,9 +123,10 @@ export class UnifiedDataIntegrationService {
       const unifiedData = await this.mergeDataSources(
         sport,
         league,
-        oddsData,
+        theOddsData,
+        sportsRadarData,
         dfsData,
-        sportsbookData,
+        autonomousSportsbookData,
       );
 
       // Cache the result
