@@ -25,6 +25,9 @@ import {
 import { productionApiService, api } from "@/services/api/ProductionApiService";
 import { logger, logUserAction, logError } from "@/utils/logger";
 import OfflineIndicator from "@/components/ui/OfflineIndicator";
+import UnifiedSportSelector from "@/components/common/UnifiedSportSelector";
+import { filterSportData } from "@/utils/sportFiltering";
+import { UNIFIED_SPORTS, getSportDisplayName } from "@/constants/unifiedSports";
 
 // ============================================================================
 // INTERFACES & TYPES
@@ -79,7 +82,7 @@ interface LineupEntry {
 }
 
 interface PrizePicksConfig {
-  sport: "all" | "nba" | "nfl" | "mlb" | "soccer";
+  sport: string;
   maxPicks: number;
   minConfidence: number;
   entrySize: number;
@@ -112,8 +115,10 @@ const getPickTypeColor = (pickType: "normal" | "demon" | "goblin"): string => {
 };
 
 const getConfidenceColor = (confidence: number): string => {
-  if (confidence >= 80) return "text-green-600 bg-green-100 dark:bg-green-900/20";
-  if (confidence >= 60) return "text-yellow-600 bg-yellow-100 dark:bg-yellow-900/20";
+  if (confidence >= 80)
+    return "text-green-600 bg-green-100 dark:bg-green-900/20";
+  if (confidence >= 60)
+    return "text-yellow-600 bg-yellow-100 dark:bg-yellow-900/20";
   return "text-red-600 bg-red-100 dark:bg-red-900/20";
 };
 
@@ -126,9 +131,11 @@ const PrizePicksPro: React.FC = () => {
   const [selectedPicks, setSelectedPicks] = useState<SelectedPick[]>([]);
   const [lineup, setLineup] = useState<LineupEntry[]>([]);
   const [showRecommendations, setShowRecommendations] = useState(false);
-  const [activeTab, setActiveTab] = useState<"picks" | "lineup" | "history">("picks");
+  const [activeTab, setActiveTab] = useState<"picks" | "lineup" | "history">(
+    "picks",
+  );
   const [config, setConfig] = useState<PrizePicksConfig>({
-    sport: "all",
+    sport: UNIFIED_SPORTS.ALL,
     maxPicks: 6,
     minConfidence: 70,
     entrySize: 25,
@@ -138,7 +145,9 @@ const PrizePicksPro: React.FC = () => {
   const [autoSelect, setAutoSelect] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState<"confidence" | "edge" | "player">("confidence");
+  const [sortBy, setSortBy] = useState<"confidence" | "edge" | "player">(
+    "confidence",
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [props, setProps] = useState<PlayerProp[]>([]);
@@ -148,16 +157,18 @@ const PrizePicksPro: React.FC = () => {
   const fetchProps = useCallback(async () => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const response = await api.getPrizePicksProps({
         sport: config.sport,
         minConfidence: config.minConfidence,
       });
-      
+
       if (response.success && response.data) {
         setProps(response.data);
-        logger.info("Successfully fetched PrizePicks props", { count: response.data.length });
+        logger.info("Successfully fetched PrizePicks props", {
+          count: response.data.length,
+        });
       } else {
         throw new Error(response.error || "Failed to fetch props");
       }
@@ -165,7 +176,9 @@ const PrizePicksPro: React.FC = () => {
       logger.error("Failed to fetch PrizePicks props", err);
       // Production error handling - no fallback data
       setProps([]);
-      setError("Failed to load props. Please check your connection and try again.");
+      setError(
+        "Failed to load props. Please check your connection and try again.",
+      );
       logger.error("API Error fetching props:", err);
     } finally {
       setIsLoading(false);
@@ -179,7 +192,7 @@ const PrizePicksPro: React.FC = () => {
         strategy: config.strategy,
         minConfidence: config.minConfidence,
       });
-      
+
       if (response.success && response.data) {
         setRecommendations(response.data);
       } else {
@@ -188,7 +201,9 @@ const PrizePicksPro: React.FC = () => {
     } catch (err) {
       logger.error("Failed to fetch recommendations", err);
       // Production error handling - no fallback data
-      setError("Failed to load AI recommendations. Please check your connection and try again.");
+      setError(
+        "Failed to load AI recommendations. Please check your connection and try again.",
+      );
       setRecommendations([]);
     }
   }, [config]);
@@ -216,9 +231,9 @@ const PrizePicksPro: React.FC = () => {
 
   // Effects
   useEffect(() => {
-    logUserAction("prizepicks_pro_opened", { 
+    logUserAction("prizepicks_pro_opened", {
       config,
-      selectedPicksCount: selectedPicks.length 
+      selectedPicksCount: selectedPicks.length,
     });
     fetchProps();
   }, [fetchProps, config, selectedPicks.length]);
@@ -239,7 +254,7 @@ const PrizePicksPro: React.FC = () => {
   const handlePickToggle = (prop: PlayerProp, choice: "over" | "under") => {
     const propId = prop.id;
     const existingIndex = selectedPicks.findIndex(
-      (pick) => pick.propId === propId
+      (pick) => pick.propId === propId,
     );
 
     if (existingIndex >= 0) {
@@ -250,8 +265,8 @@ const PrizePicksPro: React.FC = () => {
       } else {
         setSelectedPicks((prev) =>
           prev.map((pick, i) =>
-            i === existingIndex ? { ...pick, choice } : pick
-          )
+            i === existingIndex ? { ...pick, choice } : pick,
+          ),
         );
         logUserAction("pick_updated", { propId, choice });
       }
@@ -276,12 +291,12 @@ const PrizePicksPro: React.FC = () => {
 
   const calculatePickEV = (
     prop: PlayerProp,
-    choice: "over" | "under"
+    choice: "over" | "under",
   ): number => {
     const odds = choice === "over" ? prop.overOdds : prop.underOdds;
     const impliedProb = Math.abs(odds) / (Math.abs(odds) + 100);
     const trueProbability = prop.confidence / 100;
-    
+
     if (choice === "under") {
       return (1 - trueProbability) / impliedProb - 1;
     }
@@ -297,8 +312,13 @@ const PrizePicksPro: React.FC = () => {
     const entryFee = config.entrySize;
     const multiplier = calculateMultiplier(selectedPicks.length);
     const potentialPayout = entryFee * multiplier;
-    const avgConfidence = selectedPicks.reduce((sum, pick) => sum + pick.confidence, 0) / selectedPicks.length;
-    const expectedValue = selectedPicks.reduce((sum, pick) => sum + pick.edge, 0);
+    const avgConfidence =
+      selectedPicks.reduce((sum, pick) => sum + pick.confidence, 0) /
+      selectedPicks.length;
+    const expectedValue = selectedPicks.reduce(
+      (sum, pick) => sum + pick.edge,
+      0,
+    );
 
     const newLineup: LineupEntry = {
       id: `lineup_${Date.now()}`,
@@ -314,28 +334,36 @@ const PrizePicksPro: React.FC = () => {
     setLineup((prev) => [...prev, newLineup]);
     setSelectedPicks([]);
     setActiveTab("lineup");
-    
-    logUserAction("lineup_created", { 
+
+    logUserAction("lineup_created", {
       pickCount: selectedPicks.length,
       entryFee,
-      potentialPayout 
+      potentialPayout,
     });
     alert("Lineup created successfully!");
   };
 
-  // Filtered and sorted props
+  // Filtered and sorted props with unified sport filtering
   const filteredProps = useMemo(() => {
-    const filtered = props.filter((prop) => {
-      const matchesSearch = 
+    // First filter by sport using unified filtering
+    let filtered = filterSportData(props, config.sport, {
+      useCommonMappings: true,
+      allowPartialMatch: true,
+      caseSensitive: false,
+    });
+
+    // Then apply other filters
+    filtered = filtered.filter((prop) => {
+      const matchesSearch =
         prop.player.toLowerCase().includes(searchQuery.toLowerCase()) ||
         prop.stat.toLowerCase().includes(searchQuery.toLowerCase()) ||
         prop.team.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      const matchesSport = config.sport === "all" || prop.sport.toLowerCase() === config.sport.toLowerCase();
-      const matchesConfidence = prop.confidence >= config.minConfidence;
-      const matchesPickType = !config.focusOnDemonsGoblins || prop.pickType !== "normal";
 
-      return matchesSearch && matchesSport && matchesConfidence && matchesPickType;
+      const matchesConfidence = prop.confidence >= config.minConfidence;
+      const matchesPickType =
+        !config.focusOnDemonsGoblins || prop.pickType !== "normal";
+
+      return matchesSearch && matchesConfidence && matchesPickType;
     });
 
     // Sort props
@@ -357,12 +385,12 @@ const PrizePicksPro: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-      <OfflineIndicator 
-        show={!!error} 
-        service="PrizePicks API" 
+      <OfflineIndicator
+        show={!!error}
+        service="PrizePicks API"
         onRetry={fetchProps}
       />
-      
+
       {/* Header */}
       <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-b border-slate-200 dark:border-slate-700 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -380,7 +408,12 @@ const PrizePicksPro: React.FC = () => {
                 </div>
                 {selectedPicks.length > 0 && (
                   <div className="px-3 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300 rounded-full text-sm font-medium">
-                    ${(config.entrySize * calculateMultiplier(selectedPicks.length)).toFixed(2)} Potential
+                    $
+                    {(
+                      config.entrySize *
+                      calculateMultiplier(selectedPicks.length)
+                    ).toFixed(2)}{" "}
+                    Potential
                   </div>
                 )}
               </div>
@@ -398,7 +431,7 @@ const PrizePicksPro: React.FC = () => {
               >
                 <Brain className="h-5 w-5" />
               </button>
-              
+
               <button
                 onClick={() => setAutoSelect(!autoSelect)}
                 className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
@@ -417,7 +450,9 @@ const PrizePicksPro: React.FC = () => {
                 className="p-2 bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-600 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-600 transition-colors disabled:opacity-50"
                 title="Refresh data"
               >
-                <RefreshCw className={`h-5 w-5 ${isLoading ? "animate-spin" : ""}`} />
+                <RefreshCw
+                  className={`h-5 w-5 ${isLoading ? "animate-spin" : ""}`}
+                />
               </button>
             </div>
           </div>
@@ -474,19 +509,17 @@ const PrizePicksPro: React.FC = () => {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
-                  
-                  <select
-                    value={config.sport}
-                    onChange={(e) => setConfig(prev => ({ ...prev, sport: e.target.value as any }))}
-                    className="px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    title="Select sport filter"
-                  >
-                    <option value="all">All Sports</option>
-                    <option value="nba">NBA</option>
-                    <option value="nfl">NFL</option>
-                    <option value="mlb">MLB</option>
-                    <option value="soccer">Soccer</option>
-                  </select>
+
+                  <UnifiedSportSelector
+                    selectedSport={config.sport}
+                    onSportChange={(sport) =>
+                      setConfig((prev) => ({ ...prev, sport }))
+                    }
+                    showEmojis={true}
+                    showColors={false}
+                    includeAll={true}
+                    className="min-w-[180px]"
+                  />
 
                   <select
                     value={sortBy}
@@ -505,10 +538,17 @@ const PrizePicksPro: React.FC = () => {
                     <input
                       type="checkbox"
                       checked={config.focusOnDemonsGoblins}
-                      onChange={(e) => setConfig(prev => ({ ...prev, focusOnDemonsGoblins: e.target.checked }))}
+                      onChange={(e) =>
+                        setConfig((prev) => ({
+                          ...prev,
+                          focusOnDemonsGoblins: e.target.checked,
+                        }))
+                      }
                       className="rounded border-slate-300 dark:border-slate-600 text-blue-600 focus:ring-blue-500"
                     />
-                    <span className="text-sm text-slate-600 dark:text-slate-400">Demons & Goblins Only</span>
+                    <span className="text-sm text-slate-600 dark:text-slate-400">
+                      Demons & Goblins Only
+                    </span>
                   </label>
                 </div>
               </div>
@@ -518,7 +558,10 @@ const PrizePicksPro: React.FC = () => {
             {isLoading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 border border-slate-200 dark:border-slate-700 animate-pulse">
+                  <div
+                    key={i}
+                    className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-xl p-6 border border-slate-200 dark:border-slate-700 animate-pulse"
+                  >
                     <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded mb-4"></div>
                     <div className="h-8 bg-slate-200 dark:bg-slate-700 rounded mb-2"></div>
                     <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded mb-4"></div>
@@ -532,8 +575,10 @@ const PrizePicksPro: React.FC = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProps.map((prop) => {
-                  const selectedPick = selectedPicks.find(p => p.propId === prop.id);
-                  
+                  const selectedPick = selectedPicks.find(
+                    (p) => p.propId === prop.id,
+                  );
+
                   return (
                     <div
                       key={prop.id}
@@ -547,16 +592,23 @@ const PrizePicksPro: React.FC = () => {
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
                           <div className="flex items-center space-x-2 mb-1">
-                            <h3 className="font-bold text-slate-900 dark:text-slate-100">{prop.player}</h3>
-                            <span className={`px-2 py-1 text-xs font-medium rounded-full ${getPickTypeColor(prop.pickType)}`}>
+                            <h3 className="font-bold text-slate-900 dark:text-slate-100">
+                              {prop.player}
+                            </h3>
+                            <span
+                              className={`px-2 py-1 text-xs font-medium rounded-full ${getPickTypeColor(prop.pickType)}`}
+                            >
                               {prop.pickType.toUpperCase()}
                             </span>
                           </div>
                           <p className="text-sm text-slate-600 dark:text-slate-400">
-                            {prop.team} {prop.opponent} • {new Date(prop.gameTime).toLocaleDateString()}
+                            {prop.team} {prop.opponent} •{" "}
+                            {new Date(prop.gameTime).toLocaleDateString()}
                           </p>
                         </div>
-                        <div className={`px-2 py-1 text-xs font-bold rounded-full ${getConfidenceColor(prop.confidence)}`}>
+                        <div
+                          className={`px-2 py-1 text-xs font-bold rounded-full ${getConfidenceColor(prop.confidence)}`}
+                        >
                           {prop.confidence.toFixed(0)}%
                         </div>
                       </div>
@@ -567,7 +619,9 @@ const PrizePicksPro: React.FC = () => {
                           {prop.line} {prop.stat}
                         </div>
                         <div className="text-sm text-slate-600 dark:text-slate-400">
-                          Projection: {prop.projection.toFixed(1)} | Edge: {prop.edge > 0 ? "+" : ""}{prop.edge.toFixed(1)}%
+                          Projection: {prop.projection.toFixed(1)} | Edge:{" "}
+                          {prop.edge > 0 ? "+" : ""}
+                          {prop.edge.toFixed(1)}%
                         </div>
                       </div>
 
@@ -583,10 +637,12 @@ const PrizePicksPro: React.FC = () => {
                         >
                           <div className="text-center">
                             <div className="font-bold">Over</div>
-                            <div className="text-sm">{formatOdds(prop.overOdds)}</div>
+                            <div className="text-sm">
+                              {formatOdds(prop.overOdds)}
+                            </div>
                           </div>
                         </button>
-                        
+
                         <button
                           onClick={() => handlePickToggle(prop, "under")}
                           className={`px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
@@ -597,7 +653,9 @@ const PrizePicksPro: React.FC = () => {
                         >
                           <div className="text-center">
                             <div className="font-bold">Under</div>
-                            <div className="text-sm">{formatOdds(prop.underOdds)}</div>
+                            <div className="text-sm">
+                              {formatOdds(prop.underOdds)}
+                            </div>
                           </div>
                         </button>
                       </div>
@@ -610,10 +668,15 @@ const PrizePicksPro: React.FC = () => {
                         </div>
                         <div className="flex justify-between">
                           <span>Form:</span>
-                          <span className={`font-medium ${
-                            prop.recentForm === "hot" ? "text-red-500" : 
-                            prop.recentForm === "cold" ? "text-blue-500" : "text-slate-500"
-                          }`}>
+                          <span
+                            className={`font-medium ${
+                              prop.recentForm === "hot"
+                                ? "text-red-500"
+                                : prop.recentForm === "cold"
+                                  ? "text-blue-500"
+                                  : "text-slate-500"
+                            }`}
+                          >
                             {prop.recentForm.toUpperCase()}
                           </span>
                         </div>
@@ -628,7 +691,9 @@ const PrizePicksPro: React.FC = () => {
             {selectedPicks.length > 0 && (
               <div className="fixed bottom-6 right-6 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 p-6 max-w-sm">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-bold text-slate-900 dark:text-slate-100">Selected Picks</h3>
+                  <h3 className="font-bold text-slate-900 dark:text-slate-100">
+                    Selected Picks
+                  </h3>
                   <button
                     onClick={() => setSelectedPicks([])}
                     className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"
@@ -637,10 +702,13 @@ const PrizePicksPro: React.FC = () => {
                     <X className="h-4 w-4" />
                   </button>
                 </div>
-                
+
                 <div className="space-y-2 mb-4 max-h-48 overflow-y-auto">
                   {selectedPicks.map((pick) => (
-                    <div key={pick.propId} className="flex items-center justify-between text-sm bg-slate-50 dark:bg-slate-700 rounded-lg p-2">
+                    <div
+                      key={pick.propId}
+                      className="flex items-center justify-between text-sm bg-slate-50 dark:bg-slate-700 rounded-lg p-2"
+                    >
                       <div>
                         <div className="font-medium">{pick.player}</div>
                         <div className="text-slate-500 dark:text-slate-400">
@@ -648,7 +716,9 @@ const PrizePicksPro: React.FC = () => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className={`font-bold ${getConfidenceColor(pick.confidence)}`}>
+                        <div
+                          className={`font-bold ${getConfidenceColor(pick.confidence)}`}
+                        >
                           {pick.confidence.toFixed(0)}%
                         </div>
                       </div>
@@ -664,10 +734,14 @@ const PrizePicksPro: React.FC = () => {
                   <div className="flex justify-between text-sm mb-4">
                     <span>Potential Payout:</span>
                     <span className="font-bold text-green-600">
-                      ${(config.entrySize * calculateMultiplier(selectedPicks.length)).toFixed(2)}
+                      $
+                      {(
+                        config.entrySize *
+                        calculateMultiplier(selectedPicks.length)
+                      ).toFixed(2)}
                     </span>
                   </div>
-                  
+
                   <button
                     onClick={handleCreateLineup}
                     disabled={selectedPicks.length < 2}
@@ -686,9 +760,12 @@ const PrizePicksPro: React.FC = () => {
             {lineup.length === 0 ? (
               <div className="text-center py-12">
                 <Users className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-slate-900 dark:text-slate-100 mb-2">No Lineups Yet</h3>
+                <h3 className="text-lg font-medium text-slate-900 dark:text-slate-100 mb-2">
+                  No Lineups Yet
+                </h3>
                 <p className="text-slate-600 dark:text-slate-400 mb-6">
-                  Create your first lineup by selecting player props and clicking "Create Lineup"
+                  Create your first lineup by selecting player props and
+                  clicking "Create Lineup"
                 </p>
                 <button
                   onClick={() => setActiveTab("picks")}
@@ -708,27 +785,38 @@ const PrizePicksPro: React.FC = () => {
                       <h3 className="font-bold text-slate-900 dark:text-slate-100">
                         {entry.picks.length}-Pick Entry
                       </h3>
-                      <span className={`px-3 py-1 text-sm font-medium rounded-full ${
-                        entry.status === "draft" ? "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300" :
-                        entry.status === "submitted" ? "bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300" :
-                        entry.status === "live" ? "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300" :
-                        "bg-slate-100 dark:bg-slate-900/20 text-slate-800 dark:text-slate-300"
-                      }`}>
+                      <span
+                        className={`px-3 py-1 text-sm font-medium rounded-full ${
+                          entry.status === "draft"
+                            ? "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-300"
+                            : entry.status === "submitted"
+                              ? "bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-300"
+                              : entry.status === "live"
+                                ? "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300"
+                                : "bg-slate-100 dark:bg-slate-900/20 text-slate-800 dark:text-slate-300"
+                        }`}
+                      >
                         {entry.status.toUpperCase()}
                       </span>
                     </div>
 
                     <div className="space-y-2 mb-4">
                       {entry.picks.map((pick, index) => (
-                        <div key={index} className="flex items-center justify-between text-sm bg-slate-50 dark:bg-slate-700 rounded-lg p-3">
+                        <div
+                          key={index}
+                          className="flex items-center justify-between text-sm bg-slate-50 dark:bg-slate-700 rounded-lg p-3"
+                        >
                           <div>
                             <div className="font-medium">{pick.player}</div>
                             <div className="text-slate-500 dark:text-slate-400">
-                              {pick.choice.toUpperCase()} {pick.line} {pick.stat}
+                              {pick.choice.toUpperCase()} {pick.line}{" "}
+                              {pick.stat}
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className={`text-xs font-medium ${getConfidenceColor(pick.confidence)}`}>
+                            <div
+                              className={`text-xs font-medium ${getConfidenceColor(pick.confidence)}`}
+                            >
                               {pick.confidence.toFixed(0)}%
                             </div>
                           </div>
@@ -739,20 +827,32 @@ const PrizePicksPro: React.FC = () => {
                     <div className="border-t border-slate-200 dark:border-slate-700 pt-4">
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
-                          <div className="text-slate-500 dark:text-slate-400">Entry Fee</div>
+                          <div className="text-slate-500 dark:text-slate-400">
+                            Entry Fee
+                          </div>
                           <div className="font-bold">${entry.entryFee}</div>
                         </div>
                         <div>
-                          <div className="text-slate-500 dark:text-slate-400">Potential Payout</div>
-                          <div className="font-bold text-green-600">${entry.potentialPayout.toFixed(2)}</div>
+                          <div className="text-slate-500 dark:text-slate-400">
+                            Potential Payout
+                          </div>
+                          <div className="font-bold text-green-600">
+                            ${entry.potentialPayout.toFixed(2)}
+                          </div>
                         </div>
                         <div>
-                          <div className="text-slate-500 dark:text-slate-400">Multiplier</div>
+                          <div className="text-slate-500 dark:text-slate-400">
+                            Multiplier
+                          </div>
                           <div className="font-bold">{entry.multiplier}x</div>
                         </div>
                         <div>
-                          <div className="text-slate-500 dark:text-slate-400">Win Probability</div>
-                          <div className="font-bold">{entry.winProbability.toFixed(1)}%</div>
+                          <div className="text-slate-500 dark:text-slate-400">
+                            Win Probability
+                          </div>
+                          <div className="font-bold">
+                            {entry.winProbability.toFixed(1)}%
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -777,7 +877,9 @@ const PrizePicksPro: React.FC = () => {
         {activeTab === "history" && (
           <div className="text-center py-12">
             <BarChart3 className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-slate-900 dark:text-slate-100 mb-2">Coming Soon</h3>
+            <h3 className="text-lg font-medium text-slate-900 dark:text-slate-100 mb-2">
+              Coming Soon
+            </h3>
             <p className="text-slate-600 dark:text-slate-400">
               Track your performance and analyze your betting history
             </p>
