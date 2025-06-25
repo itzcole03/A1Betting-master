@@ -116,7 +116,7 @@ export function backendPlugin() {
         },
       };
 
-      // Add routes as middleware
+      // Add routes as middleware - must run before Vite's SPA fallback
       server.middlewares.use("/health", (req: any, res: any, next: any) => {
         if (req.method === "GET") {
           console.log("[Backend Plugin] Health check requested");
