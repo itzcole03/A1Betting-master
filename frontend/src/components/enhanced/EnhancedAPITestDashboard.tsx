@@ -114,6 +114,20 @@ const EnhancedAPITestDashboard: React.FC = () => {
     }
   };
 
+  const runProductionValidation = async () => {
+    setIsValidating(true);
+    try {
+      const report =
+        await productionValidationService.validateProductionReadiness();
+      setProductionReport(report);
+      console.log("Production Validation Report:", report);
+    } catch (error) {
+      console.error("Production validation failed:", error);
+    } finally {
+      setIsValidating(false);
+    }
+  };
+
   useEffect(() => {
     checkHealthStatus();
     const interval = setInterval(checkHealthStatus, 30000); // Every 30 seconds
@@ -361,7 +375,7 @@ const EnhancedAPITestDashboard: React.FC = () => {
               </h3>
               <ul className="text-sm space-y-1">
                 <li>• The-Odds-API</li>
-                <li>��� OddsJam API</li>
+                <li>• OddsJam API</li>
                 <li>• SportsDataIO Odds</li>
                 <li>• Real-time aggregation</li>
               </ul>
