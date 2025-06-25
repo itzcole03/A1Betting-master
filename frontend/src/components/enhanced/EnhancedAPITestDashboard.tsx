@@ -207,6 +207,141 @@ const EnhancedAPITestDashboard: React.FC = () => {
           </div>
         </div>
 
+        {/* Production Validation Section */}
+        {productionReport && (
+          <div className="mb-8 bg-gray-800 rounded-lg p-6">
+            <h2 className="text-xl font-bold mb-4">
+              Production Readiness Validation
+            </h2>
+
+            <div className="mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-4">
+                  <span
+                    className={`px-4 py-2 rounded-lg font-bold text-lg ${
+                      productionReport.overall_status === "ready"
+                        ? "bg-green-600"
+                        : productionReport.overall_status ===
+                            "ready_with_warnings"
+                          ? "bg-yellow-600"
+                          : "bg-red-600"
+                    }`}
+                  >
+                    {productionReport.overall_status
+                      .replace("_", " ")
+                      .toUpperCase()}
+                  </span>
+                  <div className="text-2xl font-bold">
+                    {productionReport.readiness_score}% Ready
+                  </div>
+                </div>
+                <div className="text-right text-sm text-gray-400">
+                  <p>
+                    {productionReport.api_keys_configured.length} API keys
+                    configured
+                  </p>
+                  <p>
+                    {
+                      productionReport.validations.filter(
+                        (v: any) => v.status === "pass",
+                      ).length
+                    }{" "}
+                    validations passed
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="bg-gray-700 rounded-lg p-4">
+                  <h3 className="font-semibold text-green-400 mb-2">
+                    Configured APIs
+                  </h3>
+                  <div className="space-y-1">
+                    {productionReport.api_keys_configured.map((api: string) => (
+                      <div key={api} className="flex items-center text-sm">
+                        <span className="text-green-400 mr-2">✓</span>
+                        {api}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-gray-700 rounded-lg p-4">
+                  <h3 className="font-semibold text-yellow-400 mb-2">
+                    Feature Flags
+                  </h3>
+                  <div className="space-y-1">
+                    {Object.entries(
+                      productionReport.environment_summary.feature_flags,
+                    ).map(([flag, enabled]) => (
+                      <div key={flag} className="flex items-center text-sm">
+                        <span
+                          className={`mr-2 ${enabled ? "text-green-400" : "text-gray-500"}`}
+                        >
+                          {enabled ? "✓" : "○"}
+                        </span>
+                        {flag.replace(/_/g, " ")}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {productionReport.recommendations.length > 0 && (
+                <div className="bg-gray-700 rounded-lg p-4 mb-4">
+                  <h3 className="font-semibold text-blue-400 mb-2">
+                    Recommendations
+                  </h3>
+                  <div className="space-y-2">
+                    {productionReport.recommendations.map(
+                      (rec: string, index: number) => (
+                        <div key={index} className="text-sm text-gray-300">
+                          {rec}
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <details className="bg-gray-700 rounded-lg p-4">
+                <summary className="cursor-pointer font-semibold mb-2">
+                  View Detailed Validation Results (
+                  {productionReport.validations.length} checks)
+                </summary>
+                <div className="space-y-2 mt-2">
+                  {productionReport.validations.map(
+                    (validation: any, index: number) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between py-1 border-b border-gray-600"
+                      >
+                        <span className="text-sm">{validation.service}</span>
+                        <div className="flex items-center gap-2">
+                          <span
+                            className={`px-2 py-1 rounded text-xs font-bold ${
+                              validation.status === "pass"
+                                ? "bg-green-600"
+                                : validation.status === "warning"
+                                  ? "bg-yellow-600"
+                                  : "bg-red-600"
+                            }`}
+                          >
+                            {validation.status.toUpperCase()}
+                          </span>
+                          <span className="text-xs text-gray-400 max-w-md text-right">
+                            {validation.message}
+                          </span>
+                        </div>
+                      </div>
+                    ),
+                  )}
+                </div>
+              </details>
+            </div>
+          </div>
+        )}
+
         {/* Health Status Section */}
         {healthStatus && (
           <div className="mb-8 bg-gray-800 rounded-lg p-6">
