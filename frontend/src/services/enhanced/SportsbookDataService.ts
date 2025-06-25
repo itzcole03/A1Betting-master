@@ -82,8 +82,17 @@ export class SportsbookDataService {
   };
 
   constructor() {
-    this.baseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+    this.baseUrl =
+      import.meta.env.VITE_BACKEND_URL ||
+      import.meta.env.VITE_API_URL ||
+      "http://localhost:8000";
     this.cache = new Map();
+
+    // Production validation
+    console.log(
+      "✓ Enhanced Sportsbook Data Service initialized for production",
+    );
+    console.log(`✓ Backend URL: ${this.baseUrl}`);
   }
 
   private async enforceRateLimit(): Promise<void> {
