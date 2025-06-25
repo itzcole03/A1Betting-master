@@ -116,15 +116,68 @@ export function backendPlugin() {
         },
       };
 
-      // Add routes as middleware - must run before Vite's SPA fallback
-      server.middlewares.use("/health", (req: any, res: any, next: any) => {
-        if (req.method === "GET") {
+      // Add API middleware that handles all API routes
+      server.middlewares.use((req: any, res: any, next: any) => {
+        const url = req.url;
+
+        // Handle /health endpoint
+        if (url === "/health" && req.method === "GET") {
           console.log("[Backend Plugin] Health check requested");
           res.setHeader("Content-Type", "application/json");
           res.setHeader("Access-Control-Allow-Origin", "*");
           res.end(JSON.stringify(mockData.health));
           return;
         }
+
+        // Handle /api/analytics/advanced endpoint
+        if (url === "/api/analytics/advanced" && req.method === "GET") {
+          console.log("[Backend Plugin] Analytics requested");
+          res.setHeader("Content-Type", "application/json");
+          res.setHeader("Access-Control-Allow-Origin", "*");
+          res.end(JSON.stringify(mockData.analytics));
+          return;
+        }
+
+        // Handle /api/active-bets endpoint
+        if (url === "/api/active-bets" && req.method === "GET") {
+          console.log("[Backend Plugin] Active bets requested");
+          res.setHeader("Content-Type", "application/json");
+          res.setHeader("Access-Control-Allow-Origin", "*");
+          res.end(JSON.stringify(mockData.activeBets));
+          return;
+        }
+
+        // Handle /api/transactions endpoint
+        if (url === "/api/transactions" && req.method === "GET") {
+          console.log("[Backend Plugin] Transactions requested");
+          res.setHeader("Content-Type", "application/json");
+          res.setHeader("Access-Control-Allow-Origin", "*");
+          res.end(JSON.stringify(mockData.transactions));
+          return;
+        }
+
+        // Handle /api/health/all endpoint
+        if (url === "/api/health/all" && req.method === "GET") {
+          console.log("[Backend Plugin] Health all requested");
+          res.setHeader("Content-Type", "application/json");
+          res.setHeader("Access-Control-Allow-Origin", "*");
+          res.end(JSON.stringify(mockData.healthAll));
+          return;
+        }
+
+        // Handle /api/ultra-accuracy/model-performance endpoint
+        if (
+          url === "/api/ultra-accuracy/model-performance" &&
+          req.method === "GET"
+        ) {
+          console.log("[Backend Plugin] Model performance requested");
+          res.setHeader("Content-Type", "application/json");
+          res.setHeader("Access-Control-Allow-Origin", "*");
+          res.end(JSON.stringify(mockData.modelPerformance));
+          return;
+        }
+
+        // Continue to next middleware
         next();
       });
 
