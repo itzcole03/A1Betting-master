@@ -1,7 +1,10 @@
 /**
  * Enhanced DailyFantasy Service - Production Ready
  * Integrates with real DFS providers and aggregates data from multiple sources
+ * Now includes PrizePicks free projections API
  */
+
+import { prizePicksProjectionsService } from "./PrizePicksProjectionsService";
 
 // DraftKings unofficial endpoints
 interface DraftKingsContest {
