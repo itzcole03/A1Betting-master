@@ -1,0 +1,4 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Link } from 'react-router-dom';
+const ToggleSidebar = ({ isOpen, onToggle }) => (_jsxs("div", { className: isOpen ? "w-64 bg-gray-800 text-white min-h-screen" : "w-16 bg-gray-800 text-white min-h-screen", children: [_jsx("button", { onClick: onToggle, className: "p-2 hover:bg-gray-700 w-full text-left text-lg", children: isOpen ? "⏴" : "☰" }), isOpen && (_jsxs("ul", { className: "mt-4 space-y-2 pl-4", children: [_jsx("li", { children: _jsx(Link, { to: "/", children: "\uD83C\uDFE0 Home" }) }), _jsx("li", { children: _jsx(Link, { to: "/lineup", children: "\uD83C\uDFC6 Lineup" }) }), _jsx("li", { children: _jsx(Link, { to: "/analytics", children: "\uD83D\uDCCA Analytics" }) }), _jsx("li", { children: _jsx(Link, { to: "/settings", children: "\u2699\uFE0F Settings" }) })] }))] }));
+export default ToggleSidebar;

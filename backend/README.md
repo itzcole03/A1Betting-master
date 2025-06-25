@@ -1,0 +1,40 @@
+# UltimateSportsBettingApp Backend
+
+This directory contains the backend services for the UltimateSportsBettingApp, providing all core data processing, prediction, feature engineering, monitoring, and API endpoints. Each module is documented below.
+
+## Modules
+
+- **admin_api.py**: Admin endpoints and utilities for backend management.
+- **betting_opportunity_service.py**: Service for identifying and managing betting opportunities.
+- **feature_cache.py**: In-memory cache for feature data with TTL support.
+- **feature_engineering.py**: Feature extraction, transformation, selection, and engineering logic for ML models.
+- **feature_flags.py**: Feature flag and experiment management system.
+- **feature_logger.py**: Logging utility for feature processing and pipeline events.
+- **feature_monitor.py**: Tracks feature processing metrics and performance.
+- **feature_registry.py**: Registry for feature configurations and metadata.
+- **feature_selector.py**: Feature selection logic for ML pipelines.
+- **feature_transformation.py**: Feature transformation and normalization utilities.
+- **feature_validator.py**: Validates feature data for completeness and correctness.
+- **filtered_prediction_api.py**: FastAPI router for filtered prediction endpoints.
+- **main.py**: Main FastAPI application entrypoint, service initialization, and API registration.
+- **monitoring_service.py**: Service for monitoring backend performance and generating alerts.
+- **prediction_engine.py**: Unified prediction engine with ensemble, SHAP explainability, and API endpoints.
+- **shap_explainer.py**: SHAP explainability integration for model predictions.
+- **unified_feature_service.py**: Unified pipeline for feature validation, transformation, selection, caching, and monitoring.
+- **ws.py**: WebSocket endpoints for real-time prediction updates.
+
+## Subdirectories
+
+- **tests/**: Unit and integration tests for backend modules.
+- **venv/**, **venv_integration/**, **venv_new/**: Python virtual environments (should be excluded from production).
+- ****pycache**/**, **.pytest_cache/**: Python cache directories (should be excluded from production).
+
+## Usage
+
+- Run the backend with FastAPI using `main.py`.
+- All services are modular and documented with docstrings.
+- See each module for detailed usage and API documentation.
+
+---
+
+_This README is auto-generated. Update as modules evolve._

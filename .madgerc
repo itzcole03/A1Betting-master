@@ -1,0 +1,24 @@
+{
+  "alias": {
+    "@components": "./frontend/src/components",
+    "@utils": "./frontend/src/utils",
+    "@core": "./frontend/src/core",
+    "@services": "./frontend/src/services",
+    "@api": "./frontend/src/api",
+    "@hooks": "./frontend/src/hooks",
+    "@pages": "./frontend/src/pages",
+    "@lib": "./frontend/src/lib",
+    "@assets": "./frontend/src/assets",
+    "@theme": "./frontend/src/theme",
+    "@providers": "./frontend/src/providers",
+    "@config": "./frontend/src/config",
+    "@models": "./frontend/src/models",
+    "@styles": "./frontend/src/styles"
+  },
+  "extensions": [ "js", "jsx", "ts", "tsx" ],
+  "excludeRegExp": [
+    ".*\\.test\\.(js|ts|jsx|tsx)$",
+    ".*\\.stories\\.(js|ts|jsx|tsx)$",
+    ".*\\.d\\.ts$"
+  ]
+}

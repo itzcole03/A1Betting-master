@@ -1,0 +1,5 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { FaFilter, FaSearch } from 'react-icons/fa';
+export const NoResultsFallback = () => {
+    return (_jsxs("div", { className: "text-center py-12 px-4", children: [_jsx("div", { className: "flex justify-center mb-4", children: _jsx("div", { className: "p-4 bg-gray-100 dark:bg-gray-800 rounded-full", children: _jsx(FaFilter, { className: "w-8 h-8 text-gray-400" }) }) }), _jsx("h3", { className: "text-xl font-semibold text-gray-900 dark:text-white mb-2", children: "No Results Found" }), _jsx("p", { className: "text-gray-600 dark:text-gray-400 mb-6", children: "Try adjusting your filters to see more predictions" }), _jsx("div", { className: "flex justify-center space-x-4", children: _jsxs("button", { className: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500", onClick: () => window.location.reload(), children: [_jsx(FaSearch, { className: "w-4 h-4 mr-2" }), "Refresh Predictions"] }) })] }));
+};

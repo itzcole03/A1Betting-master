@@ -1,0 +1,359 @@
+name: Backend CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      [
+        "backend/**",
+        "Dockerfile",
+        "docker-compose.yml",
+        ".github/workflows/backend-deploy.yml",
+      ]
+  pull_request:
+    branches: [main]
+    paths: ["backend/**", "Dockerfile", "docker-compose.yml"]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: a1betting/backend
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test_a1betting
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:7
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio pytest-cov black isort flake8 mypy
+
+      - name: Lint with flake8
+        run: |
+          cd backend
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Check code formatting with black
+        run: |
+          cd backend
+          black --check .
+
+      - name: Check import sorting with isort
+        run: |
+          cd backend
+          isort --check-only .
+
+      - name: Type checking with mypy
+        run: |
+          cd backend
+          mypy . --ignore-missing-imports
+
+      - name: Test with pytest
+        env:
+          A1BETTING_ENVIRONMENT: test
+          A1BETTING_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_a1betting
+          A1BETTING_REDIS_URL: redis://localhost:6379
+          A1BETTING_SECRET_KEY: test-secret-key
+        run: |
+          cd backend
+          pytest --cov=. --cov-report=xml --cov-report=html -v
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./backend/coverage.xml
+          flags: backend
+          name: backend-coverage
+
+  security:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install bandit
+        run: pip install bandit[toml]
+
+      - name: Run security scan with bandit
+        run: |
+          cd backend
+          bandit -r . -f json -o bandit-report.json || true
+
+      - name: Upload security scan results
+        uses: actions/upload-artifact@v3
+        with:
+          name: bandit-report
+          path: backend/bandit-report.json
+
+      - name: Run safety check
+        run: |
+          pip install safety
+          cd backend
+          safety check -r requirements.txt
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test, security]
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          target: production
+
+      - name: Build and push model server image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-models:${{ github.sha }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          target: model-server
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+
+    environment:
+      name: staging
+      url: https://api-staging.a1betting.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to staging
+        env:
+          DEPLOY_HOST: ${{ secrets.STAGING_HOST }}
+          DEPLOY_USER: ${{ secrets.STAGING_USER }}
+          DEPLOY_KEY: ${{ secrets.STAGING_SSH_KEY }}
+          A1BETTING_SECRET_KEY: ${{ secrets.STAGING_SECRET_KEY }}
+          A1BETTING_DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+          A1BETTING_SPORTRADAR_API_KEY: ${{ secrets.SPORTRADAR_API_KEY }}
+          A1BETTING_ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+        run: |
+          echo "$DEPLOY_KEY" > deploy_key
+          chmod 600 deploy_key
+
+          scp -i deploy_key -o StrictHostKeyChecking=no docker-compose.yml $DEPLOY_USER@$DEPLOY_HOST:/app/
+
+          ssh -i deploy_key -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST << 'EOF'
+            cd /app
+            
+            # Set environment variables
+            echo "A1BETTING_ENVIRONMENT=staging" > .env
+            echo "A1BETTING_SECRET_KEY=${{ secrets.STAGING_SECRET_KEY }}" >> .env
+            echo "A1BETTING_DATABASE_URL=${{ secrets.STAGING_DATABASE_URL }}" >> .env
+            echo "A1BETTING_SPORTRADAR_API_KEY=${{ secrets.SPORTRADAR_API_KEY }}" >> .env
+            echo "A1BETTING_ODDS_API_KEY=${{ secrets.ODDS_API_KEY }}" >> .env
+            
+            # Pull latest images
+            docker-compose pull
+            
+            # Deploy with zero downtime
+            docker-compose up -d --remove-orphans
+            
+            # Run health check
+            sleep 30
+            curl -f http://localhost:8000/health || exit 1
+          EOF
+
+      - name: Run integration tests
+        env:
+          STAGING_URL: https://api-staging.a1betting.com
+        run: |
+          cd backend
+          pytest tests/integration/ -v --staging-url=$STAGING_URL
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+
+    environment:
+      name: production
+      url: https://api.a1betting.com
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to production
+        env:
+          DEPLOY_HOST: ${{ secrets.PRODUCTION_HOST }}
+          DEPLOY_USER: ${{ secrets.PRODUCTION_USER }}
+          DEPLOY_KEY: ${{ secrets.PRODUCTION_SSH_KEY }}
+          A1BETTING_SECRET_KEY: ${{ secrets.PRODUCTION_SECRET_KEY }}
+          A1BETTING_DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+          A1BETTING_SPORTRADAR_API_KEY: ${{ secrets.SPORTRADAR_API_KEY }}
+          A1BETTING_ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
+          A1BETTING_PRIZEPICKS_API_KEY: ${{ secrets.PRIZEPICKS_API_KEY }}
+        run: |
+          echo "$DEPLOY_KEY" > deploy_key
+          chmod 600 deploy_key
+
+          # Deploy with blue-green strategy
+          scp -i deploy_key -o StrictHostKeyChecking=no docker-compose.yml $DEPLOY_USER@$DEPLOY_HOST:/app/
+
+          ssh -i deploy_key -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST << 'EOF'
+            cd /app
+            
+            # Set production environment variables
+            echo "A1BETTING_ENVIRONMENT=production" > .env
+            echo "A1BETTING_SECRET_KEY=${{ secrets.PRODUCTION_SECRET_KEY }}" >> .env
+            echo "A1BETTING_DATABASE_URL=${{ secrets.PRODUCTION_DATABASE_URL }}" >> .env
+            echo "A1BETTING_SPORTRADAR_API_KEY=${{ secrets.SPORTRADAR_API_KEY }}" >> .env
+            echo "A1BETTING_ODDS_API_KEY=${{ secrets.ODDS_API_KEY }}" >> .env
+            echo "A1BETTING_PRIZEPICKS_API_KEY=${{ secrets.PRIZEPICKS_API_KEY }}" >> .env
+            
+            # Create backup of current deployment
+            docker-compose config > docker-compose.backup.yml
+            
+            # Pull latest images
+            docker-compose pull
+            
+            # Deploy with rolling update
+            docker-compose up -d --remove-orphans --scale api=2
+            
+            # Health check new instances
+            sleep 60
+            curl -f http://localhost:8000/health || (echo "Health check failed, rolling back..." && docker-compose -f docker-compose.backup.yml up -d && exit 1)
+            
+            # Scale down old instances
+            docker-compose up -d --remove-orphans
+            
+            # Run database migrations
+            docker-compose exec -T api python -c "
+            import asyncio
+            from database import db_manager
+            asyncio.run(db_manager.create_tables())
+            "
+          EOF
+
+      - name: Run production smoke tests
+        env:
+          PRODUCTION_URL: https://api.a1betting.com
+        run: |
+          # Basic smoke tests
+          curl -f $PRODUCTION_URL/health
+          curl -f $PRODUCTION_URL/health/ready
+          curl -f $PRODUCTION_URL/health/live
+
+      - name: Notify deployment
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: |
+            Deployment to production: ${{ job.status }}
+            Commit: ${{ github.sha }}
+            Author: ${{ github.actor }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, deploy-production]
+    if: always()
+
+    steps:
+      - name: Clean up old images
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Keep only the latest 10 images
+          gh api --paginate \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /orgs/a1betting/packages/container/backend/versions \
+            --jq '.[] | select(.metadata.container.tags | length == 0) | .id' \
+          | tail -n +11 \
+          | xargs -I {} gh api \
+            --method DELETE \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /orgs/a1betting/packages/container/backend/versions/{}

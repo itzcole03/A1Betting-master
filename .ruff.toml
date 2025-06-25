@@ -1,0 +1,12 @@
+# Ruff configuration - DISABLED FOR DEVELOPMENT
+# line-length = 120
+# indent-width = 4
+# target-version = "py39"
+
+# [lint] - DISABLED FOR DEVELOPMENT
+# select = ["E", "F", "B", "I", "UP", "C90", "N", "D", "A", "S", "PL", "RUF"]
+# ignore = ["E203"]
+
+# [format] - DISABLED FOR DEVELOPMENT
+# quote-style = "double"
+# indent-style = "space"

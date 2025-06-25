@@ -1,0 +1,15 @@
+{
+  "__archive/backup-files/setupTests.js": [],
+  "__archive/legacy_js/AnalyticsService.js": [],
+  "__archive/legacy_js/api.js": [],
+  "__archive/legacy_js/errorLogger.js": [],
+  "__archive/legacy_js/performanceMonitor.js": [],
+  "__archive/legacy_js/performanceService.js": [],
+  "api/predictions.js": [],
+  "hooks/useConfidenceStats.js": [],
+  "jest.setup-env.js": [],
+  "jest.setup-files.js": [],
+  "test/__mocks__/fileMock.js": [],
+  "test/jest.setup-env.js": [],
+  "test/jest.setup-files.js": []
+}

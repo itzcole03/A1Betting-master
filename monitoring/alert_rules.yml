@@ -1,0 +1,288 @@
+# Alert rules for A1Betting backend monitoring
+
+groups:
+  - name: a1betting.alerts
+    rules:
+      # High-level service alerts
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service {{ $labels.job }} is down"
+          description: "Service {{ $labels.job }} on {{ $labels.instance }} has been down for more than 1 minute."
+
+      - alert: HighErrorRate
+        expr: a1betting:error_rate_5m > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value | humanizePercentage }} for service {{ $labels.job }}"
+
+      - alert: HighResponseTime
+        expr: a1betting:response_time_p95_5m > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High response time detected"
+          description: "95th percentile response time is {{ $value }}s for service {{ $labels.job }}"
+
+      # Database alerts
+      - alert: DatabaseConnectionsHigh
+        expr: a1betting:db_pool_utilization > 0.8
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Database connection pool utilization high"
+          description: "Database connection pool is {{ $value | humanizePercentage }} utilized"
+
+      - alert: DatabaseDown
+        expr: up{job="postgres"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database is down"
+          description: "PostgreSQL database has been down for more than 1 minute"
+
+      - alert: DatabaseSlowQueries
+        expr: pg_stat_activity_max_tx_duration > 300
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Database has slow running queries"
+          description: "Longest running query is {{ $value }}s"
+
+      # Model service alerts
+      - alert: ModelPredictionFailures
+        expr: rate(model_prediction_failures_total[5m]) > 0.1
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High model prediction failure rate"
+          description: "Model prediction failure rate is {{ $value }} per second"
+
+      - alert: ModelAccuracyDrop
+        expr: a1betting:model_accuracy_1h < 0.7
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Model accuracy has dropped"
+          description: "Model accuracy is {{ $value | humanizePercentage }} over the last hour"
+
+      - alert: ModelServiceDown
+        expr: up{job="a1betting-models"} == 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Model service is down"
+          description: "Model inference service has been down for more than 2 minutes"
+
+      # Data pipeline alerts
+      - alert: DataPipelineFailures
+        expr: a1betting:data_pipeline_success_rate_5m < 0.9
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Data pipeline success rate low"
+          description: "Data pipeline success rate is {{ $value | humanizePercentage }}"
+
+      - alert: DataSourceDown
+        expr: data_source_health == 0
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Data source {{ $labels.source }} is down"
+          description: "Data source {{ $labels.source }} has been unavailable for more than 3 minutes"
+
+      - alert: StaleData
+        expr: time() - data_last_updated_timestamp > 1800
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Stale data detected"
+          description: "Data for {{ $labels.source }} hasn't been updated for {{ $value }} seconds"
+
+      # System resource alerts
+      - alert: HighCPUUsage
+        expr: 100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU usage is {{ $value }}% on {{ $labels.instance }}"
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage"
+          description: "Memory usage is {{ $value }}% on {{ $labels.instance }}"
+
+      - alert: DiskSpaceLow
+        expr: (1 - node_filesystem_avail_bytes{fstype!="tmpfs"} / node_filesystem_size_bytes) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low disk space"
+          description: "Disk usage is {{ $value }}% on {{ $labels.instance }}"
+
+      - alert: DiskSpaceCritical
+        expr: (1 - node_filesystem_avail_bytes{fstype!="tmpfs"} / node_filesystem_size_bytes) * 100 > 95
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Critical disk space"
+          description: "Disk usage is {{ $value }}% on {{ $labels.instance }}"
+
+      # Cache alerts
+      - alert: CacheHitRateLow
+        expr: a1betting:cache_hit_rate_5m < 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Low cache hit rate"
+          description: "Cache hit rate is {{ $value | humanizePercentage }}"
+
+      - alert: RedisDown
+        expr: up{job="redis"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis is down"
+          description: "Redis cache server has been down for more than 1 minute"
+
+      # Container alerts
+      - alert: ContainerKilled
+        expr: time() - container_last_seen > 60
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container killed"
+          description: "Container {{ $labels.name }} has disappeared"
+
+      - alert: ContainerCpuUsage
+        expr: (rate(container_cpu_usage_seconds_total[3m]) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container high CPU usage"
+          description: "Container {{ $labels.name }} CPU usage is {{ $value }}%"
+
+      - alert: ContainerMemoryUsage
+        expr: (container_memory_usage_bytes / container_spec_memory_limit_bytes) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Container high memory usage"
+          description: "Container {{ $labels.name }} memory usage is {{ $value }}%"
+
+      # Business logic alerts
+      - alert: BettingOpportunitiesLow
+        expr: betting_opportunities_active < 5
+        for: 15m
+        labels:
+          severity: info
+        annotations:
+          summary: "Low number of betting opportunities"
+          description: "Only {{ $value }} active betting opportunities available"
+
+      - alert: PredictionVolumeHigh
+        expr: rate(predictions_total[5m]) > 100
+        for: 5m
+        labels:
+          severity: info
+        annotations:
+          summary: "High prediction volume"
+          description: "Prediction rate is {{ $value }} per second"
+
+      - alert: UnusualModelBehavior
+        expr: abs(model_prediction_mean_5m - model_prediction_mean_1h) > 0.3
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Unusual model behavior detected"
+          description: "Model {{ $labels.model }} prediction mean has shifted significantly"
+
+  # External dependency alerts
+  - name: external.alerts
+    rules:
+      - alert: APIRateLimitApproaching
+        expr: api_rate_limit_remaining / api_rate_limit_total < 0.2
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "API rate limit approaching"
+          description: "{{ $labels.api }} rate limit is {{ $value | humanizePercentage }} remaining"
+
+      - alert: ExternalAPIDown
+        expr: external_api_success_rate < 0.5
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "External API {{ $labels.api }} is having issues"
+          description: "Success rate for {{ $labels.api }} is {{ $value | humanizePercentage }}"
+
+      - alert: WebSocketConnectionsHigh
+        expr: websocket_connections_active > 1000
+        for: 5m
+        labels:
+          severity: info
+        annotations:
+          summary: "High WebSocket connection count"
+          description: "{{ $value }} active WebSocket connections"
+
+  # Security alerts
+  - name: security.alerts
+    rules:
+      - alert: TooManyFailedLogins
+        expr: rate(auth_failures_total[5m]) > 10
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High authentication failure rate"
+          description: "{{ $value }} authentication failures per second"
+
+      - alert: UnauthorizedAccess
+        expr: rate(http_requests_total{status="401"}[5m]) > 5
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High rate of unauthorized access attempts"
+          description: "{{ $value }} unauthorized requests per second"
+
+      - alert: SuspiciousActivity
+        expr: rate(http_requests_total{status="403"}[5m]) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Suspicious activity detected"
+          description: "{{ $value }} forbidden requests per second from {{ $labels.instance }}"

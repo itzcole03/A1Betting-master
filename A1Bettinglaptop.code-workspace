@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"uri": "vscode-vfs://github/itzcole03/A1Betting"
+		}
+	],
+	"settings": {
+		"terminal.integrated.defaultProfile.windows": "Git Bash",
+		"extensions.ignoreRecommendations": false,
+		"task.autoDetect": "on",
+		"typescript.tsdk": "node_modules/typescript/lib"
+	}
+}

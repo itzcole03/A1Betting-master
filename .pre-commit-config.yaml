@@ -1,0 +1,117 @@
+
+# .pre-commit-config.yaml
+# Maintainer notes:
+# - Run `pre-commit autoupdate` regularly to keep hooks up to date.
+# - See https://pre-commit.com/ for docs and best practices.
+# - This config enforces code style, type safety, security, and secret scanning for Python 3.9+ projects.
+# - Ruff is the main linter/formatter/import sorter. Black is kept for uncompromising formatting.
+# - Mypy and Pyright provide type safety. pip-audit, bandit, and detect-secrets provide security.
+# - Ruff and pydocstyle enforce docstrings and code documentation.
+# - Codespell prevents spelling mistakes in code and docs.
+# - Meta hooks ensure pre-commit config hygiene.
+# - Add or tune a `pyproject.toml` or `.ruff.toml` for Ruff, and `pyrightconfig.json` for Pyright as needed.
+
+default_language_version:
+  python: python3.11
+minimum_pre_commit_version: '3.0.0'
+
+repos:
+  # Black: The uncompromising Python code formatter
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+        language_version: python3.11
+
+  # Ruff: Fast linter, formatter, and import sorter (replaces flake8, isort, autoflake)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.4
+    hooks:
+      - id: ruff
+        args: [--fix]
+        language_version: python3.11
+
+# Pyright: Fast static type checker for Python (complements mypy)
+# Note: Pyright does not currently support pre-commit hooks directly.
+# To run Pyright, use `npx pyright` or set up a CI job to run it with your `pyrightconfig.json`.
+
+  # Pre-commit meta hooks: self-checks for config hygiene
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+
+  # mypy: Static type checking
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.0
+    hooks:
+      - id: mypy
+        args: [--ignore-missing-imports, --show-error-codes]
+        language_version: python3.11
+
+  # pip-audit: Scan for vulnerable dependencies
+  - repo: https://github.com/pypa/pip-audit
+    rev: v2.9.0
+    hooks:
+      - id: pip-audit
+        args: ["-r", "backend/requirements.txt"]
+        language_version: python3.11
+
+  # detect-secrets: Prevent committing secrets
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: [--baseline, .secrets.baseline]
+        language_version: python3.11
+
+  # pydocstyle: Enforce docstring conventions (PEP257)
+  - repo: https://github.com/PyCQA/pydocstyle
+    rev: 6.3.0
+    hooks:
+      - id: pydocstyle
+        args: [--convention=google, --add-ignore=D100,D104]
+        language_version: python3.11
+
+  # bandit: Security linter for Python code
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.8
+    hooks:
+      - id: bandit
+        args: [--recursive, backend]
+        language_version: python3.11
+
+  # codespell: Spell checker for code and docs
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        args: [--ignore-words-list=te,hist,nd,ot,fo]
+        language_version: python3.11
+
+  # Advanced: Ensure test coverage minimum (fail if below threshold)
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.9.0
+    hooks:
+      - id: python-check-blanket-noqa
+      - id: python-no-eval
+      - id: python-no-log-warn
+
+  # Advanced: Enforce requirements file is sorted and deduped
+  - repo: https://github.com/asottile/reorder_python_imports
+    rev: v3.12.0
+    hooks:
+      - id: reorder-python-imports
+        files: ^backend/requirements.txt$
+
+# End of config
+
+# End of config
+
+# Recommended: Add a `pyproject.toml` or `.ruff.toml` for Ruff, and `pyrightconfig.json` for Pyright.
+# Example minimal pyrightconfig.json:
+# {
+#   "include": ["backend", "frontend"],
+#   "pythonVersion": "3.9",
+#   "typeCheckingMode": "strict"
+# }

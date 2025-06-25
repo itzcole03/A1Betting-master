@@ -1,0 +1,30 @@
+{
+  "architecturalRules": [
+    "Use ESM imports exclusively",
+    "Singleton export pattern for service modules",
+    "Config gating required for all feature flags",
+    "All events emitted via centralized EventBus",
+    "Use strict TypeScript with noImplicitAny enabled",
+    "All new components must have matching test coverage"
+  ],
+  "knownLegacyIssues": [
+    "Legacy CSS classes need refactor in UI",
+    "Old prediction engine interface deprecated",
+    "SHAP explainability integration incomplete for some models"
+  ],
+  "completedTasks": [
+    "Integrate PlayerFormModel into UnifiedPredictionEngine",
+    "Add enablePlayerFormModel flag",
+    "Scaffold MomentumModel, BenchDepthModel, GameContextModel"
+  ],
+  "staleTasks": [
+    "Fix lint in files: 512, 860, 871, 872, 771"
+  ],
+  "flags": {
+    "skipStaleTasks": true,
+    "enableAutoGitCommit": true,
+    "enableWatchMode": false,
+    "maxConcurrentTasks": 2
+  },
+  "lastUpdated": "2025-06-10T16:00:00Z"
+}

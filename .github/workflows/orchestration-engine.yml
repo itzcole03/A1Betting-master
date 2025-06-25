@@ -1,0 +1,52 @@
+sname: Orchestration Engine CI
+
+on:
+  schedule:
+    # Runs every hour on the hour
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  orchestrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make curl
+
+      - name: Install frontend dependencies
+        run: |
+          cd Alpha1/UltimateSportsBettingApp/frontend
+          npm install
+
+      - name: Install backend dependencies
+        run: |
+          cd Alpha1/UltimateSportsBettingApp/backend
+          pip install -r requirements.txt
+
+      - name: Run orchestration engine
+        run: |
+          bash scripts/orchestrate_prompts.sh
+        working-directory: ./
+
+      - name: Upload orchestration logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: orchestration-logs
+          path: |
+            orchestration_log.md
+            orchestration_state.json

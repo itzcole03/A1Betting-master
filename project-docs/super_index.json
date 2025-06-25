@@ -1,0 +1,3376 @@
+{
+  "__archive/backup-files/setupTests.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": null,
+    "file_size": null,
+    "last_modified": null
+  },
+  "__archive/legacy_js/AnalyticsService.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": null,
+    "file_size": null,
+    "last_modified": null
+  },
+  "__archive/legacy_js/api.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": null,
+    "file_size": null,
+    "last_modified": null
+  },
+  "__archive/legacy_js/errorLogger.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": null,
+    "file_size": null,
+    "last_modified": null
+  },
+  "__archive/legacy_js/performanceMonitor.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": null,
+    "file_size": null,
+    "last_modified": null
+  },
+  "__archive/legacy_js/performanceService.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": null,
+    "file_size": null,
+    "last_modified": null
+  },
+  "api/predictions.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides a predictionsApi object with methods for fetching predictions, optimizing lineups, getting feature importance, model performance, and odds updates via Axios.",
+      "usage": "Used in the frontend to interact with prediction and analytics endpoints.",
+      "notes": "Includes request/response interceptors for authentication and error handling.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md"
+    },
+    "file_size": null,
+    "last_modified": null,
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md"
+  },
+  "hooks/useConfidenceStats.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": null,
+    "file_size": null,
+    "last_modified": null
+  },
+  "jest.setup-env.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Sets up global environment variables and mocks for Jest tests.",
+      "usage": "Imported by Jest to configure the test environment.",
+      "notes": "Mocks `import.meta.env` and other globals for test compatibility.",
+      "status": "Actively used for testing; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md"
+    },
+    "file_size": null,
+    "last_modified": null,
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md"
+  },
+  "jest.setup-files.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Jest setup file for mocking IntersectionObserver and setting up test environment for React and Next.js.",
+      "usage": "Used in Jest configuration to ensure compatibility with browser APIs.",
+      "notes": "Ensures tests pass in environments lacking certain browser features.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "file_size": null,
+    "last_modified": null,
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+  },
+  "test/__mocks__/fileMock.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": null,
+    "file_size": null,
+    "last_modified": null
+  },
+  "test/jest.setup-env.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": null,
+    "file_size": null,
+    "last_modified": null
+  },
+  "test/jest.setup-files.js": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": null,
+    "file_size": null,
+    "last_modified": null
+  },
+  "DailyFantasyAdapter.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements an adapter for fetching and caching daily fantasy sports projections from an external API.",
+      "usage": "Used to fetch, cache, and provide daily fantasy projections, with event publishing and performance monitoring.",
+      "notes": "Integrates with EventBus and PerformanceMonitor. Includes cache management and error handling.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ESPNAdapter.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Adapter for fetching NBA games and headlines from ESPN's public APIs and RSS feeds.",
+      "usage": "Used to retrieve, cache, and provide ESPN game and news data, with event emission and performance monitoring.",
+      "notes": "Includes cache management, data transformation, and error handling.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "index.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for Poe-like data context, blocks, and API responses.",
+      "usage": "Used by data aggregation and API modules.",
+      "notes": "Includes example content types for PoeDataBlock.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "poe/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains adapters and type definitions specific to the Poe platform.",
+      "usage": "Used to transform Poe data to the app's API format.",
+      "notes": "Includes PoeToApiAdapter.ts (placeholder class with stub method) and types.ts (comprehensive type definitions for Poe data structures).",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "poe/PoeToApiAdapter.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Placeholder class for integrating Poe API with the data pipeline.",
+      "usage": "Contains a stub method for fetching and transforming Poe data.",
+      "notes": "No real implementation yet; serves as a scaffold for future integration.",
+      "status": "Placeholder; not yet implemented.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "poe/types.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Type definitions for app state and toast notifications.",
+      "usage": "Shared across stores and components for type safety.",
+      "notes": "Includes error and loading state for global app state.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "poeToApiAdapter.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements a class for transforming Poe-like data blocks into PrizePicksProps and simulates fetching mock data.",
+      "usage": "Used to adapt Poe data for PrizePicks prop card display and testing.",
+      "notes": "Includes transformation logic, mock data, and error reporting via unifiedMonitor.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "prizepicks.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the PrizePicks betting provider adapter, encapsulating API integration, data transformation, and provider-specific logic.",
+      "usage": "Used by the unified betting system and opportunity analysis modules to interact with PrizePicks, fetch props, submit entries, and normalize provider data.",
+      "notes": "Handles provider-specific quirks, error handling, and data mapping. Should be reviewed if PrizePicks API changes.",
+      "status": "Actively used; core to PrizePicks integration.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\SERVICES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\SERVICES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "PrizePicksAdapter.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements an adapter for fetching, transforming, and caching PrizePicks projections from the PrizePicks API.",
+      "usage": "Used to fetch, cache, and provide PrizePicks projections, players, and leagues, with performance monitoring.",
+      "notes": "Includes transformation logic, cache management, and error handling. Integrates with unifiedMonitor.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "README.md": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Overview and usage notes for the types directory.",
+      "usage": "Reference for developers.",
+      "notes": "Lists example type files and usage.",
+      "status": "Actively maintained; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "SocialSentimentAdapter.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements an adapter for aggregating and analyzing social sentiment data from Twitter, Reddit, and news sources.",
+      "usage": "Used to fetch, cache, and provide sentiment data for players, with event publishing and performance monitoring.",
+      "notes": "Includes scraping logic, sentiment scoring, and cache management. Integrates with newsService.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "SportsRadarAdapter.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements an adapter for fetching, caching, and providing sports data from the SportsRadar API.",
+      "usage": "Used to fetch, cache, and provide game, player, and odds data, with event publishing and performance monitoring.",
+      "notes": "Includes cache management, odds fetching, and error handling. Requires API key.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "TheOddsAdapter.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements an adapter for fetching, caching, and providing betting odds data from TheOdds API.",
+      "usage": "Used to fetch, cache, and provide odds data, with event publishing and performance monitoring.",
+      "notes": "Includes cache management, odds fetching, and error handling. Requires API key.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "__tests__/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains unit and integration tests for adapter modules.",
+      "usage": "Used to verify correctness and reliability of adapters.",
+      "notes": "Includes SocialSentimentAdapter.test.ts for sentiment adapter testing.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "__tests__/SocialSentimentAdapter.test.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Unit tests for SocialSentimentAdapter functionality.",
+      "usage": "Jest-based tests to ensure correct sentiment data adaptation, caching, and cache clearing.",
+      "notes": "Tests fetch, cache, and clearCache methods.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\adapters\\ADAPTERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "performance.py": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the PerformanceAnalyzer class for analyzing system performance metrics (CPU, memory, disk, network, processes) and providing health insights.",
+      "usage": "Used to process collected metrics, compare them to configurable thresholds, and generate warnings or critical alerts.",
+      "notes": "Integrates with a Config object for dynamic thresholds. Calculates overall system health score.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analysis\\ANALYSIS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analysis\\ANALYSIS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "resources.py": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the ResourceAnalyzer class for analyzing system resource utilization (disk, memory, swap, file system, processes) and providing health insights.",
+      "usage": "Used to process collected resource metrics, compare them to configurable thresholds, and generate warnings or critical alerts.",
+      "notes": "Integrates with a Config object for dynamic thresholds. Calculates overall resource health score.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analysis\\ANALYSIS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analysis\\ANALYSIS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "security.py": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the SecurityAnalyzer class for analyzing system security metrics (ports, services, updates, firewall, antivirus, SSL certificates) and providing security scores.",
+      "usage": "Used to process collected security metrics, check for vulnerabilities, and generate warnings or critical alerts.",
+      "notes": "Integrates with a Config object for dynamic checks. Calculates overall security score.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analysis\\ANALYSIS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analysis\\ANALYSIS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "FeatureEngineeringService.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Stub for the FeatureEngineeringService class, intended to implement feature engineering, selection, validation, transformation, monitoring, caching, and registry logic.",
+      "usage": "Exports an instance of FeatureEngineeringService. No functional implementation yet.",
+      "notes": "Implementation to be migrated from legacy workspace. Currently only a class definition and export.",
+      "status": "Placeholder; not yet implemented.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "FeatureRegistry.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Placeholder for a migrated and refactored FeatureRegistry, intended to provide versioned feature registry, backup, cleanup, and metadata management.",
+      "usage": "No implementation yet.",
+      "notes": "Implementation to be migrated from legacy workspace.",
+      "status": "Placeholder; not yet implemented.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "FeatureSelector.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Minimal stub for FeatureSelector class, intended to implement feature selection logic for the analytics pipeline.",
+      "usage": "Contains a select method that returns the input features unchanged.",
+      "notes": "Implementation to be migrated from legacy workspace. Includes a TODO to improve type specificity.",
+      "status": "Stub; minimal implementation for build success.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "UnifiedFeatureService.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "(Legacy) Previously handled feature analytics logic.",
+      "usage": "Deprecated; logic migrated to unified analytics modules.",
+      "notes": "File is empty except for a migration notice.",
+      "status": "Deprecated; candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "prediction.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for prediction results, SHAP values, and prediction responses.",
+      "usage": "Used by prediction and analytics modules.",
+      "notes": "Includes model weights, features, and metadata.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "PrizePicksAPI.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements a PrizePicksAPI class for interacting with the PrizePicks API, including projections, leagues, stat types, and player details.",
+      "usage": "Used by adapters and services to fetch and transform PrizePicks data.",
+      "notes": "Handles API key, error reporting, and response transformation.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "dailyfantasy/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains API handler for daily fantasy data requests.",
+      "usage": "Used as a Next.js API route for fetching and processing daily fantasy data from DraftKings or FanDuel.",
+      "notes": "Includes logging, metrics, and error handling. Requires API key in request headers.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "dailyfantasy/index.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Next.js API handler for POST requests to fetch and process daily fantasy data.",
+      "usage": "Used to standardize and return player data from external fantasy APIs.",
+      "notes": "Integrates with logger and metrics. Validates method and API key.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "predictions/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains API handler for generating predictions.",
+      "usage": "Used as a Next.js API route for generating predictions based on model and date.",
+      "notes": "Integrates with logger and metrics. Validates method and input.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "predictions/generate.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Next.js API handler for POST requests to generate predictions using a specified model and date.",
+      "usage": "Used to trigger prediction generation and return results.",
+      "notes": "Integrates with logger and metrics. Handles errors and logs them.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\api\\API_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "react.svg": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "SVG image of the React logo.",
+      "usage": "Used for branding, UI icons, or as a placeholder in the frontend application.",
+      "notes": "Standard React logo in SVG format. Can be referenced in components or HTML for scalable, high-quality rendering.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\assets\\ASSETS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\assets\\ASSETS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "api.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines user, player, and API-related types and interfaces.",
+      "usage": "Used by API service and data-fetching modules.",
+      "notes": "Includes user preferences, player stats, and status.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "apiConfig.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Centralized API configuration for all major integrations, including sports data, odds, sentiment, news, weather, and injury APIs.",
+      "usage": "Used to configure API clients and services for different deployment environments.",
+      "notes": "Supports environment variable overrides for all endpoints and keys.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\config\\CONFIG_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\config\\CONFIG_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "automation.config.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines the AutomationConfig interface and provides a default configuration object for automation, risk management, prediction, personalization, and notification settings.",
+      "usage": "Used by automation modules and services to determine scheduling, risk, and notification parameters.",
+      "notes": "Highly extensible; includes nested configuration for multiple automation domains.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\config\\CONFIG_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\config\\CONFIG_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "constants.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Exports shared constants for environment detection, API base URL, feature flags, WebSocket configuration, ML configuration, and UI configuration.",
+      "usage": "Used throughout the frontend to ensure consistent configuration and avoid magic values.",
+      "notes": "Includes dynamic base URL detection and utility functions for WebSocket URLs.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\config\\CONFIG_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\config\\CONFIG_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "predictionConfig.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines feature flags, experiment configuration, and utility functions for managing feature flags and experiments in the prediction and analytics modules.",
+      "usage": "Used to enable/disable features and manage experiments in analytics and prediction workflows.",
+      "notes": "Includes interfaces, default values, and utility functions for feature flag management.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\config\\CONFIG_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\config\\CONFIG_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "AuthContext.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides authentication context and hooks for user state, login, logout, and registration.",
+      "usage": "Wraps the app to provide `useAuth` and manage user authentication state and actions.",
+      "notes": "Integrates with `authService` and error logging; supports async initialization and error handling.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "LoggerContext.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides a context for unified logging utilities.",
+      "usage": "Wraps the app to provide a `UnifiedLogger` instance to components.",
+      "notes": "Used for dependency injection of logging services.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "MetricsContext.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides a context for unified metrics utilities.",
+      "usage": "Wraps the app to provide a `UnifiedMetrics` instance to components.",
+      "notes": "Used for dependency injection of metrics services.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "StrategyInputContext.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides context and hooks for managing strategy input state (stake, confidence, strategies, sports, props).",
+      "usage": "Used to manage and update strategy input in betting and analytics flows.",
+      "notes": "Supports updating and resetting strategy input; uses React state and context.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ThemeContext.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides theming context and hooks for dark/light mode and Material-UI theme.",
+      "usage": "Wraps the app to provide theme toggling and MUI theme provider.",
+      "notes": "Supports dark mode toggle and custom theme configuration.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "WebSocketContext.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides context and hooks for WebSocket connection state, message subscription, and event handling.",
+      "usage": "Wraps the app to provide WebSocket connection status and event subscription utilities.",
+      "notes": "Integrates with `webSocketManager` and error logging; supports connection, disconnection, and error handling.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\contexts\\CONTEXTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "AdvancedAnalysisEngine.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the advanced analysis engine for player predictions, trends, risk, and opportunity analysis.",
+      "usage": "Used to aggregate and analyze integrated data, generate predictions, and identify opportunities and risks.",
+      "notes": "Integrates with event bus, feature flags, and performance monitoring.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "AnalysisFramework.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides the plugin-based analysis framework and registry for registering, managing, and executing analysis plugins.",
+      "usage": "Used to register and execute analysis plugins, manage dependencies, and monitor performance.",
+      "notes": "Integrates with event bus, performance monitor, and unified monitor.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Analyzer.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines the `Analyzer` interface for analysis modules, including metrics and validation.",
+      "usage": "Used to implement custom analyzers for prediction and analytics modules.",
+      "notes": "Provides a standard interface for analysis logic and metrics.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "core.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Core types for SHAP vectors, game context, bet types, and results.",
+      "usage": "Used by core analytics and prediction modules.",
+      "notes": "Large file; includes many foundational types.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "DataIntegrationHub.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Central hub for integrating data from multiple sources (adapters, APIs, services).",
+      "usage": "Used to aggregate, normalize, and provide integrated data for analytics and prediction engines.",
+      "notes": "Integrates with adapters, event bus, and performance monitor.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "DataPipeline.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines the data pipeline, stages, sinks, and cache for processing and transforming data.",
+      "usage": "Used to build and manage data pipelines for analytics and prediction workflows.",
+      "notes": "Supports pipeline metrics, validation, and cleanup.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "DataSource.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides a contract/interface for fetching data from any source.",
+      "usage": "Used by modules that need to abstract data fetching logic.",
+      "notes": "Generic interface; supports extensibility.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ErrorHandler.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Singleton error handler for capturing, logging, and emitting errors via the event bus.",
+      "usage": "Used to handle and track errors across the app, with metrics and event emission.",
+      "notes": "Integrates with EventBus and supports error metrics.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "errors.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines the `SystemError` class and error context for system-level errors.",
+      "usage": "Used to throw and handle system errors with context and severity.",
+      "notes": "Integrates with unified error types.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "EventBus.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Singleton event bus for app-wide event publishing and subscription.",
+      "usage": "Used to emit, listen, and manage events across the app.",
+      "notes": "Supports async publishing and handler registration.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "analytics/ModelPerformanceTracker.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Tracks and records model performance metrics (ROI, win rate, drawdown, calibration, etc.) for prediction models.",
+      "usage": "Used by analytics and monitoring modules to evaluate and visualize model effectiveness over time.",
+      "notes": "Integrates with unified logging and metrics; supports calibration and historical snapshots.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "analytics/PerformanceMonitor.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Performance monitoring utility for tracing, measuring, and logging component and system metrics.",
+      "usage": "Used to start/end traces and spans, and log performance data.",
+      "notes": "Integrates with browser Performance API and error handler.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "analytics/__tests__/ModelPerformanceTracker.test.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Unit tests for the ModelPerformanceTracker class.",
+      "usage": "Ensures correct tracking, updating, and reporting of model performance metrics.",
+      "notes": "Jest test file; mocks logger and metrics.",
+      "status": "Active test; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "BestBetSelector/BestBetSelector.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements logic to select the best betting opportunities based on model outputs, risk profiles, and performance.",
+      "usage": "Used by the prediction and betting modules to recommend optimal bets.",
+      "notes": "Integrates with prediction engine, event bus, error handler, and performance monitor.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "BestBetSelector/__tests__/BestBetSelector.test.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Unit tests for the BestBetSelector class.",
+      "usage": "Validates selection logic and risk profile handling.",
+      "notes": "Jest test file; mocks logger and metrics.",
+      "status": "Active test; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "CacheManager/types.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines interfaces for cache configuration, entries, statistics, and unified logger/metrics.",
+      "usage": "Used by cache management modules to enforce type safety and extensibility.",
+      "notes": "Type definitions only.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "config/types.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Interface for unified configuration manager (get/set/delete/has methods).",
+      "usage": "Used by config management modules for type safety and abstraction.",
+      "notes": "Type definitions only.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "error/types.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Enumerates error severities, categories, and context interfaces for unified error handling.",
+      "usage": "Used by error handling modules to standardize error reporting and metrics.",
+      "notes": "Type definitions only.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "FinalPredictionEngine/FinalPredictionEngine.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the core prediction engine, aggregating model outputs, risk profiles, and feature impacts to generate final predictions.",
+      "usage": "Used by analytics and betting modules to produce confidence-weighted predictions and explanations.",
+      "notes": "Highly extensible; integrates with logging, metrics, config, and error handling.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "FinalPredictionEngine/README.md": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Documentation for the FinalPredictionEngine architecture, features, and usage.",
+      "usage": "Reference for developers integrating or extending the prediction engine.",
+      "notes": "Markdown documentation; not code.",
+      "status": "Actively maintained; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "FinalPredictionEngine/types.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Type definitions for prediction engine interfaces, model outputs, risk profiles, feature impacts, and errors.",
+      "usage": "Used throughout the prediction engine and related modules for type safety.",
+      "notes": "Type definitions only.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "FinalPredictionEngine/__tests__/FinalPredictionEngine.test.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Unit tests for the FinalPredictionEngine implementation.",
+      "usage": "Validates prediction aggregation, risk handling, and feature impact logic.",
+      "notes": "Jest test file; mocks logger, metrics, and config.",
+      "status": "Active test; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "logging/logger.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Centralized logger implementation for unified logging across the app.",
+      "usage": "Used by all modules for info, error, warn, debug, and trace logging.",
+      "notes": "Can be swapped for production loggers (Sentry, Datadog, etc.).",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "logging/types.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Interface for the unified logger (info, error, warn, debug, trace).",
+      "usage": "Used by logger implementations and consumers for type safety.",
+      "notes": "Type definitions only.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "metrics/metrics.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements unified metrics tracking (track, increment, gauge, timing, histogram) for app-wide observability.",
+      "usage": "Used by analytics, prediction, and monitoring modules to record and report metrics.",
+      "notes": "Extensible for custom metrics and tags.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "metrics/types.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Interface for unified metrics (track, increment, gauge, timing, histogram).",
+      "usage": "Used by metrics implementations and consumers for type safety.",
+      "notes": "Type definitions only.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "models/BaseMLService.ts, models/MLService.ts, models/ModelEvaluator.ts, models/ModelManager.ts, models/ModelRegistry.ts, models/types.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Core machine learning service, evaluation, management, and registry logic for prediction models.",
+      "usage": "Used by analytics and prediction modules to manage and evaluate ML models.",
+      "notes": "Type definitions and service logic.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "types/prediction.ts, types.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Type definitions for prediction, analytics, and core logic.",
+      "usage": "Used throughout the core and analytics modules for type safety.",
+      "notes": "Type definitions only.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "websocket/handlers/PredictionHandler.ts, websocket/WebSocketManager.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements WebSocket management and prediction event handling for real-time updates.",
+      "usage": "Used by the app to manage WebSocket connections and handle prediction events.",
+      "notes": "Supports extensibility for new event types and handlers.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\core\\CORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "dataIntegrationService.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Minimal stub for the dataIntegrationService object, intended to provide data integration logic for the frontend.",
+      "usage": "Currently exports an empty object for build success.",
+      "notes": "No functional implementation yet; serves as a scaffold for future data integration features.",
+      "status": "Stub; not yet implemented.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\data\\DATA_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\data\\DATA_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "MainLayout.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides the primary structure for authenticated or main application pages, including navigation and sidebar.",
+      "usage": "Wraps main content with a Navbar at the top, a Sidebar on the side, and a main content area that renders nested routes via `<Outlet />` from react-router-dom.",
+      "notes": "Uses Tailwind CSS for styling. Centralizes header, sidebar, and main content logic. Ensures a consistent layout for all main app pages.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\layouts\\LAYOUTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\layouts\\LAYOUTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "AuthLayout.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines a focused, centered layout for authentication-related pages (e.g., login, signup, password reset).",
+      "usage": "Displays a logo and heading, and renders nested routes (such as authentication forms) via `<Outlet />` from react-router-dom.",
+      "notes": "Uses Tailwind CSS for styling. Ensures a clean, distraction-free experience for authentication flows. Includes branding (logo and app name) at the top.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\layouts\\LAYOUTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\layouts\\LAYOUTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "utils.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Exports the `cn` function, which merges Tailwind CSS class names using `clsx` and `tailwind-merge` for conditional and deduplicated class composition.",
+      "usage": "Used throughout the frontend to combine and deduplicate class names for React components, especially when using Tailwind CSS.",
+      "notes": "Leverages `clsx` for conditional class logic and `tailwind-merge` for resolving Tailwind class conflicts.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\lib\\LIB_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\lib\\LIB_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "auth.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides authentication and authorization middleware, including JWT verification, role-based access control, password validation, session management, and rate limiting for login and registration.",
+      "usage": "Used to protect routes, enforce password policies, and manage user sessions in Express applications.",
+      "notes": "Integrates with JWT, Express rate limiter, and user type definitions. Includes logic for token renewal and role checks.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\middleware\\MIDDLEWARE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\middleware\\MIDDLEWARE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "rateLimiter.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines multiple rate limiters for different API endpoints, including general API, authentication, and betting routes.",
+      "usage": "Used to prevent abuse and brute-force attacks by limiting request rates per IP address.",
+      "notes": "Integrates with UnifiedLogger for logging rate limit events. Custom handlers for each limiter.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\middleware\\MIDDLEWARE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\middleware\\MIDDLEWARE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "security.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides security middleware for setting HTTP security headers and integrating Helmet for advanced security policies.",
+      "usage": "Used to enhance HTTP response security, enforce CSP, and log security events in Express applications.",
+      "notes": "Integrates with UnifiedLogger. Exports both a custom security middleware and a configured Helmet instance.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\middleware\\MIDDLEWARE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\middleware\\MIDDLEWARE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "browser.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Sets up a mock service worker (MSW) with handlers for various API endpoints and provides mock data for players, entries, and lineups.",
+      "usage": "Used during development and testing to intercept API requests and return mock responses, enabling frontend development without a backend.",
+      "notes": "Includes mock data for NBA players, entries, and lineups. Handlers are defined for props, odds, predictions, players, entries, and lineups endpoints.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\mocks\\MOCKS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\mocks\\MOCKS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "BehaviorProfile.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines the `BehaviorProfile` interface for user betting behavior, performance metrics, risk profile, and prediction preferences.",
+      "usage": "Used to model and update user behavior and risk analytics in betting flows and analytics dashboards.",
+      "notes": "Includes update methods for each profile section.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Bet.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines the `Bet` interface for representing a user's bet, including prediction details and factors.",
+      "usage": "Used throughout betting, analytics, and user dashboards to represent and process bets.",
+      "notes": "Includes prediction breakdown and confidence factors.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Cluster.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines the `Cluster` interface for user or bet clustering, including risk profile and characteristics.",
+      "usage": "Used in analytics and segmentation features to group users or bets by behavior and risk.",
+      "notes": "Supports clustering by style, risk, and market preference.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "LineupSynergyModel.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides a modular model for lineup synergy analysis, including feature extraction and SHAP insights.",
+      "usage": "Used to compute synergy scores for lineups in analytics and prediction modules.",
+      "notes": "Integrates with unified config and SHAP utilities. Throws if disabled by config.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "PlayerFormModel.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Modular model for player form analysis, extending a base model and emitting SHAP insights.",
+      "usage": "Used to predict player form and generate analytics for dashboards and prediction services.",
+      "notes": "Integrates with unified config, event bus, and SHAP utilities. Throws if disabled by config.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Prediction.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines the `Prediction` interface for model predictions, including probability, confidence, and factor breakdowns.",
+      "usage": "Used in prediction, analytics, and betting modules to represent and process predictions.",
+      "notes": "Supports metadata, SHAP values, and prediction breakdowns.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "PvPMatchupModel.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Modular model for player-vs-player matchup analysis, extending a base model and emitting SHAP insights.",
+      "usage": "Used to predict PvP outcomes and generate analytics for dashboards and prediction services.",
+      "notes": "Integrates with unified config, event bus, and SHAP utilities. Throws if disabled by config.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "RefereeImpactModel.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Modular model for referee impact analysis, including feature extraction and SHAP insights.",
+      "usage": "Used to compute referee impact scores in analytics and prediction modules.",
+      "notes": "Integrates with unified config and SHAP utilities. Throws if disabled by config.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "User.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines the `User` interface for user profile, preferences, and statistics.",
+      "usage": "Used throughout the app for user management, analytics, and personalization.",
+      "notes": "Includes notification settings and betting statistics.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "VenueEffectModel.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Modular model for venue effect analysis, including feature extraction and SHAP insights.",
+      "usage": "Used to compute venue effect scores in analytics and prediction modules.",
+      "notes": "Integrates with unified config and SHAP utilities. Throws if disabled by config.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\models\\MODELS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "metrics_collector.py": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the MetricsCollector class for collecting system metrics, including CPU, memory, disk, network, processes, and file system information.",
+      "usage": "Used to gather comprehensive system metrics for analysis, health checks, and reporting.",
+      "notes": "Integrates with a Config object for dynamic configuration. Handles errors and logs issues during collection. Designed for extensibility and integration with analysis modules.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\monitoring\\MONITORING_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\monitoring\\MONITORING_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Admin.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Admin dashboard for managing model settings, error logs, and cache.",
+      "usage": "Used by administrators to monitor and configure backend and frontend features.",
+      "notes": "Integrates with error handling, model settings, and cache management components.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Analytics.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Analytics dashboard for visualizing trends, metrics, and model performance.",
+      "usage": "Used to display charts and analytics for users and admins.",
+      "notes": "Integrates with analytics service and charting libraries.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "AnalyticsPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Modern analytics dashboard with advanced widgets and visualizations.",
+      "usage": "Used to display prediction confidence, risk, trends, and SHAP explanations.",
+      "notes": "Integrates with advanced analytics and personalization services.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ArbitragePage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Displays arbitrage betting opportunities and related analytics.",
+      "usage": "Used by users to find and act on arbitrage opportunities.",
+      "notes": "Fetches opportunities from API; supports filtering and selection.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "AuthPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Main authentication page (login/register/forgot/reset password).",
+      "usage": "Used for user authentication flows.",
+      "notes": "May be split into subpages in `auth/`.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "BankrollPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Displays user bankroll, transaction history, and active bets.",
+      "usage": "Used by users to track their financial activity and exposure.",
+      "notes": "Fetches data from API; supports filtering by timeframe.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "BetsPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Main betting interface, including bet slip, history, and widgets.",
+      "usage": "Used by users to place and track bets.",
+      "notes": "Integrates with betting services and advanced widgets.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "DashboardPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Main dashboard view, aggregating predictions, analytics, and user stats.",
+      "usage": "Used as the landing page after login.",
+      "notes": "Integrates with prediction, analytics, and advanced widgets.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "HomePage.jsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Landing page for the platform, introducing features and navigation.",
+      "usage": "Used as the public homepage.",
+      "notes": "Simple layout; highlights live predictions, metrics, and risk analysis.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "LineupBuilderPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Page for building and analyzing betting lineups.",
+      "usage": "Used by users to create and optimize lineups.",
+      "notes": "Integrates with prediction and lineup services.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "LineupPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Displays betting lineups and top picks.",
+      "usage": "Used by users to view and select lineups.",
+      "notes": "Uses motion and MUI for layout and animation.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "LoginPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements a simple login page with email/password form and API integration.",
+      "usage": "Used for user authentication in the frontend app.",
+      "notes": "Stores JWT in localStorage on successful login; can be extended for real auth flows.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "NotFound.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "404 error page for unknown routes.",
+      "usage": "Shown when a user navigates to a non-existent page.",
+      "notes": "Uses MUI and motion for layout.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Predictions.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Displays predictions, tabs, and analytics for various sports/events.",
+      "usage": "Used by users to view and filter predictions.",
+      "notes": "Integrates with analytics and prediction services.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "PredictionsDashboard.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Dashboard for live predictions, model performance, and betting opportunities.",
+      "usage": "Used by users to monitor predictions and performance in real time.",
+      "notes": "Integrates with WebSocket and prediction services.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "PrizePicksPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Displays PrizePicks props, player data, and sentiment analysis.",
+      "usage": "Used by users to explore and select PrizePicks opportunities.",
+      "notes": "Integrates with store, modals, and analytics.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Profile.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "User profile page with stats, editable info, and preferences.",
+      "usage": "Used by users to view and edit their profile.",
+      "notes": "Integrates with MUI and mock data.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "PropsPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Displays prop bets, analytics, and trending props.",
+      "usage": "Used by users to explore and analyze prop bets.",
+      "notes": "Integrates with analytics and notification services.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "RegisterPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Registration page for new users.",
+      "usage": "Used by users to create an account.",
+      "notes": "Integrates with auth service and store.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "RiskManagerPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Manages user risk profiles and active bets.",
+      "usage": "Used by users to configure risk settings and view exposure.",
+      "notes": "Integrates with risk management services.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Settings.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "User settings page for notifications, display, betting, and privacy.",
+      "usage": "Used by users to configure preferences.",
+      "notes": "Integrates with MUI and state management.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "SettingsPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Wrapper for the modern settings component.",
+      "usage": "Used to display the settings UI.",
+      "notes": "Simple wrapper; delegates to Settings component.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "SHAPExplain.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Displays SHAP value analysis and feature importance.",
+      "usage": "Used by users to understand model predictions.",
+      "notes": "Placeholder for SHAP visualizations.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "StrategiesPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Displays available betting strategies and automation toggles.",
+      "usage": "Used by users to view and enable/disable strategies.",
+      "notes": "Integrates with strategy service and automation toggle.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Trends.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Displays trends, analytics, and charts for sports and betting data.",
+      "usage": "Used by users to analyze trends and performance.",
+      "notes": "Integrates with analytics service and charting libraries.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "auth/ForgotPasswordPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Page for users to request a password reset email.",
+      "usage": "Used in the password reset flow.",
+      "notes": "Integrates with API service.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "auth/LoginPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Login page for authentication (auth submodule).",
+      "usage": "Used by users to log in.",
+      "notes": "Integrates with store and API service.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "auth/RegisterPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Registration page for new users (auth submodule).",
+      "usage": "Used by users to register.",
+      "notes": "Integrates with store and API service.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "auth/ResetPasswordPage.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Page for users to reset their password using a token.",
+      "usage": "Used in the password reset flow.",
+      "notes": "Integrates with API service.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Dashboard/Dashboard.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Dashboard component for displaying active bets, winnings, and win rate.",
+      "usage": "Used in the main dashboard page.",
+      "notes": "Integrates with betting service and react-query.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "Dashboard/__tests__/Dashboard.test.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Unit tests for the Dashboard component.",
+      "usage": "Ensures correct rendering and error handling.",
+      "notes": "Uses React Testing Library and jest.",
+      "status": "Active test; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\pages\\PAGES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "AuthProvider.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the AuthProvider React context for user authentication, including login, logout, registration, token validation, and profile updates.",
+      "usage": "Wraps the application to provide authentication state and actions via context. Exports a useAuth hook for consuming authentication state and actions.",
+      "notes": "Handles token storage, validation, and user state. Integrates with a remote API for authentication and profile management.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\providers\\PROVIDERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\providers\\PROVIDERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ThemeProvider.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the ThemeProvider React context for managing dark/light theme state and toggling.",
+      "usage": "Wraps the application to provide theme state and a toggle function via context. Exports a useTheme hook for consuming theme state and toggling.",
+      "notes": "Persists theme preference in localStorage and applies/removes the 'dark' class on the document root.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\providers\\PROVIDERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\providers\\PROVIDERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "useAuth.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Exports a useAuth hook for consuming the AuthContext.",
+      "usage": "Used in React components to access authentication state and actions provided by AuthProvider.",
+      "notes": "Throws an error if used outside of AuthProvider. Duplicates the useAuth export from AuthProvider.tsx for convenience.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\providers\\PROVIDERS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\providers\\PROVIDERS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "report_generator.py": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the ReportGenerator class for generating reports from analysis results and metrics, supporting HTML, JSON, and CSV formats, and creating visualizations.",
+      "usage": "Used to format and output analysis results, generate visualizations, and save reports to disk. Integrates with Jinja2 for HTML templating and Matplotlib for plotting.",
+      "notes": "Supports configurable output directory and format. Handles errors and logs issues during report generation. Designed for extensibility and integration with analysis and monitoring modules.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\reporting\\REPORTING_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\reporting\\REPORTING_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "automate-updates.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Automates updates for dependencies, imports, type definitions, and UI components. Updates framer-motion, modifies imports, creates a SmartSidebar component, updates type definitions, and runs a linter.",
+      "usage": "Run as a Node.js script to automate project maintenance and codebase updates.",
+      "notes": "Uses child_process, fs, and path modules. Modifies files and runs npm commands.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\scripts\\SCRIPTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\scripts\\SCRIPTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "runAutomation.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Starts and manages the betting automation service, handling process signals and errors for graceful shutdown and notifications.",
+      "usage": "Run as a Node.js script to start the betting automation workflow.",
+      "notes": "Integrates with BettingAutomationService and notificationService. Handles process signals and exceptions.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\scripts\\SCRIPTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\scripts\\SCRIPTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "start.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Starts the Express server and logs available endpoints and health check URLs.",
+      "usage": "Run as a Node.js script to start the backend server.",
+      "notes": "Imports the app from the main index file. Configurable port.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\scripts\\SCRIPTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\scripts\\SCRIPTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "updateData.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Runs the DataScrapingService to fetch and update player data.",
+      "usage": "Run as a Node.js script to perform data scraping and updates.",
+      "notes": "Uses reflect-metadata and a singleton DataScrapingService. Logs errors if data update fails.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\scripts\\SCRIPTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\scripts\\SCRIPTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "mlService.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "(Legacy) Previously provided unified orchestration for advanced ML, prediction, and analytics features.",
+      "usage": "Deprecated; all logic now handled by `useUnifiedAnalytics` and related unified services.",
+      "notes": "File is empty except for a migration notice.",
+      "status": "Deprecated; candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "mlService.test.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Unit tests for the legacy `mlService` API surface.",
+      "usage": "Jest-based tests to verify the presence of ML service methods.",
+      "notes": "Tests are now legacy; should be updated or removed if `mlService` is deleted.",
+      "status": "Legacy; candidate for removal or update.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "featureEngineeringService.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides feature engineering for player, team, and opponent data, including base, temporal, interaction, and contextual features.",
+      "usage": "Used to generate, transform, select, validate, cache, and monitor features for ML models and analytics.",
+      "notes": "Integrates with multiple submodules (selector, transformer, validator, etc.). Highly extensible and central to analytics pipeline.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "featureSelection.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements feature selection logic, including importance calculation and filtering.",
+      "usage": "Used by feature engineering service to select the most relevant features for ML models.",
+      "notes": "Supports numerical, categorical, temporal, and derived features. Includes normalization and importance thresholding.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "featureTransformation.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Handles transformation of numerical, categorical, and derived features for ML models.",
+      "usage": "Used by feature engineering service to normalize, scale, and apply nonlinear transformations to features.",
+      "notes": "Includes advanced transformations (e.g., rate of change, regression slope/intercept).",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "featureValidation.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Validates engineered features for completeness, consistency, and quality.",
+      "usage": "Used by feature engineering service to ensure features meet quality standards before use in ML models.",
+      "notes": "Validates all feature types and metadata; includes correlation and trend checks.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "featureLogging.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides logging utilities for feature engineering and analytics modules.",
+      "usage": "Used throughout analytics services for info, warning, error, and debug logging.",
+      "notes": "Supports configurable log level, format, and output. Placeholder for file writing/rotation.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "featureMonitor.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Monitors feature engineering metrics, quality, and performance.",
+      "usage": "Used to track feature counts, quality, and processing metrics over time.",
+      "notes": "Supports enabling/disabling, interval configuration, and metrics retrieval.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "featureRegistry.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Manages registration and versioning of engineered features.",
+      "usage": "Used to store, retrieve, and manage feature sets and their versions.",
+      "notes": "Integrates with feature store for persistence and backup.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\analytics\\ANALYTICS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ApiService.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements a generic API service for HTTP and WebSocket communication with backend and third-party endpoints (e.g., Sportradar, OddsAPI, ESPN, Social).",
+      "usage": "Used throughout the app for fetching player stats, odds, injuries, news, and subscribing to real-time data feeds. Exports a singleton `apiService` instance with environment-based configuration.",
+      "notes": "Handles WebSocket reconnection, data streaming, and API key management. Central to all data fetching and real-time updates.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\api\\API_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\api\\API_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "client.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides a type-safe API client for HTTP requests (GET, POST, PUT, PATCH, DELETE) with unified monitoring and error handling.",
+      "usage": "Used by services and components to make HTTP requests to backend APIs. Exports a singleton `apiClient` and convenience `get`/`post` functions for legacy compatibility.",
+      "notes": "Integrates with unified monitoring and error handling. Supports custom headers, params, and timeouts.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\api\\API_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\api\\API_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "PlayerPropService.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides real-time analysis and recommendations for player prop bets, including expected value, probability, confidence, and risk scoring.",
+      "usage": "Used to analyze player props by aggregating stats, odds, news, and sentiment data streams. Exports a singleton `playerPropService` for use in betting UIs and analytics.",
+      "notes": "Integrates with advanced ML and data integration services. Supports lineup optimization and portfolio risk analysis.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\betting\\BETTING_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\betting\\BETTING_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "sportsBettingService.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements core sports betting logic, including odds aggregation, match prediction, risk modeling, and value assessment.",
+      "usage": "Used to generate match predictions, recommend bets, and calculate optimal stake sizes. Exports a singleton `sportsBettingService` for use in betting flows and dashboards.",
+      "notes": "Integrates with analytics, ML, and risk modules. Validates API configuration and supports Kelly criterion for stake sizing.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\betting\\BETTING_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\betting\\BETTING_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "notificationManager.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements a notification manager for creating, storing, and managing notifications and user preferences.",
+      "usage": "Used to emit, retrieve, and mark notifications as read/unread, and to manage notification preferences. Exports a class for use in alerting and notification UIs.",
+      "notes": "Supports event-driven updates, quiet hours, and notification prioritization. Integrates with arbitrage and line shopping modules.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\notification\\NOTIFICATION_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\notification\\NOTIFICATION_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "validation.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines interfaces and classes for data validation, including rules, results, errors, and warnings.",
+      "usage": "Used throughout services to validate data, enforce constraints, and report validation errors/warnings. Provides reusable rule classes for common validation patterns (required, range, date, enum, pattern, custom).",
+      "notes": "Extensible for new validation types. Central to data integrity and input validation across the app.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "UnifiedDataService.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides a singleton service for unified data access, caching, and real-time updates from multiple sources (PrizePicks, ESPN, Odds API).",
+      "usage": "Used to fetch, cache, and subscribe to data from various APIs and WebSocket streams. Exposes event-driven interface for data updates.",
+      "notes": "Integrates with axios, socket.io, and zod for schema validation. Supports cache management and WebSocket lifecycle.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "BetTrackingService.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Tracks user bets, calculates ROI, win/loss streaks, and provides analytics for user betting performance.",
+      "usage": "Used to fetch user bet records and analytics from backend persistent storage. Exports a singleton `betTrackingService` for use in user dashboards and analytics features.",
+      "notes": "Integrates with backend APIs and rate limiting. Returns detailed analytics including streaks and profit.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\user\\USER_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\services\\user\\USER_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "App.css": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains global styles for the main app layout, header, prediction cards, and error messages.",
+      "usage": "Imported by `App.tsx` to style the main application UI.",
+      "notes": "Uses standard CSS for layout and theming.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "App.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Main React application component, handles routing and renders the primary UI components.",
+      "usage": "Entry point for the React app, imported by `index.tsx`.",
+      "notes": "Implements simple hash-based routing and imports key dashboard and money-making components.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "components.css": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines Tailwind CSS component classes and custom variants for cards, buttons, inputs, badges, progress bars, tables, dropdowns, and more.",
+      "usage": "Used to style reusable UI components with glassmorphism, gradients, and modern effects.",
+      "notes": "Includes custom animations and responsive design utilities.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\styles\\STYLES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\styles\\STYLES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "globals.css": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Sets up Tailwind CSS base, component, and utility layers, and defines global CSS variables, base styles, and component classes.",
+      "usage": "Used for global theming, typography, and utility classes across the app.",
+      "notes": "Includes dark mode support, gradients, and custom scrollbars.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\styles\\STYLES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\styles\\STYLES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "index.css": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Integrates Tailwind CSS and custom global styles, including glassmorphism, gradients, card effects, responsive breakpoints, and loading spinners.",
+      "usage": "Used as the main entry point for global styles in the app.",
+      "notes": "Defines CSS variables for light/dark mode and custom animations.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\styles\\STYLES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\styles\\STYLES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "index.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "React app entry point, renders the `App` component into the DOM.",
+      "usage": "Main entry for the frontend, bootstraps the React app.",
+      "notes": "Uses React 18 root API and strict mode.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "main.py": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Python entry point for a system analysis tool (not directly related to the frontend React app).",
+      "usage": "Used for system analysis, optimization, and reporting via CLI.",
+      "notes": "Integrates with backend analysis modules; not part of the React build.",
+      "status": "Utility script; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "setupTests.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Jest setup file for polyfilling browser APIs, mocking Chart.js, and setting up environment variables for tests.",
+      "usage": "Used in Jest configuration for CJS/ESM projects.",
+      "notes": "Ensures compatibility with browser APIs and global mocks.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "theme.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Exports theme tokens for colors, shadows, fonts, radii, transitions, and gradients, along with utility functions for accessing and generating theme variables.",
+      "usage": "Used in JS/TS to access design tokens and generate CSS variables for theming.",
+      "notes": "Supports both static and programmatic theme management.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\styles\\STYLES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\styles\\STYLES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "vite-env.d.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Type declarations for Vite environment variables and import meta.",
+      "usage": "Used for type safety with environment variables.",
+      "notes": "Includes all VITE_ prefixed variables and NODE_ENV.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "zod.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Re-exports Zod for type-safe schema validation.",
+      "usage": "Used throughout the app for runtime type validation.",
+      "notes": "Centralizes Zod imports for consistency.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\SRC_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "modelStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for managing prediction models, including active model and model options.",
+      "usage": "Used to select and manage prediction models in analytics and prediction flows.",
+      "notes": "Supports persistence and model versioning.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "predictionStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for predictions by event.",
+      "usage": "Used to update and retrieve predictions and analytics for events.",
+      "notes": "Integrates with devtools middleware.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "themeStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for theme mode (light/dark) with persistence.",
+      "usage": "Used to toggle and persist theme preference.",
+      "notes": "Uses persist middleware for localStorage.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "useAppStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Unified Zustand store combining multiple slices (auth, bet slip, notifications, etc.).",
+      "usage": "Used as the main app store for complex state.",
+      "notes": "Integrates with persist and multiple slice creators.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "useStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for toast notifications and other slices.",
+      "usage": "Used to manage toasts and extend with additional slices.",
+      "notes": "Simple composition; extensible.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "useThemeStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for theme (dark/light/system) with persistence.",
+      "usage": "Used to set and persist theme preference.",
+      "notes": "Simple and extensible for theming needs.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ml-predictions/index.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for managing ML predictions, loading state, and errors.",
+      "usage": "Used in ML prediction modules to manage and update predictions.",
+      "notes": "Supports devtools and modular prediction state/actions.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/authSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for authentication state, token management, and WebSocket auth status.",
+      "usage": "Used in modular app store for authentication flows and session management.",
+      "notes": "Supports async login/logout and session rehydration.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/prizePicksSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for PrizePicks props, players, lines, and entries.",
+      "usage": "Used in modular app store for PrizePicks data management.",
+      "notes": "Supports async fetching and error handling.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/betSlipSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for bet slip state, legs, stake, payout, and submission.",
+      "usage": "Used in modular app store for bet slip management and submission.",
+      "notes": "Includes odds conversion and async submission.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/notificationSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for toast notifications.",
+      "usage": "Used in modular app store for managing toasts and notifications.",
+      "notes": "Supports adding/removing toasts with unique IDs.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/bankrollSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for bankroll state, transactions, settings, and stats.",
+      "usage": "Used to manage bankroll, add transactions, and update settings.",
+      "notes": "Supports stats refresh and reset.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/betHistorySlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for user/model bet history state.",
+      "usage": "Used to manage and update bet history for users and models.",
+      "notes": "Supports adding, setting, and clearing history.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/confidenceSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for confidence band and win probability state.",
+      "usage": "Used to manage prediction confidence and win probability.",
+      "notes": "Supports setting, updating, and clearing state.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/dynamicDataSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for dynamic data (sentiments, headlines, projections, live odds, subscriptions).",
+      "usage": "Used to fetch and update dynamic data from services and APIs.",
+      "notes": "Supports async fetching and WebSocket updates.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/simulationSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for bet simulation input/result state.",
+      "usage": "Used to manage simulation input and results for bet simulations.",
+      "notes": "Supports setting, updating, and clearing simulation state.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\store\\STORE_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "appStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for global app state (user, setUser).",
+      "usage": "Used for managing the current user and related global state.",
+      "notes": "Simple store; used in unified store composition.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "bettingStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for betting state (active bets, bet slip, odds, selection).",
+      "usage": "Used to manage betting actions, odds, and bet slip logic.",
+      "notes": "Uses devtools and persist middleware.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "enhanced.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for enhanced user state with validation and metrics.",
+      "usage": "Used for advanced user state, validation, and performance tracking.",
+      "notes": "Integrates with immer, devtools, and persist middleware.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "filterStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for betting filter state and presets.",
+      "usage": "Used to manage filters, risk profiles, and filter presets for betting.",
+      "notes": "Supports localStorage persistence for filter presets.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "mlStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Placeholder for ML-related Zustand store (not implemented).",
+      "usage": "Reserved for future ML state logic.",
+      "notes": "Currently a stub.",
+      "status": "Candidate for future implementation.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "moneyMakerStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for MoneyMaker feature (predictions, portfolio, metrics).",
+      "usage": "Used to manage MoneyMaker state, predictions, and actions.",
+      "notes": "Integrates with auth and prediction services; supports advanced analytics.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "monitoring.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for tracking store performance metrics (update count, durations).",
+      "usage": "Used to monitor and optimize store update performance.",
+      "notes": "Provides updatePerformanceMetrics utility.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "oddsStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for odds data by event.",
+      "usage": "Used to manage and update odds for events and markets.",
+      "notes": "Integrates with devtools middleware.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "payoutStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for payout previews and Kelly stake calculations.",
+      "usage": "Used to compute and preview payouts for bet selections.",
+      "notes": "Integrates with risk profile and store.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "riskProfileStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for user risk profile and bankroll.",
+      "usage": "Used to update risk profile, bankroll, and calculate stakes.",
+      "notes": "Integrates with devtools middleware and default risk profiles.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "websocketStore.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand store for WebSocket connection state and subscriptions.",
+      "usage": "Used to manage WebSocket status, subscriptions, and messages.",
+      "notes": "Integrates with WebSocketManager and persist middleware.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/bettingSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for betting state (bets, odds, payouts, actions).",
+      "usage": "Used in unified store composition for betting logic.",
+      "notes": "Implements placeBet, updateActiveBet, clearOpportunities.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/mlSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for ML state (predictions, metrics, drift alerts).",
+      "usage": "Used in unified store composition for ML logic.",
+      "notes": "Implements updatePredictions, updateModelMetrics, drift alert management.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "slices/toastSlice.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Zustand slice for toast notifications.",
+      "usage": "Used to add and remove toasts in the UI.",
+      "notes": "Uses uuid for toast IDs.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "__tests__/enhanced.test.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Unit tests for the enhanced user store.",
+      "usage": "Ensures correct state, validation, and persistence.",
+      "notes": "Uses React Testing Library hooks and jest.",
+      "status": "Active test; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stores\\STORES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "PredictionSummaryCard.stories.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides Storybook stories for the PredictionSummaryCard component, including default, interactive, high risk, and low risk scenarios.",
+      "usage": "Used in Storybook to visualize and interact with the PredictionSummaryCard component in various states and with different props.",
+      "notes": "Configures controls and actions for component props, enabling live editing and event simulation in Storybook.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stories\\STORIES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\stories\\STORIES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "bettingStrategy.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements functions for calculating betting strategies and placing bets by interacting with backend endpoints. Maps frontend requests and responses to backend models and handles error reporting and monitoring.",
+      "usage": "Used to calculate betting opportunities and place bets based on user input and backend responses.",
+      "notes": "Integrates with unifiedMonitor for tracing and error reporting. Handles mapping between frontend and backend data structures.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\strategies\\STRATEGIES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\strategies\\STRATEGIES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ProjectionBettingStrategy.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Implements the ProjectionBettingStrategy class, which analyzes player projections and other integrated data to generate betting recommendations and decisions.",
+      "usage": "Used to evaluate projections, calculate confidence and edge, and generate recommendations for betting opportunities.",
+      "notes": "Integrates with EventBus, PerformanceMonitor, and FeatureManager. Includes advanced logic for data quality, risk, and confidence calculations.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\strategies\\STRATEGIES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\strategies\\STRATEGIES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "modern.css": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Provides modern UI custom styles for cards, premium inputs, and currency symbols, including glassmorphism and gradient backgrounds.",
+      "usage": "Used to enhance the look and feel of modern UI components.",
+      "notes": "Includes custom keyframes and dark mode variants.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\styles\\STYLES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\styles\\STYLES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "featureCoverage.test.tsx": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Integration test for full feature coverage, including rendering, navigation, error handling, and state persistence in the App.",
+      "usage": "Used to ensure all main features and directories are covered by tests.",
+      "notes": "Some tests are skipped due to incomplete logic or missing mocks.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "integrationChecklist.md": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Markdown checklist for tracking integration, API, UI, state, error, performance, and mobile coverage.",
+      "usage": "Used by developers to manually or automatically track test coverage and feature validation.",
+      "notes": "Referenced by automated tests; not for manual editing except for new features.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "performanceMonitor.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Utility for measuring and asserting render/load performance in tests.",
+      "usage": "Used in performance and integration tests to log and enforce performance budgets.",
+      "notes": "Throws if render/load exceeds 2 seconds.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "setup.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Vitest setup file for mocking browser APIs, localStorage, WebSocket, and Notification for consistent test environments.",
+      "usage": "Used in Vitest configuration for global test setup.",
+      "notes": "Ensures consistent mocks and timezone for all tests.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "setupTests.mts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Jest ESM-compatible setup file for mocking browser APIs, Chart.js, and UnifiedConfig, and setting up environment variables.",
+      "usage": "Used in Jest configuration for ESM projects.",
+      "notes": "Ensures compatibility with ESM modules and browser APIs.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "__mocks__/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains file mocks for static assets in tests.",
+      "usage": "Used to mock file imports in Jest.",
+      "notes": "Includes fileMock.js for asset stubbing.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "a11y/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains accessibility tests for App and major components using jest-axe.",
+      "usage": "Used to ensure accessibility compliance and ARIA/contrast/keyboard navigation.",
+      "notes": "Includes tests for App, Dashboard, PropCards, MoneyMaker, EntryTracking, and Settings.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "api/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains API endpoint and service tests.",
+      "usage": "Used to test API integration and service logic.",
+      "notes": "Includes endpoint and service tests for PrizePicks and other APIs.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "integration/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains integration tests for features, authentication, and workflows.",
+      "usage": "Used to test end-to-end flows and feature integration.",
+      "notes": "Includes tests for all features, auth flow, and MoneyMaker.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "performance/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains performance tests for dashboard load and overall app performance.",
+      "usage": "Used to ensure performance budgets are met.",
+      "notes": "Includes dashboardLoad.perf.test.ts and Performance.test.ts.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "stateSync/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains tests for store consistency and state synchronization.",
+      "usage": "Used to ensure state updates propagate correctly.",
+      "notes": "Includes storeConsistency.test.ts.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "unit/": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Contains unit tests for core logic, prediction engine, state sync, and store hooks.",
+      "usage": "Used to test isolated logic and hooks.",
+      "notes": "Includes StateSync, UnifiedBettingCore, UnifiedPredictionEngine, and useAppStore tests.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\test\\TEST_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "e2e/prediction.test.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Playwright E2E test suite for the prediction flow, including API mocking, UI interactions, filtering, sorting, modal explanations, error handling, and risk profile updates.",
+      "usage": "Used to verify the full prediction workflow, including recommendations, filtering, sorting, and error handling in the UI.",
+      "notes": "Mocks API responses for predictions and risk profiles. Simulates user actions and checks UI updates and error messages.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\tests\\TESTS_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\tests\\TESTS_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "analytics.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Defines interfaces for analytics metrics, trends, risk factors, and explainability maps.",
+      "usage": "Used by analytics and reporting modules for type safety.",
+      "notes": "Includes performance metrics and risk profile types.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "bankroll.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for bankroll management, transactions, and stats.",
+      "usage": "Used by bankroll and transaction modules.",
+      "notes": "Includes transaction types and bankroll settings.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "betting.new.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Legacy file, now removed as part of codebase consolidation.",
+      "usage": "Not used in the current codebase.",
+      "notes": "Kept for historical reference.",
+      "status": "Legacy; candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "betting.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Comprehensive types for betting, sportsbooks, arbitrage, line shopping, and opportunities.",
+      "usage": "Used throughout betting, arbitrage, and odds modules.",
+      "notes": "Large file; includes all core betting types.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "common.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Shared enums and types for sports, props, alerts, and statuses.",
+      "usage": "Used across multiple modules for consistency.",
+      "notes": "Includes alert types, bet results, and market states.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "components.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for React component props (risk profile selector, SHAP visualization, betting opportunities, etc.).",
+      "usage": "Used by UI components for type safety.",
+      "notes": "Integrates with betting and analytics types.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "confidence.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for prediction confidence bands, win probability, and performance history.",
+      "usage": "Used by prediction and analytics modules.",
+      "notes": "Includes interfaces for confidence bands and historical performance.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "core.d.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Empty global type declaration file.",
+      "usage": "Reserved for future global type extensions.",
+      "notes": "Currently empty.",
+      "status": "Candidate for future use.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "explainability.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for SHAP values, summaries, breakdowns, and visualization props.",
+      "usage": "Used by explainability and analytics modules.",
+      "notes": "Supports advanced SHAP visualizations.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "filters.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for advanced filtering, filter options, and contextual input.",
+      "usage": "Used by filtering and prediction modules.",
+      "notes": "Includes filter operators and advanced filter sets.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "global.d.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Global type declarations for third-party modules and overrides.",
+      "usage": "Used to extend or override types for external libraries.",
+      "notes": "Includes MUI, framer-motion, react-router-dom, axios, etc.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "history.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for historical prediction and bet performance tracking.",
+      "usage": "Used by analytics and user history modules.",
+      "notes": "Includes user and model performance history.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "lineup.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for betting lineups, legs, performance, and metrics.",
+      "usage": "Used by lineup builder and analytics modules.",
+      "notes": "Integrates with predictions and performance types.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "market.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for market data, updates, context, and analysis.",
+      "usage": "Used by market analytics and odds modules.",
+      "notes": "Includes CLV analysis and order book types.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ml-modules.d.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Type declarations for ML libraries (SVM, KNN, Naive Bayes, XGBoost, Random Forest).",
+      "usage": "Used to provide type safety for ML module imports.",
+      "notes": "Declares modules for various ML libraries.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ml.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for machine learning explanations, model performance, and metrics.",
+      "usage": "Used by ML and analytics modules.",
+      "notes": "Includes SHAP explanations and feature importance.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "model.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for model performance and metrics.",
+      "usage": "Used by model evaluation and analytics modules.",
+      "notes": "Includes accuracy, precision, recall, and F1 score.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "models.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Model-specific type definitions for prediction models, game context, and player stats.",
+      "usage": "Used by prediction and analytics modules.",
+      "notes": "Includes SHAP vector and player stats interfaces.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "money-maker.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for MoneyMaker feature, model status, predictions, and tabs.",
+      "usage": "Used by MoneyMaker modules and UI.",
+      "notes": "Includes prediction, tab config, and model breakdown types.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "performance.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for performance metrics, strategy metrics, and risk assessment.",
+      "usage": "Used by analytics and performance tracking modules.",
+      "notes": "Includes timestamped data and risk assessment interfaces.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "prizePicks.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for PrizePicks entries, players, projections, and leagues.",
+      "usage": "Used by PrizePicks modules and UI.",
+      "notes": "Extensible for future fields.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "shap.d.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Type declarations for the 'shap' module (DeepExplainer class).",
+      "usage": "Used by explainability and ML modules.",
+      "notes": "Declares DeepExplainer class and methods.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "shared.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Shared type definitions used across multiple modules.",
+      "usage": "Used by core, analytics, and prediction modules.",
+      "notes": "Includes timestamped data, market state, and model ensemble types.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "simulation.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for bet probability simulation and result modeling.",
+      "usage": "Used by simulation and analytics modules.",
+      "notes": "Includes simulation input, result, and scenario types.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "sports.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for sports, teams, and events.",
+      "usage": "Used by sports analytics and event modules.",
+      "notes": "Not yet analyzed in this batch.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "strategy.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for betting strategies and automation.",
+      "usage": "Used by strategy and automation modules.",
+      "notes": "Not yet analyzed in this batch.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "webSocket.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Types for WebSocket events and payloads.",
+      "usage": "Used by WebSocket modules and services.",
+      "notes": "Not yet analyzed in this batch.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\types\\TYPES_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "ModelVersioning.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Singleton for tracking and managing model versions and their metrics.",
+      "usage": "Used to add, retrieve, and manage model version history and metadata.",
+      "notes": "Stores version metrics, features, and training metadata.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "UnifiedConfig.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Singleton for managing feature flags and unified configuration.",
+      "usage": "Used to enable/disable features and manage config state across the app.",
+      "notes": "Supports extensibility for extra config and feature flags.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\unified\\UNIFIED_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  },
+  "schemas.ts": {
+    "dependencies": [],
+    "reverse_dependencies": [],
+    "documentation": {
+      "purpose": "Exports Zod validation schemas for bets, users, predictions, markets, and events, and provides an Express middleware for validating requests against these schemas.",
+      "usage": "Used to validate API request bodies and data models throughout the app, ensuring type safety and data integrity.",
+      "notes": "Integrates with Express for request validation. Uses Zod for schema definitions and async parsing.",
+      "status": "Actively used; not a candidate for removal.",
+      "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\validation\\VALIDATION_FILE_USAGE_ANALYSIS.md"
+    },
+    "analysis_md": "C:\\dev\\Alpha1\\UltimateSportsBettingApp\\frontend\\src\\validation\\VALIDATION_FILE_USAGE_ANALYSIS.md",
+    "file_size": null,
+    "last_modified": null
+  }
+}

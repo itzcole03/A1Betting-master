@@ -1,0 +1,77 @@
+{
+	"folders": [
+		{
+			"uri": "vscode-vfs://github/itzcole03/A1Betting"
+		}
+	],
+	"remoteAuthority": "github.com",
+	"settings": {
+		"files.exclude": {
+			"**/.git": true,
+			"**/.DS_Store": true
+		},
+		"search.exclude": {
+			"**/node_modules": true,
+			"**/dist": true
+		},
+		"files.autoSave": "afterDelay",
+		"files.autoSaveDelay": 1000,
+		"files.watcherExclude": {
+			"**/node_modules/**": true,
+			"**/dist/**": true
+		},
+		"chat.tools.autoApprove": true,
+		"chat.tools.autoApproveDelay": 5000,
+		"chat.tools.autoApproveMax": 5,
+		"chat.tools.autoApproveOnError": true,
+		"chat.tools.autoApproveOnSuccess": true,
+		"chat.tools.autoApproveOnTimeout": true,
+		"chat.tools.autoApproveOnCancel": true,
+		"chat.tools.autoApproveOnRateLimit": true,
+		"chat.tools.autoApproveOnNoResponse": true,
+		"chat.tools.autoApproveOnNoResults": true,
+		"chat.tools.autoApproveOnNoResultsDelay": 2000,
+		"chat.tools.autoApproveOnNoResultsMax": 3,
+		"chat.tools.autoApproveOnNoResultsOnError": true,
+		"chat.tools.autoApproveOnNoResultsOnSuccess": true,
+		"chat.tools.autoApproveOnNoResultsOnTimeout": true,
+		"chat.tools.autoApproveOnNoResultsOnCancel": true,		
+		"editor.formatOnSave": true,
+		"editor.tabSize": 2,
+		"editor.insertSpaces": true,
+		"editor.wordWrap": "on",
+		"editor.minimap.enabled": true,
+		"editor.renderWhitespace": "boundary",
+		"editor.codeLens": true,
+		"editor.suggestSelection": "first",
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": false,
+			"strings": true		
+		}
+	}
+,
+"extensions": {
+	"recommendations": [
+		"GitHub.copilot-chat",
+		"GitHub.copilot-labs",
+		"GitHub.copilot",
+		"ms-vscode.vscode-typescript-tslint-plugin",
+		"ms-vscode.vscode-typescript-next",
+		"ms-python.python",
+		"esbenp.prettier-vscode",
+		"eamodio.gitlens",
+		"vscode-icons-team.vscode-icons"
+	]
+}
+// This workspace file is for the A1Betting project.
+// It can be used to open the project in Visual Studio Code with the specified folders and settings.
+// This workspace file is for the A1Betting project.
+// It can be used to open the project in Visual Studio Code with the specified folders and settings
+// The settings include file exclusions, search exclusions, auto-save settings, editor settings, and extension recommendations.
+// The extensions recommended for this project include GitHub Copilot, TSLint, Prettier, and GitLens.
+// The workspace file also includes settings for the chat tools, such as auto-approving responses and handling no results.
+// The workspace file is in JSON format and can be edited to customize the project settings further.
+// The workspace file can be shared with other developers to ensure a consistent development environment.
+// The workspace file can be used to open the project in Visual Studio Code with the specified folders and settings.
+}

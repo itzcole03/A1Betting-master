@@ -1,0 +1,7 @@
+# [tool.black] - DISABLED FOR DEVELOPMENT
+# line-length = 88
+# target-version = ['py39']
+# include = '\.pyi?$'
+
+# [tool.isort] - DISABLED FOR DEVELOPMENT
+# profile = 'black'

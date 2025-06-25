@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "🧼 Lint & Autofix",
+      "type": "shell",
+      "command": "npx eslint \"src/**\" \"frontend/src/**\" --ext .ts,.tsx --fix",
+      "problemMatcher": ["$eslint-stylish"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "🧪 Type Check",
+      "type": "shell",
+      "command": "npx tsc --noEmit",
+      "problemMatcher": ["$tsc"],
+      "group": "build"
+    },
+    {
+      "label": "🔍 Run Vitest Tests",
+      "type": "shell",
+      "command": "npx vitest run",
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "🛠 Frontend Build (Vite)",
+      "type": "shell",
+      "command": "cd frontend && npm run build",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "🔁 Full ALPHA1 Check (Lint + Type + Build + Test)",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "🧼 Lint & Autofix",
+        "🧪 Type Check",
+        "🔍 Run Vitest Tests",
+        "🛠 Frontend Build (Vite)"
+      ],
+      "group": "build"
+    }
+  ]
+}

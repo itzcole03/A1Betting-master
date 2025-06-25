@@ -1,0 +1,53 @@
+import { Transaction, BankrollSettings, BankrollStats } from '../types/bankroll';
+import { EventEmitter } from 'events';
+export interface BankrollTransaction {
+    id: string;
+    type: 'deposit' | 'withdrawal' | 'bet' | 'win' | 'loss';
+    amount: number;
+    timestamp: string;
+    description: string;
+    status: 'pending' | 'completed' | 'failed';
+    metadata?: any;
+}
+export declare class BankrollService extends EventEmitter {
+    private static instance;
+    private currentBalance;
+    private transactions;
+    private settings;
+    private constructor();
+    static getInstance(): BankrollService;
+    initialize(): Promise<void>;
+    getBalance(): Promise<number>;
+    deposit(amount: number): Promise<Transaction>;
+    withdraw(amount: number): Promise<Transaction>;
+    getTransactionHistory(): Promise<Transaction[]>;
+    getCurrentBalance(): number;
+    updateBalance(amount: number, type: 'win' | 'loss' | 'bet'): Promise<void>;
+    getTransactions(): Transaction[];
+    getSettings(): BankrollSettings;
+    updateSettings(newSettings: Partial<BankrollSettings>): void;
+    getStats(): BankrollStats;
+    private getStartingBalance;
+    private getTotalDeposits;
+    private getTotalWithdrawals;
+    private getTotalBets;
+    private getTotalWins;
+    private getTotalLosses;
+    private getNetProfit;
+    private getROI;
+    private getWinRate;
+    private getAverageBetSize;
+    private getLargestWin;
+    private getLargestLoss;
+    private getCurrentStreak;
+    private getBestStreak;
+    private getWorstStreak;
+    getMaxBetAmount(): number;
+    private getDailyBetsCount;
+    private getConcurrentBetsCount;
+    checkStopLoss(): boolean;
+    checkTakeProfit(): boolean;
+    getMetrics(): BankrollStats;
+}
+export declare const bankrollService: BankrollService;
+export default bankrollService;

@@ -1,0 +1,14 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { Box, Typography, TextField, Slider, FormControl, InputLabel, Select, MenuItem, Chip, OutlinedInput, } from '@mui/material';
+const SPORTS_OPTIONS = ['NBA', 'NFL', 'MLB', 'NHL', 'Soccer'];
+const MARKET_OPTIONS = ['Moneyline', 'Spread', 'Over/Under', 'Props', 'Parlays'];
+export const UserConstraintsForm = ({ constraints, onConstraintsChange, }) => {
+    const handleMultiSelectChange = (field, value) => {
+        onConstraintsChange(field, value);
+    };
+    return (_jsxs(Box, { sx: { maxWidth: 600, mx: 'auto' }, children: [_jsx(Typography, { gutterBottom: true, variant: "h6", children: "Betting Constraints" }), _jsxs(Box, { sx: { mt: 3 }, children: [_jsx(Typography, { gutterBottom: true, children: "Maximum Stake (% of Bankroll)" }), _jsx(Slider, { marks: [
+                            { value: 1, label: '1%' },
+                            { value: 25, label: '25%' },
+                            { value: 50, label: '50%' },
+                        ], max: 50, min: 1, value: constraints.max_bankroll_stake * 100, valueLabelDisplay: "auto", valueLabelFormat: value => `${value}%`, onChange: (_, value) => onConstraintsChange('max_bankroll_stake', value / 100) })] }), _jsxs(Box, { sx: { mt: 3 }, children: [_jsx(Typography, { gutterBottom: true, children: "Time Window (Hours)" }), _jsx(TextField, { fullWidth: true, inputProps: { min: 1, max: 168 }, type: "number", value: constraints.time_window_hours, onChange: e => onConstraintsChange('time_window_hours', parseInt(e.target.value)) })] }), _jsx(Box, { sx: { mt: 3 }, children: _jsxs(FormControl, { fullWidth: true, children: [_jsx(InputLabel, { children: "Preferred Sports" }), _jsx(Select, { multiple: true, input: _jsx(OutlinedInput, { label: "Preferred Sports" }), renderValue: selected => (_jsx(Box, { sx: { display: 'flex', flexWrap: 'wrap', gap: 0.5 }, children: selected.map(value => (_jsx(Chip, { label: value }, value))) })), value: constraints.preferred_sports, onChange: e => handleMultiSelectChange('preferred_sports', e.target.value), children: SPORTS_OPTIONS.map(sport => (_jsx(MenuItem, { value: sport, children: sport }, sport))) })] }) }), _jsx(Box, { sx: { mt: 3 }, children: _jsxs(FormControl, { fullWidth: true, children: [_jsx(InputLabel, { children: "Preferred Markets" }), _jsx(Select, { multiple: true, input: _jsx(OutlinedInput, { label: "Preferred Markets" }), renderValue: selected => (_jsx(Box, { sx: { display: 'flex', flexWrap: 'wrap', gap: 0.5 }, children: selected.map(value => (_jsx(Chip, { label: value }, value))) })), value: constraints.preferred_markets, onChange: e => handleMultiSelectChange('preferred_markets', e.target.value), children: MARKET_OPTIONS.map(market => (_jsx(MenuItem, { value: market, children: market }, market))) })] }) })] }));
+};

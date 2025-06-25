@@ -1,0 +1,10 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { useMemo } from 'react';
+import useStore from '@/store/useStore';
+const Header = ({ onToggleSidebar, isSidebarOpen }) => {
+    const { darkMode, toggleDarkMode } = useStore();
+    // Placeholder trending games
+    const trendingGames = useMemo(() => [], []); // TODO: Replace with real data
+    return (_jsx("header", { className: "h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700", children: _jsxs("div", { className: "h-full px-4 flex items-center justify-between", children: [_jsxs("div", { className: "flex items-center space-x-4", children: [_jsx("button", { className: "lg:hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200", onClick: onToggleSidebar, children: isSidebarOpen ? '✕' : '☰' }), _jsxs("div", { className: "hidden lg:flex items-center space-x-2", children: [_jsx("span", { className: "text-sm font-medium", children: "Quick Actions:" }), _jsx("button", { className: "px-3 py-1 text-sm bg-primary-50 text-primary-700 rounded-lg hover:bg-primary-100 dark:bg-primary-900/20 dark:text-primary-300 dark:hover:bg-primary-900/30", children: "New Entry" })] })] }), _jsxs("div", { className: "flex items-center space-x-4", children: [_jsx("button", { className: "p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700", onClick: toggleDarkMode, children: darkMode ? '🌙' : '☀️' }), _jsx("div", { className: "relative", children: _jsxs("button", { className: "flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700", children: [_jsx("div", { className: "w-8 h-8 bg-gradient-to-br from-primary-400 to-primary-600 rounded-full flex items-center justify-center text-white", children: "U" }), _jsxs("div", { className: "hidden lg:block text-left", children: [_jsx("div", { className: "text-sm font-medium", children: "User" }), _jsx("div", { className: "text-xs text-gray-500 dark:text-gray-400", children: "Pro Plan" })] })] }) })] })] }) }));
+};
+export default Header;
