@@ -115,6 +115,15 @@ const useUserStats = () => {
     setIsLoading(true);
     setError(null);
 
+    // First test basic connectivity
+    const isConnected = await testConnectivity();
+    if (!isConnected) {
+      console.warn("Backend connectivity test failed, using fallback data");
+      setError("Unable to connect to backend service");
+      setIsLoading(false);
+      return;
+    }
+
     try {
       // Try to fetch from multiple endpoints for comprehensive data
       const endpoints = [
@@ -122,6 +131,8 @@ const useUserStats = () => {
         getApiUrl("/active-bets"),
         getApiUrl("/transactions"),
       ];
+
+      console.log("Fetching data from endpoints:", endpoints);
 
       const requests = endpoints.map((endpoint) =>
         fetch(endpoint, {
