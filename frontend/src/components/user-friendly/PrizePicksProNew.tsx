@@ -28,6 +28,7 @@ import OfflineIndicator from "@/components/ui/OfflineIndicator";
 import UnifiedSportSelector from "@/components/common/UnifiedSportSelector";
 import { filterSportData } from "@/utils/sportFiltering";
 import { UNIFIED_SPORTS, getSportDisplayName } from "@/constants/unifiedSports";
+import { unifiedDataService } from "@/services/unified/UnifiedDataService";
 
 // ============================================================================
 // INTERFACES & TYPES
@@ -159,27 +160,30 @@ const PrizePicksPro: React.FC = () => {
     setError(null);
 
     try {
-      const response = await api.getPrizePicksProps({
+      const response = await unifiedDataService.getPlayerProps({
         sport: config.sport,
         minConfidence: config.minConfidence,
+        maxResults: 100,
+        sortBy: "confidence",
+        sortOrder: "desc",
       });
 
       if (response.success && response.data) {
         setProps(response.data);
-        logger.info("Successfully fetched PrizePicks props", {
+        logger.info("Successfully fetched unified PrizePicks props", {
           count: response.data.length,
+          cached: response.cached,
         });
       } else {
         throw new Error(response.error || "Failed to fetch props");
       }
     } catch (err) {
       logger.error("Failed to fetch PrizePicks props", err);
-      // Production error handling - no fallback data
       setProps([]);
       setError(
         "Failed to load props. Please check your connection and try again.",
       );
-      logger.error("API Error fetching props:", err);
+      logError(err as Error, "PrizePicksProNew.fetchProps");
     } finally {
       setIsLoading(false);
     }

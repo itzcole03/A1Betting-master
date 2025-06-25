@@ -27,6 +27,7 @@ import OfflineIndicator from "@/components/ui/OfflineIndicator";
 import UnifiedSportSelector from "@/components/common/UnifiedSportSelector";
 import { filterSportData } from "@/utils/sportFiltering";
 import { UNIFIED_SPORTS, getSportDisplayName } from "@/constants/unifiedSports";
+import { unifiedDataService } from "@/services/unified/UnifiedDataService";
 
 // ============================================================================
 // INTERFACES & TYPES
@@ -221,32 +222,36 @@ const MoneyMakerPro: React.FC = () => {
     setError(null);
 
     try {
-      const response = await api.getBettingOpportunities({
+      const response = await unifiedDataService.getBettingOpportunities({
         sport: selectedSport,
-        minEdge: 2.0,
+        minConfidence: 70,
+        maxResults: 50,
+        sortBy: "expectedValue",
+        sortOrder: "desc",
       });
 
       if (response.success && response.data) {
-        const data = response.data.map((opp: any) => ({
+        const data = response.data.map((opp) => ({
           id: opp.id,
           sport: opp.sport,
-          game: opp.event,
-          betType: opp.market,
-          line: opp.odds,
+          game: opp.game,
+          betType: opp.betType,
+          line: opp.line,
           odds: opp.odds,
-          bookmaker: opp.bookmaker || "DraftKings",
-          expectedValue: opp.expectedValue * 100, // Convert to percentage
+          bookmaker: opp.bookmaker,
+          expectedValue: opp.expectedValue,
           confidence: opp.confidence,
-          edge: opp.expectedValue * 100,
+          edge: opp.edge,
           stake: 0,
           potentialProfit: 0,
           riskLevel: opp.riskLevel,
-          category: "value" as const,
-          expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+          category: opp.category,
+          expires: opp.expires,
         }));
         setOpportunities(data);
-        logger.info("Successfully fetched betting opportunities", {
+        logger.info("Successfully fetched unified betting opportunities", {
           count: data.length,
+          cached: response.cached,
         });
       } else {
         throw new Error(
@@ -255,11 +260,11 @@ const MoneyMakerPro: React.FC = () => {
       }
     } catch (err) {
       handleApiError(err as Error, "MoneyMakerPro.fetchOpportunities");
-      setOpportunities([]); // Empty array instead of mock data
+      setOpportunities([]);
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [selectedSport]);
 
   const fetchArbitrageOpportunities = useCallback(async () => {
     try {
